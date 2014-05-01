@@ -1,30 +1,37 @@
 #! /bin/bash
 
 cmd="git branch -v"
-if [ "$1" == "-h" ]; then 
+op=$1
+shift
+if [ "$op" == "-h" ]; then 
   echo "git command shortcut"
 
   echo "      a  git add --all ."
   echo "    cam  git commit -am comment"
-  echo "      c  git config --list ."
+  echo "      c  git checkout "
   echo "    dev  git checkout dev"
   echo "      f  git fetch"
-  echo " master  git checkout master"
+  echo "    mas  git checkout master"
   echo "      m  git merge"
   echo "      p  git push"
   echo "      s  git status"
 
 else
-  if [ "$1" == "a" ]; then cmd="git add --all . "; fi
-  if [ "$1" == "c" ]; then cmd="git config --list"; fi
-  if [ "$1" == "s" ]; then cmd="git status"; fi
-  if [ "$1" == "cam" ]; then echo "git commit -am $2"; git commit -am "$2"; cmd= ; fi
-  if [ "$1" == "f" ]; then cmd="git fetch"; fi
-  if [ "$1" == "m" ]; then cmd="git merge"; fi
-  if [ "$1" == "p" ]; then cmd="git push"; fi
-  if [ "$1" == "dev" ]; then cmd="git checkout dev"; fi
-  if [ "$1" == "master" ]; then cmd="git checkout master"; fi
-  echo $cmd 
-  $cmd
+  if [ "$op" == "a" ]; then cmd="git add --all . "; fi
+  if [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd= ; fi
+  if [ "$op" == "d" ]; then echo "git diff -U0 -b -- $@"; git diff -U0 -b -- $@; cmd= ; fi
+  if [ "$op" == "s" ]; then cmd="git status"; fi
+  if [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd= ; fi
+  if [ "$op" == "f" ]; then cmd="git fetch"; fi
+  if [ "$op" == "m" ]; then cmd="git merge $@"; git merge $@; cmd= ; fi
+  if [ "$op" == "p" ]; then cmd="git push"; fi
+  if [ "$op" == "dev" ]; then cmd="git checkout dev"; fi
+  if [ "$op" == "master" ]; then cmd="git checkout master"; fi
+  if [ "$op" == "mas" ]; then cmd="git checkout master"; fi
+
+  if [ "$cmd" != "" ]; then
+    echo $cmd 
+    $cmd
+  fi
 fi
 

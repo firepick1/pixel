@@ -109,9 +109,14 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 c() {
-  if [ "$1" == "s" ] 
-  then
+  if [ "$1" == "r" ] ; then
+    cd ~/github/FireREST
+  elif [ "$1" == "f" ] ; then
+    cd ~/github/FireFUSE
+  elif [ "$1" == "s" ] ; then
     cd ~/github/FireSight
+  elif [ "$1" == "w" ] ; then
+    cd `pwd | sed -e "s/.*\///"`.wiki
   else 
     cd ~
   fi
