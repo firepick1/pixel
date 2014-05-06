@@ -111,6 +111,8 @@ fi
 c() {
   if [ "$1" == "r" ] ; then
     cd ~/github/FireREST
+  elif [ "$1" == "m" ] ; then
+    cd ~/github/FireMote
   elif [ "$1" == "f" ] ; then
     cd ~/github/FireFUSE
   elif [ "$1" == "s" ] ; then
