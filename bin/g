@@ -19,7 +19,7 @@ if [ "$op" == "-h" ]; then
 
 else
   if [ "$op" == "a" ]; then cmd="git add --all . "; fi
-  if [ "$op" == "b" ]; then cmd="git branch $@"; git branch $@; cmd= ; fi
+  if [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd= ; fi
   if [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd= ; fi
   if [ "$op" == "d" ]; then echo "git diff -U0 -b -- $@"; git diff -U0 -b -- $@; cmd= ; fi
   if [ "$op" == "s" ]; then cmd="git status"; fi
