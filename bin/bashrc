@@ -1,0 +1,13 @@
+c() {
+  if [ "$1" == "s" ]; then
+    cd ~/FireSight
+  elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then
+	  cd ~/FireMote
+	elif [ "$1" == "f" ]; then
+	  cd ~/FireFuse
+	else 
+    cd ~
+  fi
+}
+
+alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
