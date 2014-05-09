@@ -1,14 +1,17 @@
 c() {
-  if [ "$1" == "s" ]; then
-    cd ~/FireSight
-  elif [ "$1" == "r" ]; then
-    cd ~/FireREST
-  elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then
-    cd ~/FireMote
-  elif [ "$1" == "f" ]; then
-    cd ~/FireFuse
-  else 
+  if [ -e ~/github ]; then
+    cd ~/github
+  else
     cd ~
+  fi
+  if [ "$1" == "s" ]; then
+    cd FireSight
+  elif [ "$1" == "r" ]; then
+    cd FireREST
+  elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then
+    cd FireMote
+  elif [ "$1" == "f" ]; then
+    cd FireFuse
   fi
 }
 
