@@ -1,5 +1,7 @@
 c() {
-  if [ -e ~/github ]; then
+  if [ "$1" == "w" ]; then
+    cd *.wiki
+  elif [ -e ~/github ]; then
     cd ~/github
   else
     cd ~
@@ -11,7 +13,7 @@ c() {
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then
     cd FireMote
   elif [ "$1" == "f" ]; then
-    cd FireFuse
+    cd FireFUSE
   fi
 }
 
