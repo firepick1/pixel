@@ -1,9 +1,9 @@
 #! /bin/bash
 
-cmd="git branch -v"
+cmd=""
 op=$1
 shift
-if [ "$op" == "-h" ]; then 
+function help() {
   echo "git command shortcut"
 
   echo "      a  git add --all ."
@@ -12,28 +12,37 @@ if [ "$op" == "-h" ]; then
   echo "      c  git checkout "
   echo "    dev  git checkout dev"
   echo "      f  git fetch"
+  echo "      l  git log -5 --graph"
+  echo "      ls git ls-remote"
   echo "    mas  git checkout master"
   echo "      m  git merge"
   echo "      p  git push"
   echo "      s  git status"
+}
 
+if [ "$op" == "a" ]; then cmd="git add --all . " 
+elif [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd= 
+elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd= 
+elif [ "$op" == "d" ]; then echo "git diff -U0 -b -- $@"; git diff -U0 -b -- $@; cmd= 
+elif [ "$op" == "s" ]; then cmd="git status"
+elif [ "$op" == "..." ]; then echo "git commit -am ...;git push"; git commit -am ...; git push; cmd= 
+elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd= 
+elif [ "$op" == "f" ]; then cmd="git fetch"
+elif [ "$op" == "l" ]; then cmd="git log -5 --graph"
+elif [ "$op" == "ls" ]; then cmd="git ls-remote"
+elif [ "$op" == "m" ]; then cmd="git merge $@"; git merge $@; cmd= 
+elif [ "$op" == "p" ]; then cmd="git push"
+elif [ "$op" == "dev" ]; then cmd="git checkout dev"
+elif [ "$op" == "master" ]; then cmd="git checkout master"
+elif [ "$op" == "mas" ]; then cmd="git checkout master"
+elif [ "$op" == "" ]; then help
+elif [ "$op" == "vi" ]; then vi ~/bin/g
 else
-  if [ "$op" == "a" ]; then cmd="git add --all . "; fi
-  if [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd= ; fi
-  if [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd= ; fi
-  if [ "$op" == "d" ]; then echo "git diff -U0 -b -- $@"; git diff -U0 -b -- $@; cmd= ; fi
-  if [ "$op" == "s" ]; then cmd="git status"; fi
-  if [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd= ; fi
-  if [ "$op" == "f" ]; then cmd="git fetch"; fi
-  if [ "$op" == "m" ]; then cmd="git merge $@"; git merge $@; cmd= ; fi
-  if [ "$op" == "p" ]; then cmd="git push"; fi
-  if [ "$op" == "dev" ]; then cmd="git checkout dev"; fi
-  if [ "$op" == "master" ]; then cmd="git checkout master"; fi
-  if [ "$op" == "mas" ]; then cmd="git checkout master"; fi
+  cmd="git $op $@"
+fi
 
-  if [ "$cmd" != "" ]; then
-    echo $cmd 
-    $cmd
-  fi
+if [ "$cmd" != "" ]; then
+  echo $cmd 
+  $cmd
 fi
 

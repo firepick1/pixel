@@ -19,7 +19,7 @@
 # Signify verbose mode, true turns on verbose output
 # ex: verbose = true|false
 #
-verbose = true
+verbose = false
 
 #
 # CSV Verbose format: with this option, you can choose 
@@ -52,7 +52,7 @@ verbose = true
 # You can turn this message off with this directive.
 # ex: show-logfile = false
 #
-show-logfile = true
+show-logfile = false
 
 #
 # Default logging status, true turns logging on.
@@ -140,7 +140,7 @@ concurrent = 1
 # concurrent users, then siege will hit the server 200 times.
 # ex: reps = 20
 #
-# reps = 
+reps = 100
 
 #
 # Default URLs file, set at configuration time, the default
