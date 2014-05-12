@@ -13,7 +13,9 @@ c() {
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then
     cd FireMote
   elif [ "$1" == "f" ]; then
-    cd FireFUSE
+    cd FireFuse
+  elif [ "$1" == "pixel" ]; then
+    cd ~/pixel
   fi
 }
 
