@@ -21,17 +21,17 @@ function help() {
 }
 
 if [ "$op" == "a" ]; then cmd="git add --all . " 
-elif [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd= 
-elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd= 
-elif [ "$op" == "d" ]; then echo "git diff -U0 -b -- $@"; git diff -U0 -b -- $@; cmd= 
+elif [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd=
+elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=
+elif [ "$op" == "d" ]; then echo "git diff -U0 -b -- $@"; git diff -U0 -b -- $@; cmd=
 elif [ "$op" == "s" ]; then cmd="git status"
-elif [ "$op" == "..." ]; then echo "git commit -am ...;git push"; git commit -am ...; git push; cmd= 
-elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd= 
+elif [ "$op" == "..." ]; then echo "git commit -am ...;git push"; git commit -am ...; git push; cmd=
+elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd=
 elif [ "$op" == "f" ]; then cmd="git fetch"
 elif [ "$op" == "l" ]; then cmd="git log -5 --graph"
 elif [ "$op" == "ls" ]; then cmd="git ls-remote"
-elif [ "$op" == "m" ]; then cmd="git merge $@"; git merge $@; cmd= 
-elif [ "$op" == "p" ]; then cmd="git push"
+elif [ "$op" == "m" ]; then cmd="git merge $@"; git merge $@; cmd=
+elif [ "$op" == "p" ]; then echo "git push $@"; git push $@; cmd=
 elif [ "$op" == "dev" ]; then cmd="git checkout dev"
 elif [ "$op" == "master" ]; then cmd="git checkout master"
 elif [ "$op" == "mas" ]; then cmd="git checkout master"

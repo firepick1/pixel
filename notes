@@ -1,0 +1,2 @@
+#restore core_pattern
+sudo sysctl kernel.core_pattern=|/var/run/crw/crw %p %s %u %g %e %h %t %E
