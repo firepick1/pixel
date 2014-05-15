@@ -8,6 +8,8 @@ function help() {
 
   echo "      a  git add --all ."
   echo "      b  git branch "
+  echo "     bm  git branch --merged"
+  echo "    bnm  git branch --no-merged"
   echo "    cam  git commit -am comment"
   echo "      c  git checkout "
   echo "    dev  git checkout dev"
@@ -22,8 +24,10 @@ function help() {
 
 if [ "$op" == "a" ]; then cmd="git add --all . " 
 elif [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd=
+elif [ "$op" == "bm" ]; then cmd="git branch --merged"
+elif [ "$op" == "bnm" ]; then cmd="git branch --no-merged"
 elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=
-elif [ "$op" == "d" ]; then echo "git diff -U0 -b -- $@"; git diff -U0 -b -- $@; cmd=
+elif [ "$op" == "d" ]; then echo "git diff -U0 -b $@"; git diff -U0 -b $@; cmd=
 elif [ "$op" == "s" ]; then cmd="git status"
 elif [ "$op" == "..." ]; then echo "git commit -am ...;git push"; git commit -am ...; git push; cmd=
 elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd=
