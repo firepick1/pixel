@@ -11,6 +11,7 @@ function help() {
   echo "     bm  git branch --merged"
   echo "    bnm  git branch --no-merged"
   echo "    cam  git commit -am comment"
+  echo "   camp  git commit -am comment && git push"
   echo "      c  git checkout "
   echo "    dev  git checkout dev"
   echo "      f  git fetch"
@@ -33,6 +34,7 @@ elif [ "$op" == "d" ]; then echo "git diff -U0 -b $@"; git diff -U0 -b $@; cmd=
 elif [ "$op" == "s" ]; then cmd="git status"
 elif [ "$op" == "..." ]; then echo "git commit -am ...;git push"; git commit -am ...; git push; cmd=
 elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd=
+elif [ "$op" == "camp" ]; then echo "git commit -am $@ && git push"; git commit -am "$@" && git push; cmd=
 elif [ "$op" == "f" ]; then cmd="git fetch"
 elif [ "$op" == "l" ]; then cmd="git log -5 --graph"
 elif [ "$op" == "ls" ]; then cmd="git ls-remote"

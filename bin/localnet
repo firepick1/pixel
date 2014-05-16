@@ -1,0 +1,4 @@
+#! /bin/bash
+
+echo Scanning local net
+nmap -sP 192.168.1.*
