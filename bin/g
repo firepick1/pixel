@@ -19,6 +19,8 @@ function help() {
   echo "    mas  git checkout master"
   echo "      m  git merge"
   echo "      p  git push"
+  echo "   relb  git push && git checkout release/\$1 && git merge dev && git push"
+  echo "   relm  git push && git checkout master && git merge release/\$1 && git push && git checkout dev && git merge dev && git push"
   echo "      s  git status"
 }
 
@@ -40,6 +42,20 @@ elif [ "$op" == "dev" ]; then cmd="git checkout dev"
 elif [ "$op" == "master" ]; then cmd="git checkout master"
 elif [ "$op" == "mas" ]; then cmd="git checkout master"
 elif [ "$op" == "" ]; then help
+elif [ "$op" == "relb" ]; then 
+  if [ "$1" == "" ]; then 
+    help
+  else
+    echo "git push && git checkout release/$1 && git merge dev && git push && git branch -v"
+    git push && git checkout release/$1 && git merge dev && git push && git branch -v
+  fi
+elif [ "$op" == "relm" ]; then 
+  if [ "$1" == "" ]; then 
+    help
+  else
+    echo "git push && git checkout master && git merge release/$1 && git push && git checkout dev && git merge master && git push  && git branch -v"
+    git push && git checkout master && git merge release/$1 && git push && git checkout dev && git merge master && git push && git branch -v
+  fi
 elif [ "$op" == "vi" ]; then vi ~/bin/g
 else
   cmd="git $op $@"
