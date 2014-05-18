@@ -13,7 +13,11 @@ c() {
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then
     cd FireMote
   elif [ "$1" == "f" ]; then
-    cd FireFUSE
+    if [ -e FireFUSE ]; then 
+      cd FireFUSE 
+    else
+      cd FireREST/FireFUSE
+    fi
   elif [ "$1" == "pixel" ]; then
     cd ~/pixel
   fi
