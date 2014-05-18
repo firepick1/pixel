@@ -1,0 +1,68 @@
+#! /bin/bash
+
+ls -l /dev/sdb*
+
+ls ~/Downloads/sd-image-*.gz
+ls ~/Downloads/sd-image-*.img
+
+function help() {
+  echo "----------------------------------"
+  echo Insert SD card, then type:
+  echo 
+  echo sd --read-sd name
+  echo '  Create SD image as ~/Downloads/sd-image-name.gz'
+  echo sd --write-sd name
+  echo '  Write ~/Downloads/sd-image-name.gz onto SD card'
+  echo "----------------------------------"
+}
+
+if [ ! -e /dev/sdb ] || [ "$1" == "" ] ; then
+  help
+  exit 0
+fi
+
+NAME=$2
+if [ "$NAME" == "" ]; then
+  NAME=`date +%d%m%y`
+fi
+
+
+echo Unmounting SD card to restrict use during imaging
+echo umount /dev/sdb1 /dev/sdb2 
+if [ -e /dev/sdb1 ]; then sudo umount /dev/sdb1 ; fi
+if [ -e /dev/sdb2 ]; then sudo umount /dev/sdb2 ; fi
+
+BLOCKS=555
+
+if [ "$1" == "--read-sd" ]; then
+  echo 'SD image backup will take some time (5-10m)'
+  echo 'DO NOT INTERRUPT THIS PROCESS!!!'
+  echo 'sudo dd bs=4M count=$BLOCKS if=/dev/sdb | gzip -c > ~/Downloads/sd-image-$NAME.gz'
+  sudo dd bs=4M count=$BLOCKS if=/dev/sdb | gzip -c > ~/Downloads/sd-image-$NAME.gz
+  if [ $? -ne 0 ]; then
+    echo ERROR: could not read SD card
+    exit -1
+  fi
+  chmod -w ~/Downloads/sd-image-$NAME.gz 
+  ls -lh ~/Downloads/sd-image*
+  echo COMPLETED: SD card read and saved as ~/Downloads/sd-image-$NAME.gz 
+elif [ "$1" == "--write-sd" ]; then
+  echo 'SD image restore will take some time (5-10m)'
+  echo 'DO NOT INTERRUPT THIS PROCESS!!!'
+  echo 'gunzip -c ~/sd/backup.gz | sudo dd bs=4M count=$BLOCKS of=/dev/sdb '
+  if [ ! -e ~/Downloads/sd-image-$NAME.img ]; then
+    gunzip -c ~/Downloads/sd-image-$NAME.gz > ~/Downloads/sd-image-$NAME.img
+    if [ $? -ne 0 ]; then
+      echo ERROR: could not create ~/Downloads/sd-image-$NAME.img
+      sudo sync
+      exit -1
+    fi
+  fi
+  sudo dd bs=4M count=$BLOCKS of=/dev/sdb if=~/Downloads/sd-image-$NAME.img
+  if [ $? -ne 0 ]; then
+    echo ERROR: could not write SD card
+    exit -1
+  fi
+  sudo sync
+  echo COMPLETED: ~/Downloads/sd-image-$NAME.img written to SD card.
+fi
