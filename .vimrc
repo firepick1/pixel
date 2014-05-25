@@ -22,15 +22,26 @@ set cursorcolumn		  " highlight cursor column
 set cursorline			  " highlight cursor line
 set nobackup			  " crash and die without resurrectable corpse
 
-hi Conditional ctermfg=Blue
-hi Constant ctermfg=Cyan
-hi CursorColumn ctermfg=LightGreen ctermbg=Black
-hi CursorLine ctermfg=White cterm=bold ctermbg=Black
-hi Keyword ctermfg=Blue
-hi Macro ctermfg=Blue
+hi CursorColumn ctermfg=LightMagenta  ctermbg=Black
+hi CursorLine ctermfg=LightMagenta cterm=bold ctermbg=Black
 hi MatchParen ctermfg=LightRed cterm=bold ctermbg=Black
 hi Search ctermfg=Yellow ctermbg=BLACK cterm=bold
-hi Special ctermfg=Blue
-hi Statement ctermfg=Blue
-hi String ctermfg=Cyan
-hi Type ctermfg=Blue
+hi Comment ctermfg=LightGray ctermbg=Black
+hi Identifier ctermfg=LightCyan ctermbg=Black
+
+hi Conditional ctermfg=White ctermbg=Black
+hi Constant ctermfg=White ctermbg=Black
+hi Directory ctermfg=White ctermbg=Black
+hi Keyword ctermfg=White  ctermbg=Black
+hi Macro ctermfg=White ctermbg=Black
+hi NonText ctermfg=White  ctermbg=Black
+hi Operator ctermfg=White  ctermbg=Black
+hi Preproc ctermfg=White  ctermbg=Black
+hi Special ctermfg=White  ctermbg=Black
+hi SpecialKey ctermfg=White  ctermbg=Black
+hi Statement ctermfg=White  ctermbg=Black
+hi String ctermfg=White ctermbg=Black
+hi Type ctermfg=White  ctermbg=Black
+hi Underlined ctermfg=White  ctermbg=Black
+hi VimCommand ctermfg=White  ctermbg=Black
+

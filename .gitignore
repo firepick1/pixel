@@ -7,9 +7,11 @@
 .gstreamer-0.10/
 .idea/
 *.iml
+.java/
 .m2/
 .node-gyp/
 .npm/
+.openpnp/
 .pulse/
 .ssh/
 .vim/

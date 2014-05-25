@@ -2,45 +2,31 @@ function parse_git_branch () {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
    
-RED="\[\033[0;31m\]"
-YELLOW="\[\033[0;33m\]"
-GREEN="\[\033[0;32m\]"
-NO_COLOR="\[\033[0m\]"
+RED="\[\033[0;31m\]"; YELLOW="\[\033[0;33m\]"; GREEN="\[\033[0;32m\]"; NO_COLOR="\[\033[0m\]"
     
 PS1="$GREEN\h$NO_COLOR:\w$YELLOW:\$(parse_git_branch)$NO_COLOR\$ "
 
 function m() {
-  if [ "$1" == "ci" ]; then
-    mvn clean install
-  elif [ "$1" == "err" ]; then
-    more target/surefire-reports/*.txt
+  if [ "$1" == "ci" ]; then mvn clean install
+  elif [ "$1" == "err" ]; then more target/surefire-reports/*.txt
   fi
 }
 
 function c() {
-  if [ "$1" == "w" ]; then
-    cd *.wiki
-  elif [ -e ~/github ]; then
-    cd ~/github
-  else
-    cd ~
+  if [ "$1" == "w" ]; then cd *.wiki
+  elif [ -e ~/github ]; then cd ~/github
+  else cd ~
   fi
-  if [ "$1" == "s" ]; then
-    cd FireSight
-  elif [ "$1" == "fc" ]; then
-    cd firerest-client
-  elif [ "$1" == "r" ]; then
-    cd FireREST
-  elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then
-    cd FireMote
+  if [ "$1" == "s" ]; then cd FireSight
+  elif [ "$1" == "o" ]; then cd openpnp/gui
+  elif [ "$1" == "fc" ]; then cd firerest-client
+  elif [ "$1" == "r" ]; then cd FireREST
+  elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
+  elif [ "$1" == "pixel" ]; then cd ~/pixel
   elif [ "$1" == "f" ]; then
-    if [ -e FireFUSE ]; then 
-      cd FireFUSE 
-    else
-      cd FireREST/FireFUSE
+    if [ -e FireFUSE ]; then cd FireFUSE
+    else cd FireREST/FireFUSE
     fi
-  elif [ "$1" == "pixel" ]; then
-    cd ~/pixel
   fi
 }
 

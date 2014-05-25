@@ -12,7 +12,8 @@ function help() {
   echo "    bnm  git branch --no-merged"
   echo "    cam  git commit -am comment"
   echo "   camp  git commit -am comment && git push"
-  echo " config  git config ... "
+  echo "    con  git config ... "
+  echo "coninit  git config ... "
   echo "      c  git checkout "
   echo "    dev  git checkout dev"
   echo "      f  git fetch"
@@ -27,29 +28,30 @@ function help() {
 }
 
 if [ "$op" == "a" ]; then cmd="git add --all . " 
-elif [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd=
+elif [ "$op" == "b" ]; then cmd="git branch -va $@"; git branch -va $@; cmd=
 elif [ "$op" == "bm" ]; then cmd="git branch --merged"
 elif [ "$op" == "bnm" ]; then cmd="git branch --no-merged"
 elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=
-elif [ "$op" == "config" ]; then 
+elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd=
+elif [ "$op" == "camp" ]; then echo "git commit -am $@ && git push"; git commit -am "$@" && git push; cmd=
+elif [ "$op" == "con" ]; then 
+  echo "git config $@"
+  git config $@
+  cmd=
+elif [ "$op" == "coninit" ]; then 
   git config --global merge.defaultToUpstream true
   git config --global user.email karl@firepick.org
   git config --global user.name "firepick1 (`hostname`)"
   cmd=
 elif [ "$op" == "d" ]; then echo "git diff -U0 -b $@"; git diff -U0 -b $@; cmd=
-elif [ "$op" == "s" ]; then cmd="git status"
-elif [ "$op" == "..." ]; then echo "git commit -am ...;git push"; git commit -am ...; git push; cmd=
-elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd=
-elif [ "$op" == "camp" ]; then echo "git commit -am $@ && git push"; git commit -am "$@" && git push; cmd=
-elif [ "$op" == "f" ]; then cmd="git fetch"
+elif [ "$op" == "dev" ]; then cmd="git checkout dev"
+elif [ "$op" == "f" ]; then echo "git fetch $@"; git fetch $@; cmd=
 elif [ "$op" == "l" ]; then cmd="git log -5 --graph"
 elif [ "$op" == "ls" ]; then cmd="git ls-remote"
 elif [ "$op" == "m" ]; then cmd="git merge $@"; git merge $@; cmd=
-elif [ "$op" == "p" ]; then echo "git push $@"; git push $@; cmd=
-elif [ "$op" == "dev" ]; then cmd="git checkout dev"
-elif [ "$op" == "master" ]; then cmd="git checkout master"
 elif [ "$op" == "mas" ]; then cmd="git checkout master"
-elif [ "$op" == "" ]; then help
+elif [ "$op" == "master" ]; then cmd="git checkout master"
+elif [ "$op" == "p" ]; then echo "git push $@"; git push $@; cmd=
 elif [ "$op" == "relb" ]; then 
   if [ "$1" == "" ]; then 
     help
@@ -64,6 +66,9 @@ elif [ "$op" == "relm" ]; then
     echo "git push && git checkout master && git merge release/$1 && git push && git checkout dev && git merge master && git push  && git branch -v"
     git push && git checkout master && git merge release/$1 && git push && git checkout dev && git merge master && git push && git branch -v
   fi
+elif [ "$op" == "s" ]; then cmd="git status"
+elif [ "$op" == "..." ]; then echo "git commit -am ...;git push"; git commit -am ...; git push; cmd=
+elif [ "$op" == "" ]; then help
 elif [ "$op" == "vi" ]; then vi ~/bin/g
 else
   cmd="git $op $@"
