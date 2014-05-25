@@ -1,18 +1,33 @@
 #! /bin/bash
 
-ls -l /dev/sdb*
+if [ -e /dev/sdb ]; then
+  echo "SD Card: ready"
+  ls -l /dev/sdb*
+else
+  echo "SD Card: (NO CARD)"
+fi
 
+echo
+echo "Existing images:"
 ls ~/Downloads/sd-image-*.gz
 ls ~/Downloads/sd-image-*.img
 
+NAME=$2
+if [ "$NAME" == "" ]; then
+  NAME=`date +%d%m%y`
+fi
+echo
+echo "Default image name: sd-image-$NAME.img"
+
 function help() {
+  echo
   echo "----------------------------------"
   echo Insert SD card, then type:
   echo 
-  echo sd --read-sd name
-  echo '  Create SD image as ~/Downloads/sd-image-name.gz'
-  echo sd --write-sd name
-  echo '  Write ~/Downloads/sd-image-name.gz onto SD card'
+  echo sd --read-sd [NAME]
+  echo '  Create SD image as ~/Downloads/sd-image-NAME.gz'
+  echo sd --write-sd [NAME]
+  echo '  Write ~/Downloads/sd-image-NAME.gz onto SD card'
   echo "----------------------------------"
 }
 
@@ -21,12 +36,7 @@ if [ ! -e /dev/sdb ] || [ "$1" == "" ] ; then
   exit 0
 fi
 
-NAME=$2
-if [ "$NAME" == "" ]; then
-  NAME=`date +%d%m%y`
-fi
-
-
+sudo -k
 echo Unmounting SD card to restrict use during imaging
 echo umount /dev/sdb1 /dev/sdb2 
 if [ -e /dev/sdb1 ]; then sudo umount /dev/sdb1 ; fi
@@ -37,7 +47,7 @@ BLOCKS=555
 if [ "$1" == "--read-sd" ]; then
   echo 'SD image backup will take some time (5-10m)'
   echo 'DO NOT INTERRUPT THIS PROCESS!!!'
-  echo 'sudo dd bs=4M count=$BLOCKS if=/dev/sdb | gzip -c > ~/Downloads/sd-image-$NAME.gz'
+  echo "sudo dd bs=4M count=$BLOCKS if=/dev/sdb | gzip -c > ~/Downloads/sd-image-$NAME.gz"
   sudo dd bs=4M count=$BLOCKS if=/dev/sdb | gzip -c > ~/Downloads/sd-image-$NAME.gz
   if [ $? -ne 0 ]; then
     echo ERROR: could not read SD card
@@ -49,8 +59,8 @@ if [ "$1" == "--read-sd" ]; then
 elif [ "$1" == "--write-sd" ]; then
   echo 'SD image restore will take some time (5-10m)'
   echo 'DO NOT INTERRUPT THIS PROCESS!!!'
-  echo 'gunzip -c ~/sd/backup.gz | sudo dd bs=4M count=$BLOCKS of=/dev/sdb '
   if [ ! -e ~/Downloads/sd-image-$NAME.img ]; then
+    echo "gunzip -c ~/Downloads/sd-image-$NAME.gz > ~/Downloads/sd-image-$NAME.img"
     gunzip -c ~/Downloads/sd-image-$NAME.gz > ~/Downloads/sd-image-$NAME.img
     if [ $? -ne 0 ]; then
       echo ERROR: could not create ~/Downloads/sd-image-$NAME.img
@@ -58,6 +68,7 @@ elif [ "$1" == "--write-sd" ]; then
       exit -1
     fi
   fi
+  echo "sudo dd bs=4M count=$BLOCKS of=/dev/sdb if=~/Downloads/sd-image-$NAME.img"
   sudo dd bs=4M count=$BLOCKS of=/dev/sdb if=~/Downloads/sd-image-$NAME.img
   if [ $? -ne 0 ]; then
     echo ERROR: could not write SD card

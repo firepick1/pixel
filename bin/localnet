@@ -1,4 +1,5 @@
 #! /bin/bash
 
 echo Scanning local net
-nmap -sP 192.168.1.*
+nmap -sP 192.168.1.60-110 | grep -v "Host is"
+nmap -sP 192.168.1.* | grep -v "Host is"

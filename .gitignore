@@ -2,11 +2,15 @@
 .cmake/
 .config/
 .dbus/
+.fontconfig/
+.gnupg/
 .gstreamer-0.10/
+.m2/
 .node-gyp/
 .npm/
 .pulse/
 .ssh/
+.vim/
 
 .bash_history
 .bash_logout
@@ -29,3 +33,4 @@ Public
 Templates
 tmp
 Videos
+target
