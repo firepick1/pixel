@@ -5,6 +5,8 @@
 .fontconfig/
 .gnupg/
 .gstreamer-0.10/
+.idea/
+*.iml
 .m2/
 .node-gyp/
 .npm/
