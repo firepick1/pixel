@@ -22,26 +22,33 @@ set cursorcolumn		  " highlight cursor column
 set cursorline			  " highlight cursor line
 set nobackup			  " crash and die without resurrectable corpse
 
+hi Normal       ctermfg=White ctermbg=Black term=NONE cterm=NONE
+hi Identifier   ctermfg=White ctermbg=Black cterm=bold term=bold
+
 hi CursorColumn ctermfg=LightMagenta  ctermbg=Black
-hi CursorLine ctermfg=LightMagenta cterm=bold ctermbg=Black
-hi MatchParen ctermfg=LightRed cterm=bold ctermbg=Black
-hi Search ctermfg=Yellow ctermbg=BLACK cterm=bold
-hi Comment ctermfg=LightGray ctermbg=Black
-hi Identifier ctermfg=LightCyan ctermbg=Black
+hi CursorLine   ctermfg=LightMagenta ctermbg=Black cterm=bold term=bold
+hi MatchParen   ctermfg=LightRed ctermbg=Black  cterm=bold term=bold
 
-hi Conditional ctermfg=White ctermbg=Black
-hi Constant ctermfg=White ctermbg=Black
-hi Directory ctermfg=White ctermbg=Black
-hi Keyword ctermfg=White  ctermbg=Black
-hi Macro ctermfg=White ctermbg=Black
-hi NonText ctermfg=White  ctermbg=Black
-hi Operator ctermfg=White  ctermbg=Black
-hi Preproc ctermfg=White  ctermbg=Black
-hi Special ctermfg=White  ctermbg=Black
-hi SpecialKey ctermfg=White  ctermbg=Black
-hi Statement ctermfg=White  ctermbg=Black
-hi String ctermfg=White ctermbg=Black
-hi Type ctermfg=White  ctermbg=Black
-hi Underlined ctermfg=White  ctermbg=Black
-hi VimCommand ctermfg=White  ctermbg=Black
+hi Search       ctermfg=Yellow ctermbg=BLACK cterm=bold
 
+hi Comment      ctermfg=LightGray ctermbg=Black cterm=NONE term=NONE
+hi String       ctermfg=LightGray ctermbg=Black cterm=bold term=NONE
+
+hi Conceal      ctermfg=Red ctermbg=Black
+
+hi Conditional  ctermfg=LightCyan ctermbg=Black
+hi Constant     ctermfg=LightCyan ctermbg=Black
+hi Directory    ctermfg=LightCyan ctermbg=Black
+hi Keyword      ctermfg=LightCyan ctermbg=Black
+hi Macro        ctermfg=LightCyan ctermbg=Black
+hi NonText      ctermfg=LightCyan ctermbg=Black
+hi Operator     ctermfg=LightCyan ctermbg=Black
+hi Preproc      ctermfg=LightCyan ctermbg=Black
+hi Special      ctermfg=LightCyan ctermbg=Black
+hi SpecialKey   ctermfg=LightCyan ctermbg=Black
+hi Statement    ctermfg=LightCyan ctermbg=Black cterm=NONE term=NONE
+hi Type         ctermfg=LightCyan ctermbg=Black
+hi Underlined   ctermfg=LightCyan ctermbg=Black
+hi VimCommand   ctermfg=LightCyan ctermbg=Black
+
+hi LineNr       ctermfg=Green ctermbg=Black cterm=NONE term=NONE
