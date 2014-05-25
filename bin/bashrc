@@ -43,6 +43,14 @@ function v() {
   find . -name target -prune -o -name "$1*" -exec vi {} + 
 }
 
+extensions="\( -name '*.java' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
+echo $extensions
+
+function vf() {
+  eval "find . -name target -prune -o -type f $extensions -exec grep -q "$1" {} \; -exec echo vi {} +"
+  eval "find . -name target -prune -o -type f $extensions -exec grep -q "$1" {} \; -exec vi {} +"
+}
+
 function vdir() {
   find . -name target -prune -o -name "$1*" -execdir echo vi {} + 
   find . -name target -prune -o -name "$1*" -execdir vi {} + 
