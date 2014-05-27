@@ -2,32 +2,42 @@
 
 if [ -e /dev/sdb ]; then
   echo "SD Card: ready"
-  ls -l /dev/sdb*
+  sudo parted /dev/sdb unit s print
 else
   echo "SD Card: (NO CARD)"
 fi
 
+p2sec=`sudo parted -m /dev/sdb unit s print | grep -e "^2" | sed s/[^s]*s[^s]*s:// | sed s/s.*//`
+p2blk=$((p2sec/8))
+echo "/dev/sdb2 partition 2 is $p2blk (4k Blocks)"
+
 echo
-echo "Existing images:"
-ls ~/Downloads/sd-image-*.gz
-ls ~/Downloads/sd-image-*.img
+echo "Available images:"
+ls -1 ~/Downloads/sd-image-*.gz 2> /dev/null
+ls -1 ~/Downloads/sd-image-*.img 2> /dev/null
 
 NAME=$2
 if [ "$NAME" == "" ]; then
   NAME=`date +%d%m%y`
 fi
 echo
-echo "Default image name: sd-image-$NAME.img"
+echo "SD working image: sd-image-$NAME.img"
 
 function help() {
   echo
   echo "----------------------------------"
-  echo Insert SD card, then type:
+  echo 'Insert SD card, then type:'
   echo 
-  echo sd --read-sd [NAME]
+  echo 'sd --read-sd [NAME]'
   echo '  Create SD image as ~/Downloads/sd-image-NAME.gz'
-  echo sd --write-sd [NAME]
+  echo 'sd --write-sd [NAME]'
   echo '  Write ~/Downloads/sd-image-NAME.gz onto SD card'
+  echo 'sd --expand-fs'
+  echo '  resize2fs /dev/sdb2'
+  echo 'sd --shrink-fs'
+  echo '  resize2fs -p -M /dev/sdb2'
+  echo 'sd --fsck'
+  echo '  fsck.ext4 -p -f -C0 /dev/sdb2'
   echo "----------------------------------"
 }
 
@@ -37,10 +47,33 @@ if [ ! -e /dev/sdb ] || [ "$1" == "" ] ; then
 fi
 
 sudo -k
+sudo date
+if [ $? -ne 0 ]; then exit -1; fi
+
 echo Unmounting SD card to restrict use during imaging
 echo umount /dev/sdb1 /dev/sdb2 
-if [ -e /dev/sdb1 ]; then sudo umount /dev/sdb1 ; fi
-if [ -e /dev/sdb2 ]; then sudo umount /dev/sdb2 ; fi
+if [ -e /dev/sdb1 ]; then echo unmounting /dev/sdb1; sudo umount /dev/sdb1 ; fi
+if [ -e /dev/sdb2 ]; then echo unmounting /dev/sdb2; sudo umount /dev/sdb2 ; fi
+
+if [ "$1" == "--fsck" ]; then 
+  shift; 
+  echo "sudo fsck.ext4 -p -f -C0 /dev/sdb2"
+  sudo fsck.ext4 -p -f -C0 /dev/sdb2
+  if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
+fi
+
+if [ "$1" == "--shrink-fs" ]; then
+  shift
+  echo '  sudo resize2fs -p -M /dev/sdb2'
+  sudo resize2fs -p -M /dev/sdb2
+  if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
+fi
+if [ "$1" == "--expand-fs" ]; then
+  shift
+  echo '  sudo resize2fs -p /dev/sdb2 $p2blk'
+  sudo resize2fs -p /dev/sdb2 $p2blk
+  if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
+fi
 
 BLOCKS=555
 
@@ -64,7 +97,6 @@ elif [ "$1" == "--write-sd" ]; then
     gunzip -c ~/Downloads/sd-image-$NAME.gz > ~/Downloads/sd-image-$NAME.img
     if [ $? -ne 0 ]; then
       echo ERROR: could not create ~/Downloads/sd-image-$NAME.img
-      sudo sync
       exit -1
     fi
   fi
@@ -74,6 +106,7 @@ elif [ "$1" == "--write-sd" ]; then
     echo ERROR: could not write SD card
     exit -1
   fi
-  sudo sync
   echo COMPLETED: ~/Downloads/sd-image-$NAME.img written to SD card.
 fi
+sudo sync
+echo sync completed

@@ -15,6 +15,7 @@
 .pulse/
 .ssh/
 .vim/
+.netsurf/
 
 .bash_history
 .bash_logout

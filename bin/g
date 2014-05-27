@@ -13,6 +13,7 @@ function help() {
   echo "    cam  git commit -am comment"
   echo "   camp  git commit -am comment && git push"
   echo "    con  git config ... "
+  echo "   conl  git config --list "
   echo "coninit  git config ... "
   echo "      c  git checkout "
   echo "    dev  git checkout dev"
@@ -34,6 +35,7 @@ elif [ "$op" == "bnm" ]; then cmd="git branch --no-merged"
 elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=
 elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd=
 elif [ "$op" == "camp" ]; then echo "git commit -am $@ && git push"; git commit -am "$@" && git push; cmd=
+elif [ "$op" == "conl" ]; then cmd="git config --list"
 elif [ "$op" == "con" ]; then 
   echo "git config $@"
   git config $@
