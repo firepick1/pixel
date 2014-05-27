@@ -24,15 +24,17 @@ function help() {
   echo "      m  git merge"
   echo "      p  git push"
   echo "   relb  git push && git checkout release/\$1 && git merge dev && git push"
+  echo "   relc  git push && git checkout -b release/\$1 && git push -u"
   echo "   relm  git push && git checkout master && git merge release/\$1 && git push && git checkout dev && git merge dev && git push"
   echo "      s  git status"
 }
 
 if [ "$op" == "a" ]; then cmd="git add --all . " 
-elif [ "$op" == "b" ]; then cmd="git branch -va $@"; git branch -va $@; cmd=
+elif [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd=
 elif [ "$op" == "bm" ]; then cmd="git branch --merged"
 elif [ "$op" == "bnm" ]; then cmd="git branch --no-merged"
 elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=
+elif [ "$op" == "cr" ]; then cmd="git checkout -b release/$1; git push -u"; git checkout -b release/$1; git push -u; cmd=
 elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd=
 elif [ "$op" == "camp" ]; then echo "git commit -am $@ && git push"; git commit -am "$@" && git push; cmd=
 elif [ "$op" == "conl" ]; then cmd="git config --list"
@@ -55,16 +57,17 @@ elif [ "$op" == "mas" ]; then cmd="git checkout master"
 elif [ "$op" == "master" ]; then cmd="git checkout master"
 elif [ "$op" == "p" ]; then echo "git push $@"; git push $@; cmd=
 elif [ "$op" == "relb" ]; then 
-  if [ "$1" == "" ]; then 
-    help
-  else
+  if [ "$1" == "" ]; then help; else
     echo "git push && git checkout release/$1 && git merge dev && git push && git branch -v"
     git push && git checkout release/$1 && git merge dev && git push && git branch -v
   fi
+elif [ "$op" == "relc" ]; then 
+  if [ "$1" == "" ]; then help; else
+    echo "git push && git checkout -b release/$1 && git push -u && git branch -v"
+    git push && git checkout -b release/$1 && git push -u && git branch -v
+  fi
 elif [ "$op" == "relm" ]; then 
-  if [ "$1" == "" ]; then 
-    help
-  else
+  if [ "$1" == "" ]; then help; else
     echo "git push && git checkout master && git merge release/$1 && git push && git checkout dev && git merge master && git push  && git branch -v"
     git push && git checkout master && git merge release/$1 && git push && git checkout dev && git merge master && git push && git branch -v
   fi

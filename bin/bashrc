@@ -8,6 +8,7 @@ PS1="$GREEN\h$NO_COLOR:\w$YELLOW:\$(parse_git_branch)$NO_COLOR\$ "
 
 function m() {
   if [ "$1" == "ci" ]; then mvn clean install
+  elif [ "$1" == "cid" ]; then mvn clean install deploy
   elif [ "$1" == "err" ]; then more target/surefire-reports/*.txt
   fi
 }
