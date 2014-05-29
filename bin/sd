@@ -9,7 +9,7 @@ fi
 
 p2sec=`sudo parted -m /dev/sdb unit s print | grep -e "^2" | sed s/[^s]*s[^s]*s:// | sed s/s.*//`
 p2blk=$((p2sec/8))
-echo "/dev/sdb2 partition 2 is $p2blk (4k Blocks)"
+echo "/dev/sdb2 partition 2 is $p2blk blocks@4KiB = $(( ($p2blk * 4)/1024 ))KiB"
 
 echo
 echo "Available images:"

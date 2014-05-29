@@ -7,9 +7,16 @@ RED="\[\033[0;31m\]"; YELLOW="\[\033[0;33m\]"; GREEN="\[\033[0;32m\]"; NO_COLOR=
 PS1="$GREEN\h$NO_COLOR:\w$YELLOW:\$(parse_git_branch)$NO_COLOR\$ "
 
 function m() {
-  if [ "$1" == "ci" ]; then mvn clean install
-  elif [ "$1" == "cid" ]; then mvn clean install deploy
-  elif [ "$1" == "err" ]; then more target/surefire-reports/*.txt
+  if [ "$1" == "ci" ]; then 
+    mvn clean install
+    if [ $? -ne 0 ]; then more target/surefire-reports/*.txt; fi
+  elif [ "$1" == "ccas" ]; then 
+    mvn clean compile assembly:single
+  elif [ "$1" == "cid" ]; then 
+    mvn clean install deploy
+    if [ $? -ne 0 ]; then more target/surefire-reports/*.txt; fi
+  elif [ "$1" == "err" ]; then 
+    more target/surefire-reports/*.txt
   fi
 }
 
@@ -20,7 +27,8 @@ function c() {
   fi
   if [ "$1" == "s" ]; then cd FireSight
   elif [ "$1" == "o" ]; then cd openpnp/gui
-  elif [ "$1" == "fc" ]; then cd firerest-client
+  elif [ "$1" == "rcl" ]; then cd firerest-client
+  elif [ "$1" == "rcm" ]; then cd firerest-cmd
   elif [ "$1" == "r" ]; then cd FireREST
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
   elif [ "$1" == "pixel" ]; then cd ~/pixel
@@ -31,30 +39,27 @@ function c() {
   fi
 }
 
-function lf() {
-  if [ "$1" == "" ]; then
-    find . -name target -prune -o -type f -print
-  else
-    find . -name target -prune -o -type f -name "$1*" -print
-  fi
-}
-
-function v() {
-  find . -name target -prune -o -name "$1*" -exec echo vi {} + 
-  find . -name target -prune -o -name "$1*" -exec vi {} + 
-}
-
 ignore="-name target -prune -o -name node_modules -prune -o -name .git -prune"
 extensions="\( -name '*.js' -o -name '*.java' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
-function vf() {
-  eval "find . $ignore -o -type f $extensions -exec grep -q -E \"$1\" {} \; -exec echo vi {} +"
-  eval "find . $ignore -o -type f $extensions -exec grep -q -E \"$1\" {} \; -exec vi {} +"
+
+function lf() {
+  if [ "$1" == "" ]; then
+    find . $ignore -o -type f -print
+  else
+    find . $ignore -o -type f -name "$1*" -print
+  fi
 }
 
-function vdir() {
-  find . -name target -prune -o -name "$1*" -execdir echo vi {} + 
-  find . -name target -prune -o -name "$1*" -execdir vi {} + 
+
+function vgrep() {
+  eval "find . $ignore -o -type f $extensions -exec grep -q -E \"$1\" {} \; -exec echo vi -c 'lcd %:p:h' {} +"
+  eval "find . $ignore -o -type f $extensions -exec grep -q -E \"$1\" {} \; -exec vi -c 'lcd %:p:h' {} +"
+}
+
+function v() {
+  find . $ignore -o -type f -name "$1*" -exec echo vi -c "lcd %:p:h" {} + 
+  find . $ignore -o -type f -name "$1*" -exec vi -c "lcd %:p:h" {} + 
 }
 
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
