@@ -8,7 +8,7 @@
 .idea/
 *.iml
 .java/
-.m2/
+.m2/repository
 .node-gyp/
 .npm/
 .openpnp/

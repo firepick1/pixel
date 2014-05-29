@@ -65,4 +65,5 @@ function v() {
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
 alias sob='source ~/bin/bashrc'
 alias vib='vi ~/bin/bashrc'
+alias vset='vi ~/.m2/settings.xml'
 
