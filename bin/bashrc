@@ -39,7 +39,7 @@ function c() {
   fi
 }
 
-ignore="-name target -prune -o -name node_modules -prune -o -name .git -prune"
+ignore="\( -name target -o -name node_modules -o -name .git \) -prune"
 extensions="\( -name '*.js' -o -name '*.java' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
 
@@ -58,8 +58,8 @@ function vgrep() {
 }
 
 function v() {
-  find . $ignore -o -type f -name "$1*" -exec echo vi -c "lcd %:p:h" {} + 
-  find . $ignore -o -type f -name "$1*" -exec vi -c "lcd %:p:h" {} + 
+  eval "find . $ignore -o -type f -name "$1*" -exec echo vi -c 'lcd %:p:h' {} + "
+  eval "find . $ignore -o -type f -name "$1*" -exec vi -c 'lcd %:p:h' {} + "
 }
 
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
