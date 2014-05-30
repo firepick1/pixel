@@ -27,6 +27,7 @@ function c() {
   fi
   if [ "$1" == "s" ]; then cd FireSight
   elif [ "$1" == "o" ]; then cd openpnp/gui
+  elif [ "$1" == "io" ]; then cd firepick1.github.io
   elif [ "$1" == "rcl" ]; then cd firerest-client
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
   elif [ "$1" == "r" ]; then cd FireREST
@@ -39,27 +40,34 @@ function c() {
   fi
 }
 
-ignore="\( -name target -o -name node_modules -o -name .git \) -prune"
-extensions="\( -name '*.js' -o -name '*.java' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
-
+EXCLUDE="\( -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.min.*\" \) -prune"
+EXCLUDESRC="\( -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
+INCLUDE="\( -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
 function lf() {
   if [ "$1" == "" ]; then
-    find . $ignore -o -type f -print
+    eval "find . $EXCLUDE -o -type f -print"
   else
-    find . $ignore -o -type f -name "$1*" -print
+    eval "find . $EXCLUDE -o -type f -name \"$1*\" -print"
   fi
 }
 
+function repgrep() {
+  eval "find . $EXCLUDE -o -type f $INCLUDE -exec grep -HE \"$1\" {} \; -exec sed -i -e \"s/$1/$2/\" {} \; "
+}
+
+function lgrep() {
+  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -HE \"$1\" {} \; "
+}
 
 function vgrep() {
-  eval "find . $ignore -o -type f $extensions -exec grep -q -E \"$1\" {} \; -exec echo vi -c 'lcd %:p:h' {} +"
-  eval "find . $ignore -o -type f $extensions -exec grep -q -E \"$1\" {} \; -exec vi -c 'lcd %:p:h' {} +"
+  eval "find . $EXCLUDE -o -type f $INCLUDE -exec grep -q -E \"$1\" {} \; -exec echo vi -c 'lcd %:p:h' {} +"
+  eval "find . $EXCLUDE -o -type f $INCLUDE -exec grep -q -E \"$1\" {} \; -exec vi -c 'lcd %:p:h' {} +"
 }
 
 function v() {
-  eval "find . $ignore -o -type f -name "$1*" -exec echo vi -c 'lcd %:p:h' {} + "
-  eval "find . $ignore -o -type f -name "$1*" -exec vi -c 'lcd %:p:h' {} + "
+  eval "find . $EXCLUDE -o -type f -name \"$1*\" -exec echo vi -c 'lcd %:p:h' {} + "
+  eval "find . $EXCLUDE -o -type f -name \"$1*\" -exec vi -c 'lcd %:p:h' {} + "
 }
 
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
@@ -67,3 +75,5 @@ alias sob='source ~/bin/bashrc'
 alias vib='vi ~/bin/bashrc'
 alias vset='vi -c "lcd %:p:h" ~/.m2/settings.xml'
 alias otp='echo $RANDOM | md5sum'
+alias h='history'
+alias hg='history | grep '
