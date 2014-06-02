@@ -32,6 +32,7 @@ function c() {
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
   elif [ "$1" == "r" ]; then cd FireREST
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
+  elif [ "$1" == "c" ]; then cd FirePiCam
   elif [ "$1" == "pixel" ]; then cd ~/pixel
   elif [ "$1" == "f" ]; then
     if [ -e FireFUSE ]; then cd FireFUSE
@@ -40,7 +41,7 @@ function c() {
   fi
 }
 
-EXCLUDE="\( -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.min.*\" \) -prune"
+EXCLUDE="\( -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
 EXCLUDESRC="\( -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
 INCLUDE="\( -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
@@ -53,7 +54,7 @@ function lf() {
 }
 
 function repgrep() {
-  eval "find . $EXCLUDE -o -type f $INCLUDE -exec grep -HE \"$1\" {} \; -exec sed -i -e \"s/$1/$2/\" {} \; "
+  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -HE \"$1\" {} \; -exec sed -i -e \"s/$1/$2/g\" {} \; "
 }
 
 function lgrep() {
@@ -61,13 +62,13 @@ function lgrep() {
 }
 
 function vgrep() {
-  eval "find . $EXCLUDE -o -type f $INCLUDE -exec grep -q -E \"$1\" {} \; -exec echo vi -c 'lcd %:p:h' {} +"
-  eval "find . $EXCLUDE -o -type f $INCLUDE -exec grep -q -E \"$1\" {} \; -exec vi -c 'lcd %:p:h' {} +"
+  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -q -E \"$1\" {} \; -exec echo vi -c 'lcd %:p:h' {} +"
+  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -q -E \"$1\" {} \; -exec vi -c 'lcd %:p:h' {} +"
 }
 
 function v() {
-  eval "find . $EXCLUDE -o -type f -name \"$1*\" -exec echo vi -c 'lcd %:p:h' {} + "
-  eval "find . $EXCLUDE -o -type f -name \"$1*\" -exec vi -c 'lcd %:p:h' {} + "
+  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec echo vi -c 'lcd %:p:h' {} + "
+  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vi -c 'lcd %:p:h' {} + "
 }
 
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
