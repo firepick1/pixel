@@ -63,8 +63,8 @@ function lgrep() {
 }
 
 function vgrep() {
-  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -q -E \"$1\" {} \; -exec echo vi -c 'lcd %:p:h' {} +"
-  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -q -E \"$1\" {} \; -exec vi -c 'lcd %:p:h' {} +"
+  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -q -E \"$1\" {} \; -exec echo vi -c 'lcd %:p:h' -c '/$1/' {} +"
+  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -q -E \"$1\" {} \; -exec vi -c 'lcd %:p:h' -c '/$1/' {} +"
 }
 
 function v() {
