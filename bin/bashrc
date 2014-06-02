@@ -42,7 +42,7 @@ function c() {
   fi
 }
 
-EXCLUDE="\( -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
+EXCLUDE="\( -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
 EXCLUDESRC="\( -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
 INCLUDE="\( -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
