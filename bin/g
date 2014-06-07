@@ -44,6 +44,7 @@ elif [ "$op" == "con" ]; then
   cmd=
 elif [ "$op" == "coninit" ]; then 
   git config --global merge.defaultToUpstream true
+  git config --global push.default current
   git config --global user.email karl@firepick.org
   git config --global user.name "firepick1 (`hostname`)"
   cmd=

@@ -1,10 +1,14 @@
 function parse_git_branch () {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
+
+function job_count () {
+  jobs | wc -l
+}
    
 RED="\[\033[0;31m\]"; YELLOW="\[\033[0;33m\]"; GREEN="\[\033[0;32m\]"; NO_COLOR="\[\033[0m\]"
     
-PS1="$GREEN\h$NO_COLOR:\w$YELLOW:\$(parse_git_branch)$NO_COLOR\$ "
+PS1="$GREEN\h$NO_COLOR:\w$YELLOW:\$(parse_git_branch)$NO_COLOR:\$(job_count)\$ "
 
 function m() {
   if [ "$1" == "ci" ]; then 
@@ -70,6 +74,11 @@ function vgrep() {
 function v() {
   eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec echo vi -c 'lcd %:p:h' {} + "
   eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vi -c 'lcd %:p:h' {} + "
+}
+
+function coredump {
+  ulimit -c unlimited
+  sudo bash -c "echo ./core > /proc/sys/kernel/core_pattern"
 }
 
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
