@@ -11,7 +11,7 @@ RED="\[\033[0;31m\]"; YELLOW="\[\033[0;33m\]"; GREEN="\[\033[0;32m\]"; NO_COLOR=
 PS1="$GREEN\h$NO_COLOR:\w$YELLOW:\$(parse_git_branch)$NO_COLOR:\$(job_count)\$ "
 
 function m() {
-  if [ "$1" == "ci" ]; then 
+  if [ "$1" == "CI" ]; then 
     mvn clean install -Dmaven.test.skip=true
     if [ $? -ne 0 ]; then more target/surefire-reports/*.txt; fi
   elif [ "$1" == "ci" ]; then 
@@ -35,6 +35,7 @@ function c() {
   if [ "$1" == "s" ]; then 
     if [ -e FireSight ]; then cd FireSight; else cd FireREST/FireSight; fi
   elif [ "$1" == "b" ]; then cd firebom-js
+  elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "o" ]; then cd openpnp/gui
   elif [ "$1" == "io" ]; then cd firepick1.github.io
   elif [ "$1" == "rcl" ]; then cd firerest-client
