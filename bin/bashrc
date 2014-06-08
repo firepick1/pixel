@@ -82,6 +82,7 @@ function coredump {
   sudo bash -c "echo ./core > /proc/sys/kernel/core_pattern"
 }
 
+alias sshjoy='ssh admin@165.225.149.255'
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
 alias sob='source ~/bin/bashrc'
 alias vib='vi ~/bin/bashrc'
