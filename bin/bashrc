@@ -29,6 +29,7 @@ function m() {
 
 function c() {
   if [ "$1" == "w" ]; then cd *.wiki
+  elif [ "$1" == "t" ]; then cd target
   elif [ -e ~/github ]; then cd ~/github
   else cd ~
   fi
@@ -40,11 +41,11 @@ function c() {
   elif [ "$1" == "io" ]; then cd firepick1.github.io
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
   elif [ "$1" == "o" ]; then cd openpnp/gui
+  elif [ "$1" == "p" ]; then cd ~/pixel
   elif [ "$1" == "pixel" ]; then cd ~/pixel
   elif [ "$1" == "rcl" ]; then cd firerest-client
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
   elif [ "$1" == "r" ]; then cd FireREST
-  elif [ "$1" == "t" ]; then cd target
   elif [ "$1" == "f" ]; then
     if [ -e FireFUSE ]; then cd FireFUSE
     else cd FireREST/FireFUSE
