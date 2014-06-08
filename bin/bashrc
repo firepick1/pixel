@@ -34,16 +34,17 @@ function c() {
   fi
   if [ "$1" == "s" ]; then 
     if [ -e FireSight ]; then cd FireSight; else cd FireREST/FireSight; fi
-  elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "B" ]; then cd FireBOM
-  elif [ "$1" == "o" ]; then cd openpnp/gui
+  elif [ "$1" == "b" ]; then cd firebom-js
+  elif [ "$1" == "c" ]; then cd FirePiCam
   elif [ "$1" == "io" ]; then cd firepick1.github.io
+  elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
+  elif [ "$1" == "o" ]; then cd openpnp/gui
+  elif [ "$1" == "pixel" ]; then cd ~/pixel
   elif [ "$1" == "rcl" ]; then cd firerest-client
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
   elif [ "$1" == "r" ]; then cd FireREST
-  elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
-  elif [ "$1" == "c" ]; then cd FirePiCam
-  elif [ "$1" == "pixel" ]; then cd ~/pixel
+  elif [ "$1" == "t" ]; then cd target
   elif [ "$1" == "f" ]; then
     if [ -e FireFUSE ]; then cd FireFUSE
     else cd FireREST/FireFUSE
@@ -51,7 +52,7 @@ function c() {
   fi
 }
 
-EXCLUDE="\( -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
+EXCLUDE="\( -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
 EXCLUDESRC="\( -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
 INCLUDE="\( -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
