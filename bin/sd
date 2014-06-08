@@ -7,9 +7,17 @@ else
   echo "SD Card: (NO CARD)"
 fi
 
+BLK4MiB=555
+
 p2sec=`sudo parted -m /dev/sdb unit s print | grep -e "^2" | sed s/[^s]*s[^s]*s:// | sed s/s.*//`
 p2blk=$((p2sec/8))
 echo "/dev/sdb2 partition 2 is $p2blk blocks@4KiB = $(( ($p2blk * 4)/1024 ))KiB"
+#echo "2GB partition start:122880 end:$((122880+1+($BLK4MiB*4000000)/512))"
+MiB4=$((4*1024*1024))
+start2GiB=122880
+end2GiB=$((($BLK4MiB*$MiB4)/512-1))
+size2GiB=$(($end2GiB-$start2GiB+1))
+echo "2GiB partition start:$(($start2GiB))s end:$(($end2GiB))s size:$(($size2GiB))s = $(($size2GiB/8))@4KiB = $(($size2GiB/2))KiB"
 
 echo
 echo "Available images:"
@@ -33,9 +41,11 @@ function help() {
   echo 'sd --write-sd [NAME]'
   echo '  Write ~/Downloads/sd-image-NAME.gz onto SD card'
   echo 'sd --expand-fs'
-  echo '  resize2fs /dev/sdb2'
+  echo '  resize2fs /dev/sdb2' 
   echo 'sd --shrink-fs'
   echo '  resize2fs -p -M /dev/sdb2'
+  echo 'sd --shrink-part'
+  echo "  parted -m /dev/sdb unit s rm 2 mkpart primary ext4 $start2GiB $end2GiB print"
   echo 'sd --fsck'
   echo '  fsck.ext4 -p -f -C0 /dev/sdb2'
   echo "----------------------------------"
@@ -68,6 +78,12 @@ if [ "$1" == "--shrink-fs" ]; then
   sudo resize2fs -p -M /dev/sdb2
   if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
 fi
+if [ "$1" == "--shrink-part" ]; then
+  shift
+  echo "  parted -m /dev/sdb unit s rm 2 mkpart primary ext4 $start2GiB $end2GiB print"
+  sudo parted -m /dev/sdb unit s rm 2 mkpart primary ext4 $start2GiB $end2GiB print
+  if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
+fi
 if [ "$1" == "--expand-fs" ]; then
   shift
   echo '  sudo resize2fs -p /dev/sdb2 $p2blk'
@@ -75,13 +91,11 @@ if [ "$1" == "--expand-fs" ]; then
   if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
 fi
 
-BLOCKS=555
-
 if [ "$1" == "--read-sd" ]; then
   echo 'SD image backup will take some time (5-10m)'
   echo 'DO NOT INTERRUPT THIS PROCESS!!!'
-  echo "sudo dd bs=4M count=$BLOCKS if=/dev/sdb | gzip -c > ~/Downloads/sd-image-$NAME.gz"
-  sudo dd bs=4M count=$BLOCKS if=/dev/sdb | gzip -c > ~/Downloads/sd-image-$NAME.gz
+  echo "sudo dd bs=4M count=$BLK4MiB if=/dev/sdb | gzip -c > ~/Downloads/sd-image-$NAME.gz"
+  sudo dd bs=4M count=$BLK4MiB if=/dev/sdb | gzip -c > ~/Downloads/sd-image-$NAME.gz
   if [ $? -ne 0 ]; then
     echo ERROR: could not read SD card
     exit -1
@@ -100,8 +114,8 @@ elif [ "$1" == "--write-sd" ]; then
       exit -1
     fi
   fi
-  echo "sudo dd bs=4M count=$BLOCKS of=/dev/sdb if=~/Downloads/sd-image-$NAME.img"
-  sudo dd bs=4M count=$BLOCKS of=/dev/sdb if=~/Downloads/sd-image-$NAME.img
+  echo "sudo dd bs=4M count=$BLK4MiB of=/dev/sdb if=~/Downloads/sd-image-$NAME.img"
+  sudo dd bs=4M count=$BLK4MiB of=/dev/sdb if=~/Downloads/sd-image-$NAME.img
   if [ $? -ne 0 ]; then
     echo ERROR: could not write SD card
     exit -1
