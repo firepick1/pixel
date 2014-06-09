@@ -30,6 +30,7 @@ function m() {
 function c() {
   if [ "$1" == "w" ]; then cd *.wiki
   elif [ "$1" == "t" ]; then cd target
+  elif [ "$1" == "tom" ]; then cd /opt/local/share/tomcat
   elif [ -e ~/github ]; then cd ~/github
   else cd ~
   fi
