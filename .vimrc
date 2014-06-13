@@ -48,7 +48,7 @@ hi Special      ctermfg=LightCyan ctermbg=Black
 hi SpecialKey   ctermfg=LightCyan ctermbg=Black
 hi Statement    ctermfg=LightCyan ctermbg=Black cterm=NONE term=NONE
 hi Type         ctermfg=LightCyan ctermbg=Black
-hi Underlined   ctermfg=LightCyan ctermbg=Black
+"hi Underlined   ctermfg=LightCyan ctermbg=Black
 hi VimCommand   ctermfg=LightCyan ctermbg=Black
 
 hi LineNr       ctermfg=Green ctermbg=Black cterm=NONE term=NONE
