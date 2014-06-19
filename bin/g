@@ -16,8 +16,10 @@ function help() {
   echo "   conl  git config --list "
   echo "coninit  git config ... "
   echo "      c  git checkout "
+  echo "     ct  git checkout --track origin/..."
   echo "    dev  git checkout dev"
   echo "      f  git fetch"
+  echo "     fm  git fetch; git merge"
   echo "      l  git log -5 --graph"
   echo "      ls git ls-remote"
   echo "    mas  git checkout master"
@@ -51,6 +53,7 @@ elif [ "$op" == "coninit" ]; then
 elif [ "$op" == "d" ]; then echo "git diff -U0 -b $@"; git diff -U0 -b $@; cmd=
 elif [ "$op" == "dev" ]; then cmd="git checkout dev"
 elif [ "$op" == "f" ]; then echo "git fetch $@"; git fetch $@; cmd=
+elif [ "$op" == "fm" ]; then echo "git fetch; git merge "; git fetch; git merge; cmd=
 elif [ "$op" == "l" ]; then cmd="git log -5 --graph"
 elif [ "$op" == "ls" ]; then cmd="git ls-remote"
 elif [ "$op" == "m" ]; then cmd="git merge $@"; git merge $@; cmd=

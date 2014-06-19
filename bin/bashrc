@@ -14,6 +14,10 @@ function m() {
   if [ "$1" == "CI" ]; then 
     mvn clean install -Dmaven.test.skip=true
     if [ $? -ne 0 ]; then more target/surefire-reports/*.txt; fi
+  elif [ "$1" == "rprep" ]; then 
+    mvn clean release:prepare && echo "step #1: otp" && echo "step #2: g relb #.#" && echo "step #3: mvn release:perform"
+  elif [ "$1" == "rperf" ]; then 
+    mvn clean release:perform 
   elif [ "$1" == "ci" ]; then 
     mvn clean install
     if [ $? -ne 0 ]; then more target/surefire-reports/*.txt; fi
@@ -56,7 +60,7 @@ function c() {
   fi
 }
 
-EXCLUDE="\( -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
+EXCLUDE="\( -name FireSight -o -name FireFUSE -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
 EXCLUDESRC="\( -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
 INCLUDE="\( -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
