@@ -16,6 +16,7 @@ function help() {
   echo "   conl  git config --list "
   echo "coninit  git config ... "
   echo "      c  git checkout "
+  echo "     cr  git checkout -b release/$1"
   echo "     ct  git checkout --track origin/..."
   echo "    dev  git checkout dev"
   echo "      f  git fetch"
