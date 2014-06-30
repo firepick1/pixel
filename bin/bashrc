@@ -43,6 +43,7 @@ function c() {
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "c" ]; then cd FirePiCam
+  elif [ "$1" == "g" ]; then cd firepick-org.wiki
   elif [ "$1" == "d" ]; then cd firepick-delta
   elif [ "$1" == "io" ]; then cd firepick1.github.io
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
@@ -105,3 +106,5 @@ alias otp='echo $RANDOM | md5sum'
 alias h='history'
 alias hg='history | grep '
 alias psv='ps -eo vsz,pmem,pcpu,user,pid,ppid,stime,tty,time,args --sort vsz'
+alias camera80='rcp pi@firepick80:/dev/firefuse/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
+alias freek='free | grep s.c | grep -Eo "[^ ]*$"'
