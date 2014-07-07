@@ -46,6 +46,7 @@ function c() {
   elif [ "$1" == "g" ]; then cd firepick-org.wiki
   elif [ "$1" == "d" ]; then cd firepick-delta
   elif [ "$1" == "io" ]; then cd firepick1.github.io
+  elif [ "$1" == "html" ]; then cd FireREST/www/html
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
   elif [ "$1" == "o" ]; then cd openpnp/gui
   elif [ "$1" == "p" ]; then cd ~/pixel
@@ -61,7 +62,7 @@ function c() {
   fi
 }
 
-EXCLUDE="\( -name FireSight -o -name FireFUSE -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
+EXCLUDE="\( -name lib -o -name FireSight -o -name FireFUSE -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
 EXCLUDESRC="\( -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
 INCLUDE="\( -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
@@ -87,8 +88,13 @@ function vgrep() {
 }
 
 function v() {
-  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec echo vi -c 'lcd %:p:h' {} + "
-  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vi -c 'lcd %:p:h' {} + "
+  if [ "$2" == "" ]; then
+    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec echo vi -c 'lcd %:p:h' {} + "
+    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vi -c 'lcd %:p:h' {} + "
+  else
+    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec echo vi -c 'lcd %:p:h' -c 'e $2*' {} + "
+    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vi -c 'lcd %:p:h'  -c 'e $2*' {} + "
+  fi
 }
 
 function coredump {
@@ -106,5 +112,5 @@ alias otp='echo $RANDOM | md5sum'
 alias h='history'
 alias hg='history | grep '
 alias psv='ps -eo vsz,pmem,pcpu,user,pid,ppid,stime,tty,time,args --sort vsz'
-alias camera80='rcp pi@firepick80:/dev/firefuse/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
+alias cam80='rcp pi@firepick80:/dev/firefuse/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
 alias freek='free | grep s.c | grep -Eo "[^ ]*$"'
