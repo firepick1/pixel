@@ -108,3 +108,5 @@ alias hg='history | grep '
 alias psv='ps -eo vsz,pmem,pcpu,user,pid,ppid,stime,tty,time,args --sort vsz'
 alias camera80='rcp pi@firepick80:/dev/firefuse/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
 alias freek='free | grep s.c | grep -Eo "[^ ]*$"'
+alias gcode='echo $1 > /dev/firefuse/cnc/firepick1/gcode.fire'
+
