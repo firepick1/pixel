@@ -35,6 +35,8 @@ function c() {
   if [ "$1" == "w" ]; then cd *.wiki
   elif [ "$1" == "t" ]; then cd target
   elif [ "$1" == "tom" ]; then cd /opt/local/share/tomcat
+  elif [ "$1" == "fin" ]; then cd ~/finesse
+  elif [ "$1" == "tru" ]; then cd ~/finesse/trubioweb
   elif [ -e ~/github ]; then cd ~/github
   else cd ~
   fi
@@ -51,6 +53,7 @@ function c() {
   elif [ "$1" == "o" ]; then cd openpnp/gui
   elif [ "$1" == "p" ]; then cd ~/pixel
   elif [ "$1" == "part" ]; then cd firepart
+  elif [ "$1" == "pick" ]; then cd firepick
   elif [ "$1" == "pixel" ]; then cd ~/pixel
   elif [ "$1" == "rcl" ]; then cd firerest-client
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
@@ -60,16 +63,22 @@ function c() {
     else cd FireREST/FireFUSE
     fi
   fi
+
+  if [ "$2" != "" ]; then 
+    cd $2 
+  fi
 }
 
-EXCLUDE="\( -name lib -o -name FireSight -o -name FireFUSE -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
+EXCLUDE="\( -name ZBar -o -name bootstrap -o -name lib -o -name FireSight -o -name FireFUSE -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
 EXCLUDESRC="\( -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
 INCLUDE="\( -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
 function lf() {
   if [ "$1" == "" ]; then
+    echo "find . $EXCLUDE -o -type f -print"
     eval "find . $EXCLUDE -o -type f -print"
   else
+    echo "find . $EXCLUDE -o -type f -name \"$1*\" -print"
     eval "find . $EXCLUDE -o -type f -name \"$1*\" -print"
   fi
 }
@@ -89,11 +98,11 @@ function vgrep() {
 
 function v() {
   if [ "$2" == "" ]; then
-    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec echo vi -c 'lcd %:p:h' {} + "
-    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vi -c 'lcd %:p:h' {} + "
+    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec echo vi -c 'cd %:p:h' {} + "
+    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vi -c 'cd %:p:h' {} + "
   else
-    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec echo vi -c 'lcd %:p:h' -c 'e $2*' {} + "
-    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vi -c 'lcd %:p:h'  -c 'e $2*' {} + "
+    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec echo vi -c 'cd %:p:h' -c 'e $2*' {} + "
+    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vi -c 'cd %:p:h'  -c 'e $2*' {} + "
   fi
 }
 
@@ -112,5 +121,5 @@ alias otp='echo $RANDOM | md5sum'
 alias h='history'
 alias hg='history | grep '
 alias psv='ps -eo vsz,pmem,pcpu,user,pid,ppid,stime,tty,time,args --sort vsz'
-alias cam80='rcp pi@firepick80:/dev/firefuse/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
+alias cam80='rcp pi@firepick80:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
 alias freek='free | grep s.c | grep -Eo "[^ ]*$"'
