@@ -18,6 +18,8 @@ function help() {
   echo "      c  git checkout "
   echo "     cr  git checkout -b release/$1"
   echo "     ct  git checkout --track origin/..."
+  echo "      d  git diff ..."
+  echo "     ds  git diff diff --stat ..."
   echo "    dev  git checkout dev"
   echo "      f  git fetch"
   echo "     fm  git fetch; git merge"
@@ -26,6 +28,8 @@ function help() {
   echo "    mas  git checkout master"
   echo "      m  git merge"
   echo "      p  git push"
+  echo "     ra  git remote add $@"
+  echo "    rrm  git remote rm $@"
   echo "   relb  git push && git checkout release/\$1 && git merge dev && git push"
   echo "   relc  git push && git checkout -b release/\$1 && git push -u"
   echo "   relm  git push && git checkout master && git merge release/\$1 && git push && git checkout dev && git merge dev && git push"
@@ -39,6 +43,8 @@ elif [ "$op" == "bnm" ]; then cmd="git branch --no-merged"
 elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=
 elif [ "$op" == "cr" ]; then cmd="git checkout -b release/$1; git push -u"; git checkout -b release/$1; git push -u; cmd=
 elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd=
+elif [ "$op" == "ra" ]; then echo "git remote add $@"; git remote add "$@"; cmd=
+elif [ "$op" == "rrm" ]; then echo "git remote rm $@"; git remote rm "$@"; cmd=
 elif [ "$op" == "camp" ]; then echo "git commit -am $@ && git push"; git commit -am "$@" && git push; cmd=
 elif [ "$op" == "conl" ]; then cmd="git config --list"
 elif [ "$op" == "con" ]; then 
@@ -52,6 +58,7 @@ elif [ "$op" == "coninit" ]; then
   git config --global user.name "firepick1 (`hostname`)"
   cmd=
 elif [ "$op" == "d" ]; then echo "git diff -U0 -b $@"; git diff -U0 -b $@; cmd=
+elif [ "$op" == "ds" ]; then echo "git diff --stat $@"; git diff --stat $@; cmd=
 elif [ "$op" == "dev" ]; then cmd="git checkout dev"
 elif [ "$op" == "f" ]; then echo "git fetch $@"; git fetch $@; cmd=
 elif [ "$op" == "fm" ]; then echo "git fetch; git merge "; git fetch; git merge; cmd=

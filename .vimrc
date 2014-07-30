@@ -52,3 +52,8 @@ hi Type         ctermfg=LightCyan ctermbg=Black
 hi VimCommand   ctermfg=LightCyan ctermbg=Black
 
 hi LineNr       ctermfg=Green ctermbg=Black cterm=NONE term=NONE
+hi htmlItalic	cterm=underline
+hi htmlBold	cterm=underline
+
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+

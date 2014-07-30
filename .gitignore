@@ -39,3 +39,13 @@ Templates
 tmp
 Videos
 target
+
+.bash_profile
+.eclipse/
+.gem/
+.installjammerinfo/
+.local/
+.rvm/
+.zlogin
+.zshrc
+finesse/
