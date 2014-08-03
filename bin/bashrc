@@ -130,4 +130,4 @@ alias cam80='rcp pi@firepick80:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; 
 alias freek='free | grep s.c | grep -Eo "[^ ]*$"'
 alias gcode='echo $1 > /dev/firefuse/cnc/firepick1/gcode.fire'
 
-EXPORT IGNOREEOF=42
+export IGNOREEOF=42
