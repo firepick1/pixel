@@ -45,6 +45,7 @@ function c() {
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "c" ]; then cd FirePiCam
+  elif [ "$1" == "cv" ]; then cd FireSight/opencv
   elif [ "$1" == "g" ]; then cd firepick-org.wiki
   elif [ "$1" == "d" ]; then cd firepick-delta
   elif [ "$1" == "io" ]; then cd firepick1.github.io
@@ -69,7 +70,7 @@ function c() {
   fi
 }
 
-EXCLUDE="\( -name ZBar -o -name bootstrap -o -name lib -o -name FireSight -o -name FireFUSE -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
+EXCLUDE="\( -name bin -o -name ZBar -o -name bootstrap -o -name lib -o -name FireSight -o -name FireFUSE -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
 EXCLUDESRC="\( -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
 INCLUDE="\( -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
@@ -89,6 +90,10 @@ function repgrep() {
 
 function lgrep() {
   eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -HE \"$1\" {} \; "
+}
+
+function lgrepi() {
+  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -iHE \"$1\" {} \; "
 }
 
 function vgrep() {
@@ -125,3 +130,4 @@ alias cam80='rcp pi@firepick80:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; 
 alias freek='free | grep s.c | grep -Eo "[^ ]*$"'
 alias gcode='echo $1 > /dev/firefuse/cnc/firepick1/gcode.fire'
 
+EXPORT IGNOREEOF=42
