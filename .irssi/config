@@ -1,5 +1,5 @@
 servers = (
-  { address = "chat.freenode.net"; chatnet="freenode"; port="6667" },
+  { address = "chat.freenode.net"; chatnet="freenode"; port="6667"; },
   { address = "irc.ubuntu.com"; chatnet = "Ubuntu"; port = "8001"; },
   { address = "eu.irc6.net"; chatnet = "IRCnet"; port = "6667"; },
   { address = "open.ircnet.net"; chatnet = "IRCnet"; port = "6667"; },
