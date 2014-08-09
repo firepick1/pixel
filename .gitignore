@@ -37,9 +37,13 @@ Pictures
 Public
 Templates
 tmp
+temp
 Videos
 target
 
+ti
+chromelogin.auth
+.Xauthority.orig
 .bash_profile
 .eclipse/
 .gem/
