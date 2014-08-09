@@ -36,7 +36,7 @@ function c() {
   elif [ "$1" == "t" ]; then cd target
   elif [ "$1" == "tom" ]; then cd /opt/local/share/tomcat
   elif [ "$1" == "fin" ]; then cd ~/finesse
-  elif [ "$1" == "tru" ]; then cd ~/finesse/trubioweb
+  elif [ "$1" == "tru" ]; then cd ~/finesse/trubioweb/workspace
   elif [ -e ~/github ]; then cd ~/github
   else cd ~
   fi
@@ -129,5 +129,6 @@ alias psv='ps -eo vsz,pmem,pcpu,user,pid,ppid,stime,tty,time,args --sort vsz'
 alias cam80='rcp pi@firepick80:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
 alias freek='free | grep s.c | grep -Eo "[^ ]*$"'
 alias gcode='echo $1 > /dev/firefuse/cnc/firepick1/gcode.fire'
+alias irc='irssi -c chat.freenode.net -n KarlLew'
 
 export IGNOREEOF=42

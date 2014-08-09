@@ -21,6 +21,7 @@ set noswapfile			  " crash and die without resurrectable corpse
 set cursorcolumn		  " highlight cursor column
 set cursorline			  " highlight cursor line
 set nobackup			  " crash and die without resurrectable corpse
+set encoding=utf-8		  " Unicode
 
 hi Normal       ctermfg=White ctermbg=Black term=NONE cterm=NONE
 hi Identifier   ctermfg=White ctermbg=Black cterm=bold term=bold
