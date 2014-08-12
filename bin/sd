@@ -37,9 +37,9 @@ function help() {
   echo 'Insert SD card, then type:'
   echo 
   echo 'sd --read-sd [NAME]'
-  echo '  Create SD image as ~/Downloads/sd-image-NAME.gz'
+  echo '  Create SD image as ~/seagate/sd/sd-image-NAME.gz'
   echo 'sd --write-sd [NAME]'
-  echo '  Write ~/Downloads/sd-image-NAME.gz onto SD card'
+  echo '  Write ~/seagate/sd/sd-image-NAME.gz onto SD card'
   echo 'sd --expand-fs'
   echo '  resize2fs /dev/sdb2' 
   echo 'sd --shrink-fs'
@@ -94,33 +94,33 @@ fi
 if [ "$1" == "--read-sd" ]; then
   echo 'SD image backup will take some time (5-10m)'
   echo 'DO NOT INTERRUPT THIS PROCESS!!!'
-  echo "sudo dd bs=4M count=$BLK4MiB if=/dev/sdb | gzip -c > ~/Downloads/sd-image-$NAME.gz"
-  sudo dd bs=4M count=$BLK4MiB if=/dev/sdb | gzip -c > ~/Downloads/sd-image-$NAME.gz
+  echo "sudo dd bs=4M count=$BLK4MiB if=/dev/sdb | gzip -c > ~/seagate/sd/sd-image-$NAME.gz"
+  sudo dd bs=4M count=$BLK4MiB if=/dev/sdb | gzip -c > ~/seagate/sd/sd-image-$NAME.gz
   if [ $? -ne 0 ]; then
     echo ERROR: could not read SD card
     exit -1
   fi
-  chmod -w ~/Downloads/sd-image-$NAME.gz 
-  ls -lh ~/Downloads/sd-image*
-  echo COMPLETED: SD card read and saved as ~/Downloads/sd-image-$NAME.gz 
+  chmod -w ~/seagate/sd/sd-image-$NAME.gz 
+  ls -lh ~/seagate/sd/sd-image*
+  echo COMPLETED: SD card read and saved as ~/seagate/sd/sd-image-$NAME.gz 
 elif [ "$1" == "--write-sd" ]; then
   echo 'SD image restore will take some time (5-10m)'
   echo 'DO NOT INTERRUPT THIS PROCESS!!!'
-  if [ ! -e ~/Downloads/sd-image-$NAME.img ]; then
-    echo "gunzip -c ~/Downloads/sd-image-$NAME.gz > ~/Downloads/sd-image-$NAME.img"
-    gunzip -c ~/Downloads/sd-image-$NAME.gz > ~/Downloads/sd-image-$NAME.img
+  if [ ! -e ~/seagate/sd/sd-image-$NAME.img ]; then
+    echo "gunzip -c ~/seagate/sd/sd-image-$NAME.gz > ~/seagate/sd/sd-image-$NAME.img"
+    gunzip -c ~/seagate/sd/sd-image-$NAME.gz > ~/seagate/sd/sd-image-$NAME.img
     if [ $? -ne 0 ]; then
-      echo ERROR: could not create ~/Downloads/sd-image-$NAME.img
+      echo ERROR: could not create ~/seagate/sd/sd-image-$NAME.img
       exit -1
     fi
   fi
-  echo "sudo dd bs=4M count=$BLK4MiB of=/dev/sdb if=~/Downloads/sd-image-$NAME.img"
-  sudo dd bs=4M count=$BLK4MiB of=/dev/sdb if=~/Downloads/sd-image-$NAME.img
+  echo "sudo dd bs=4M count=$BLK4MiB of=/dev/sdb if=~/seagate/sd/sd-image-$NAME.img"
+  sudo dd bs=4M count=$BLK4MiB of=/dev/sdb if=~/seagate/sd/sd-image-$NAME.img
   if [ $? -ne 0 ]; then
     echo ERROR: could not write SD card
     exit -1
   fi
-  echo COMPLETED: ~/Downloads/sd-image-$NAME.img written to SD card.
+  echo COMPLETED: ~/seagate/sd/sd-image-$NAME.img written to SD card.
 fi
 sudo sync
 echo sync completed

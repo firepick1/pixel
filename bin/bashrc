@@ -34,9 +34,13 @@ function m() {
 function c() {
   if [ "$1" == "w" ]; then cd *.wiki
   elif [ "$1" == "t" ]; then cd target
+  elif [ "$1" == "D" ]; then cd Debug
   elif [ "$1" == "tom" ]; then cd /opt/local/share/tomcat
-  elif [ "$1" == "fin" ]; then cd ~/finesse
-  elif [ "$1" == "tru" ]; then cd ~/finesse/trubioweb/workspace
+  elif [ "$1" == "sea" ]; then cd ~/seagate
+  elif [ "$1" == "fin" ]; then cd ~/seagate/finesse
+  elif [ "$1" == "tru" ]; then cd ~/seagate/finesse/trubioweb/workspace
+  elif [ "$1" == "truw" ]; then cd ~/seagate/finesse/trubioweb/trubioweb.wiki
+  elif [ -e ~/seagate/FireSight ]; then cd ~/seagate
   elif [ -e ~/github ]; then cd ~/github
   else cd ~
   fi
@@ -116,6 +120,21 @@ function coredump {
   sudo bash -c "echo ./core > /proc/sys/kernel/core_pattern"
 }
 
+function seagate {
+  fuser ~/seagate
+  if [ "$1" == "off" ] || [ "$1" == "on" ]; then 
+    echo sudo umount ~/seagate; 
+    sudo umount ~/seagate; 
+    if [ $? -ne 0 ]; then echo "umount failed"; fi
+  fi
+  if [ "$1" == "on" ]; then 
+    echo sudo mount -a
+    sudo mount -a
+    if [ $? -ne 0 ]; then echo "mount failed"; fi
+  fi
+  ~/seagate/hello
+}
+
 alias sshjoy='ssh admin@165.225.149.255'
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
 alias sob='source ~/.bashrc'
@@ -130,5 +149,7 @@ alias cam80='rcp pi@firepick80:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; 
 alias freek='free | grep s.c | grep -Eo "[^ ]*$"'
 alias gcode='echo $1 > /dev/firefuse/cnc/firepick1/gcode.fire'
 alias irc='irssi -c chat.freenode.net -n KarlLew'
+alias bca='./build clean all |& tee build.log; grep -i error build.log; grep -i warning build.log'
+alias xfce='sudo startxfce4'
 
 export IGNOREEOF=42

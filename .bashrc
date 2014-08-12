@@ -110,4 +110,5 @@ fi
 
 source ~/bin/bashrc
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export TI_SDK_PATH=~/seagate/finesse/ti-sdk-am335x-evm-06.00.00.00
+export TI=~/ti.local
