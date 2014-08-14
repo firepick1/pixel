@@ -52,4 +52,7 @@ chromelogin.auth
 .rvm/
 .zlogin
 .zshrc
-finesse/
+finesse
+ti-sdk*
+save
+seagate

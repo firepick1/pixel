@@ -1,0 +1,35 @@
+new-session
+set -g history-limit 9999
+set -g mode-keys vi
+set-option mouse-select-pane on
+set-option mouse-resize-pane on
+set-option pane-active-border-bg green
+set-option pane-active-border-fg green
+set-option pane-border-fg green
+set-option status-left "#W:"
+set-option status-left-bg black
+set-option status-left-fg green
+set-option display-time 5000
+
+new-window -n AAA
+split-window -h
+select-pane -L
+split-window -v 
+select-pane -R
+
+new-window -n BBB
+split-window -h
+select-pane -L
+split-window -v 
+select-pane -R
+
+new-window -n CCC
+split-window -h
+select-pane -L
+split-window -v 
+select-pane -R
+
+next-window
+kill-window
+next-window
+
