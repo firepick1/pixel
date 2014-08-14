@@ -1,6 +1,13 @@
-function parse_git_branch () {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+function parse_git_dirty {
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
 }
+function parse_git_branch {
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
+}
+
+#function parse_git_branch () {
+#  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+#}
 
 function job_count () {
   jobs | wc -l
@@ -37,9 +44,10 @@ function c() {
   elif [ "$1" == "D" ]; then cd Debug
   elif [ "$1" == "tom" ]; then cd /opt/local/share/tomcat
   elif [ "$1" == "sea" ]; then cd ~/seagate
-  elif [ "$1" == "fin" ]; then cd ~/seagate/finesse
-  elif [ "$1" == "tru" ]; then cd ~/seagate/finesse/trubioweb/workspace
-  elif [ "$1" == "truw" ]; then cd ~/seagate/finesse/trubioweb/trubioweb.wiki
+  elif [ "$1" == "fin" ]; then cd ~/finesse
+  elif [ "$1" == "tru" ]; then cd ~/finesse/tbw/workspace
+  elif [ "$1" == "trud" ]; then cd ~/finesse/tbw-dev/workspace
+  elif [ "$1" == "truw" ]; then cd ~/finesse/tbw.wiki
   elif [ -e ~/seagate/FireSight ]; then cd ~/seagate
   elif [ -e ~/github ]; then cd ~/github
   else cd ~
@@ -49,7 +57,7 @@ function c() {
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "c" ]; then cd FirePiCam
-  elif [ "$1" == "cv" ]; then cd FireSight/opencv
+  elif [ "$1" == "cv" ]; then cd opencv
   elif [ "$1" == "g" ]; then cd firepick-org.wiki
   elif [ "$1" == "d" ]; then cd firepick-delta
   elif [ "$1" == "io" ]; then cd firepick1.github.io
@@ -74,7 +82,7 @@ function c() {
   fi
 }
 
-EXCLUDE="\( -name bin -o -name ZBar -o -name bootstrap -o -name lib -o -name FireSight -o -name FireFUSE -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
+EXCLUDE="\( -name .metadata -o -name \"*.so\" -o -name bin -o -name ZBar -o -name bootstrap -o -name lib -o -name FireSight -o -name FireFUSE -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
 EXCLUDESRC="\( -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
 INCLUDE="\( -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
@@ -89,6 +97,7 @@ function lf() {
 }
 
 function repgrep() {
+  echo "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -HE \"$1\" {} \; -exec sed -i -e \"s/$1/$2/g\" {} \; "
   eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -HE \"$1\" {} \; -exec sed -i -e \"s/$1/$2/g\" {} \; "
 }
 
@@ -151,5 +160,7 @@ alias gcode='echo $1 > /dev/firefuse/cnc/firepick1/gcode.fire'
 alias irc='irssi -c chat.freenode.net -n KarlLew'
 alias bca='./build clean all |& tee build.log; grep -i error build.log; grep -i warning build.log'
 alias xfce='sudo startxfce4'
+alias tmuxr='cp ~/.tmux-right ~/.tmux.conf; tmux attach'
+alias tmuxt='cp ~/.tmux-top ~/.tmux.conf; tmux attach'
 
 export IGNOREEOF=42

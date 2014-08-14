@@ -110,5 +110,3 @@ fi
 
 source ~/bin/bashrc
 
-export TI_SDK_PATH=~/seagate/finesse/ti-sdk-am335x-evm-06.00.00.00
-export TI=~/ti.local
