@@ -165,6 +165,7 @@ alias xfce='sudo startxfce4'
 alias tmuxr='cp ~/.tmux-right ~/.tmux.conf; tmux attach'
 alias tmuxt='cp ~/.tmux-top ~/.tmux.conf; tmux attach'
 alias psg='ps -ef | grep '
-alias aptg='dpkg --get-selections | grep -v deinstall | grep'
+alias aptinst='dpkg --get-selections | grep -v deinstall | grep'
+alias aptavail='apt-cache search '
 
 export IGNOREEOF=42
