@@ -25,6 +25,8 @@ function m() {
     mvn clean release:prepare && echo "step #1: otp" && echo "step #2: g relb #.#" && echo "step #3: mvn release:perform"
   elif [ "$1" == "rperf" ]; then 
     mvn clean release:perform 
+  elif [ "$1" == "rback" ]; then 
+    mvn clean release:rollback 
   elif [ "$1" == "ci" ]; then 
     mvn clean install
     if [ $? -ne 0 ]; then more target/surefire-reports/*.txt; fi
@@ -162,5 +164,7 @@ alias bca='./build clean all |& tee build.log; grep -i error build.log; grep -i 
 alias xfce='sudo startxfce4'
 alias tmuxr='cp ~/.tmux-right ~/.tmux.conf; tmux attach'
 alias tmuxt='cp ~/.tmux-top ~/.tmux.conf; tmux attach'
+alias psg='ps -ef | grep '
+alias aptg='dpkg --get-selections | grep -v deinstall | grep'
 
 export IGNOREEOF=42
