@@ -45,12 +45,12 @@ function c() {
   elif [ "$1" == "t" ]; then cd target
   elif [ "$1" == "D" ]; then cd Debug
   elif [ "$1" == "tom" ]; then cd /opt/local/share/tomcat
-  elif [ "$1" == "sea" ]; then cd ~/seagate
+  elif [ "$1" == "sea" ]; then cd ~/dev
   elif [ "$1" == "fin" ]; then cd ~/finesse
   elif [ "$1" == "tru" ]; then cd ~/finesse/tbw/workspace
   elif [ "$1" == "trud" ]; then cd ~/finesse/tbw-dev/workspace
   elif [ "$1" == "truw" ]; then cd ~/finesse/tbw.wiki
-  elif [ -e ~/seagate/FireSight ]; then cd ~/seagate
+  elif [ -e ~/dev/FireSight ]; then cd ~/dev
   elif [ -e ~/github ]; then cd ~/github
   else cd ~
   fi
