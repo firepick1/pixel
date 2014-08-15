@@ -17,6 +17,7 @@
 .vim/
 .netsurf/
 
+dev
 .bash_history
 .bash_logout
 .gitconfig
