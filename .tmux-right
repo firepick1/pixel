@@ -22,9 +22,10 @@ split-window -v
 split-window -h
 select-pane -U
 
-new-window -n 333
+new-window -n TWIN
+split-window -v 
 
-new-window -n 4444
+new-window -n FULL
 
 next-window
 kill-window
