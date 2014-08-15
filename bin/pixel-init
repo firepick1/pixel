@@ -1,0 +1,4 @@
+#! /bin/bash
+
+if [ ! -e .vimrc ]; then ln -s ~/pixel/vimrc ~/.vimrc; fi
+if [ ! -e .tmux.conf ]; then ln -s ~/pixel/tmux.conf ~/.tmux.conf; fi
