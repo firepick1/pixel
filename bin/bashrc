@@ -70,6 +70,7 @@ function c() {
   elif [ "$1" == "part" ]; then cd firepart
   elif [ "$1" == "pick" ]; then cd firepick
   elif [ "$1" == "pixel" ]; then cd ~/pixel
+  elif [ "$1" == "pix" ]; then cd ~/pixel
   elif [ "$1" == "rcl" ]; then cd firerest-client
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
   elif [ "$1" == "r" ]; then cd FireREST
