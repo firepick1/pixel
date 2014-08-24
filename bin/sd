@@ -1,17 +1,29 @@
 #! /bin/bash
 
-if [ -e /dev/sdb ]; then
+echo "COMMAND	: $0 $*"
+PREVIEW="echo PREVIEW_: "
+if [ "$1" == "--EXEC" ]; then
+  echo "PREVIEW	: EXECUTING COMMAND!!!"
+  PREVIEW=
+  shift
+else
+  echo "PREVIEW	: yes"
+fi
+
+export SD=`df -H |& grep -E "\s(4G|8G|16G|32G)" | grep -o "/dev/sd." | grep -o "sd." | uniq`
+echo "SD	: /dev/${SD}"
+if [ -e "/dev/${SD}1" ]; then
   echo "SD Card: ready"
-  sudo parted /dev/sdb unit s print
+  sudo -E parted /dev/${SD} unit s print
 else
   echo "SD Card: (NO CARD)"
 fi
 
 BLK4MiB=555
 
-p2sec=`sudo parted -m /dev/sdb unit s print | grep -e "^2" | sed s/[^s]*s[^s]*s:// | sed s/s.*//`
+p2sec=`sudo -E parted -m /dev/${SD} unit s print | grep -e "^2" | sed s/[^s]*s[^s]*s:// | sed s/s.*//`
 p2blk=$((p2sec/8))
-echo "/dev/sdb2 partition 2 is $p2blk blocks@4KiB = $(( ($p2blk * 4)/1024 ))KiB"
+echo "/dev/${SD}2 partition 2 is $p2blk blocks@4KiB = $(( ($p2blk * 4)/1024 ))KiB"
 #echo "2GB partition start:122880 end:$((122880+1+($BLK4MiB*4000000)/512))"
 MiB4=$((4*1024*1024))
 start2GiB=122880
@@ -21,106 +33,116 @@ echo "2GiB partition start:$(($start2GiB))s end:$(($end2GiB))s size:$(($size2GiB
 
 echo
 echo "Available images:"
-ls -1 ~/Downloads/sd-image-*.gz 2> /dev/null
-ls -1 ~/Downloads/sd-image-*.img 2> /dev/null
-
-NAME=$2
-if [ "$NAME" == "" ]; then
-  NAME=`date +%d%m%y`
-fi
-echo
-echo "SD working image: sd-image-$NAME.img"
+ls -1 ~/dev/sd/sd-image-*.gz 2> /dev/null
+ls -1 ~/dev/sd/sd-image-*.img 2> /dev/null
 
 function help() {
   echo
-  echo "----------------------------------"
-  echo 'Insert SD card, then type:'
+  echo "Insert SD card, then type one or more of the following:"
   echo 
-  echo 'sd --read-sd [NAME]'
-  echo '  Create SD image as ~/seagate/sd/sd-image-NAME.gz'
-  echo 'sd --write-sd [NAME]'
-  echo '  Write ~/seagate/sd/sd-image-NAME.gz onto SD card'
-  echo 'sd --expand-fs'
-  echo '  resize2fs /dev/sdb2' 
-  echo 'sd --shrink-fs'
-  echo '  resize2fs -p -M /dev/sdb2'
-  echo 'sd --shrink-part'
-  echo "  parted -m /dev/sdb unit s rm 2 mkpart primary ext4 $start2GiB $end2GiB print"
-  echo 'sd --fsck'
-  echo '  fsck.ext4 -p -f -C0 /dev/sdb2'
+  echo "  sd --read-sd [NAME]"
+  echo "    Create SD image as ~/seagate/sd/sd-image-NAME.gz"
+  echo "  sd --write-sd [NAME]"
+  echo "    Write ~/seagate/sd/sd-image-NAME.gz onto SD card"
+  echo "  sd --expand-fs"
+  echo "    resize2fs /dev/${SD}2" 
+  echo "  sd --shrink-fs"
+  echo "    resize2fs -p -M /dev/${SD}2"
+  echo "  sd --shrink-part"
+  echo "    parted -m /dev/${SD} unit s rm 2 mkpart primary ext4 $start2GiB $end2GiB print"
+  echo "  sd --fsck"
+  echo "    fsck.ext4 -p -f -C0 /dev/${SD}2"
+  echo
+  echo "Unless first argument is --EXEC, no change is made to SD:"
+  echo "  sd --EXEC COMMAND"
+  echo "    Execute COMMAND (default is to preview)"
   echo "----------------------------------"
 }
 
-if [ ! -e /dev/sdb ] || [ "$1" == "" ] ; then
+if [ ! -e /dev/${SD} ] || [ "$1" == "" ] ; then
   help
   exit 0
 fi
 
-sudo -k
-sudo date
+sudo -E -k
+sudo -E date
+
+
 if [ $? -ne 0 ]; then exit -1; fi
 
-echo Unmounting SD card to restrict use during imaging
-echo umount /dev/sdb1 /dev/sdb2 
-if [ -e /dev/sdb1 ]; then echo unmounting /dev/sdb1; sudo umount /dev/sdb1 ; fi
-if [ -e /dev/sdb2 ]; then echo unmounting /dev/sdb2; sudo umount /dev/sdb2 ; fi
-
-if [ "$1" == "--fsck" ]; then 
-  shift; 
-  echo "sudo fsck.ext4 -p -f -C0 /dev/sdb2"
-  sudo fsck.ext4 -p -f -C0 /dev/sdb2
-  if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
-fi
-
-if [ "$1" == "--shrink-fs" ]; then
-  shift
-  echo '  sudo resize2fs -p -M /dev/sdb2'
-  sudo resize2fs -p -M /dev/sdb2
-  if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
-fi
-if [ "$1" == "--shrink-part" ]; then
-  shift
-  echo "  parted -m /dev/sdb unit s rm 2 mkpart primary ext4 $start2GiB $end2GiB print"
-  sudo parted -m /dev/sdb unit s rm 2 mkpart primary ext4 $start2GiB $end2GiB print
-  if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
-fi
-if [ "$1" == "--expand-fs" ]; then
-  shift
-  echo '  sudo resize2fs -p /dev/sdb2 $p2blk'
-  sudo resize2fs -p /dev/sdb2 $p2blk
-  if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
-fi
-
-if [ "$1" == "--read-sd" ]; then
-  echo 'SD image backup will take some time (5-10m)'
-  echo 'DO NOT INTERRUPT THIS PROCESS!!!'
-  echo "sudo dd bs=4M count=$BLK4MiB if=/dev/sdb | gzip -c > ~/seagate/sd/sd-image-$NAME.gz"
-  sudo dd bs=4M count=$BLK4MiB if=/dev/sdb | gzip -c > ~/seagate/sd/sd-image-$NAME.gz
-  if [ $? -ne 0 ]; then
-    echo ERROR: could not read SD card
-    exit -1
+while [ "$1" != "" ]; do
+  NAME=`date +%d%m%y`
+  if [ "$2" != "" -a "${2:0:2}" != "--" ]; then
+    NAME=$2
+    echo "NAME	: $NAME"
   fi
-  chmod -w ~/seagate/sd/sd-image-$NAME.gz 
-  ls -lh ~/seagate/sd/sd-image*
-  echo COMPLETED: SD card read and saved as ~/seagate/sd/sd-image-$NAME.gz 
-elif [ "$1" == "--write-sd" ]; then
-  echo 'SD image restore will take some time (5-10m)'
-  echo 'DO NOT INTERRUPT THIS PROCESS!!!'
-  if [ ! -e ~/seagate/sd/sd-image-$NAME.img ]; then
-    echo "gunzip -c ~/seagate/sd/sd-image-$NAME.gz > ~/seagate/sd/sd-image-$NAME.img"
-    gunzip -c ~/seagate/sd/sd-image-$NAME.gz > ~/seagate/sd/sd-image-$NAME.img
+  echo "IMAGE	: sd-image-$NAME.img"
+  echo "STATUS	: Unmounting SD card to restrict use during imaging"
+  echo "COMMAND	: umount /dev/${SD}1 /dev/${SD}2"
+  if [ -e /dev/${SD}1 ]; then echo "COMMAND	:" sudo -E umaount /dev/${SD}1; $PREVIEW sudo -E umount /dev/${SD}1 ; fi
+  if [ -e /dev/${SD}2 ]; then echo "COMMAND	:" sudo -E umaount /dev/${SD}2; $PREVIEW sudo -E umount /dev/${SD}2 ; fi
+
+  if [ "$1" == "--fsck" ]; then 
+    shift; 
+    echo "COMMAND	: sudo -E fsck.ext4 -p -f -C0 /dev/${SD}2"
+    $PREVIEW sudo -E fsck.ext4 -p -f -C0 /dev/${SD}2
+    if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
+  fi
+
+  if [ "$1" == "--shrink-fs" ]; then
+    shift
+    echo "COMMAND	: sudo -E resize2fs -p -M /dev/${SD}2"
+    $PREVIEW sudo -E resize2fs -p -M /dev/${SD}2
+    if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
+  fi
+  if [ "$1" == "--shrink-part" ]; then
+    shift
+    echo "COMMAND	: parted -m /dev/${SD} unit s rm 2 mkpart primary ext4 $start2GiB $end2GiB print"
+    $PREVIEW sudo -E parted -m /dev/${SD} unit s rm 2 mkpart primary ext4 $start2GiB $end2GiB print
+    if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
+  fi
+  if [ "$1" == "--expand-fs" ]; then
+    shift
+    echo "COMMAND	: sudo -E resize2fs -p /dev/${SD}2 $p2blk"
+    $PREVIEW sudo -E resize2fs -p /dev/${SD}2 $p2blk
+    if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
+  fi
+
+  if [ "$1" == "--read-sd" ]; then
+    echo "STATUS	: SD image backup will take some time (5-10m)"
+    echo "STATUS	: DO NOT INTERRUPT THIS PROCESS!!!"
+    echo "COMMAND	: sudo -E dd bs=4M count=$BLK4MiB if=/dev/${SD} | gzip -c > ~/seagate/sd/sd-image-$NAME.gz"
+    $PREVIEW sudo -E dd bs=4M count=$BLK4MiB if=/dev/${SD} | gzip -c > ~/seagate/sd/sd-image-$NAME.gz
     if [ $? -ne 0 ]; then
-      echo ERROR: could not create ~/seagate/sd/sd-image-$NAME.img
+      echo "ERROR	: could not read SD card"
       exit -1
     fi
+    chmod -w ~/seagate/sd/sd-image-$NAME.gz 
+    ls -lh ~/seagate/sd/sd-image*
+    echo "STATUS	: SD card read and saved as ~/seagate/sd/sd-image-$NAME.gz "
+  elif [ "$1" == "--write-sd" ]; then
+    echo "STATUS	: SD image restore will take some time (5-10m)"
+    echo "STATUS	: DO NOT INTERRUPT THIS PROCESS!!!"
+    if [ ! -e ~/seagate/sd/sd-image-$NAME.img ]; then
+      echo "COMMAND	: gunzip -c ~/seagate/sd/sd-image-$NAME.gz > ~/seagate/sd/sd-image-$NAME.img"
+      $PREVIEW gunzip -c ~/seagate/sd/sd-image-$NAME.gz > ~/seagate/sd/sd-image-$NAME.img
+      if [ $? -ne 0 ]; then
+	echo "ERROR	: could not create ~/seagate/sd/sd-image-$NAME.img"
+	exit -1
+      fi
+    fi
+    echo "COMMAND	: sudo -E dd bs=4M count=$BLK4MiB of=/dev/${SD} if=~/seagate/sd/sd-image-$NAME.img"
+    $PREVIEW sudo -E dd bs=4M count=$BLK4MiB of=/dev/${SD} if=~/seagate/sd/sd-image-$NAME.img
+    if [ $? -ne 0 ]; then
+      echo "ERROR	: could not write SD card"
+      exit -1
+    fi
+    echo "STATUS	: ~/seagate/sd/sd-image-$NAME.img written to SD card."
   fi
-  echo "sudo dd bs=4M count=$BLK4MiB of=/dev/sdb if=~/seagate/sd/sd-image-$NAME.img"
-  sudo dd bs=4M count=$BLK4MiB of=/dev/sdb if=~/seagate/sd/sd-image-$NAME.img
-  if [ $? -ne 0 ]; then
-    echo ERROR: could not write SD card
-    exit -1
-  fi
-  echo COMPLETED: ~/seagate/sd/sd-image-$NAME.img written to SD card.
-fi
-sudo sync
-echo sync completed
+
+  echo "COMMAND	: sudo -E sync"
+  sudo -E sync
+  shift
+done
+
+echo "SUCCESS	: completed"

@@ -1,0 +1,57 @@
+#! /bin/bash
+
+echo "COMMAND	: install-reprap"
+BASEDIR="$HOME/RepRap" 
+echo "BASEDIR	: $BASEDIR"
+mkdir -p $BASEDIR
+
+# Defines where the 'Printrun' directory is located. But of course
+# you can change this to say: "$HOME/Documents/Create/RepRap/Printrun".
+PRINTRUNDIR="$BASEDIR/Printrun" 
+echo "ENV	: PRINTRUNDIR=$PRINTRUNDIR"
+
+SKEINFORGEDIR="$PRINTRUNDIR/skeinforge" 
+echo "ENV	: SKEINFORGEDIR=$SKEINFORGEDIR"
+
+SKEINFORGEBASEURL="http://fabmetheus.crsndoo.com/files/"
+echo "ENV	: SKEINFORGEBASEURL=$SKEINFORGEBASEURL"
+SKEINFORGEFILENAME="50_reprap_python_beanshell.zip"
+echo "ENV	: SKEINFORGEFILENAME=$SKEINFORGEFILENAME"
+
+cd $BASEDIR # Change directory to the executing users home directory.
+RC=$?; if [ $RC -ne 0 ]; then echo "ERROR	: $RC"; exit $RC; fi
+
+echo "COMMAND	: sudo apt-get install python-serial python-wxgtk2.8 python-pyglet python-tornado python-setuptools python-libxml2 python-gobject avahi-daemon libavahi-compat-libdnssd1 python-dbus python-psutil"
+sudo apt-get install python-serial python-wxgtk2.8 python-pyglet python-tornado python-setuptools python-libxml2 python-gobject avahi-daemon libavahi-compat-libdnssd1 python-dbus python-psutil
+
+if [ -e $PRINTRUNDIR ]; then
+  echo "STATUS	: removing existing PrintRun"
+  echo "COMMAND	: rm -rf $PRINTRUNDIR "
+  rm -rf $PRINTRUNDIR 
+  RC=$?; if [ $RC -ne 0 ]; then echo "ERROR	: $RC"; exit $RC; fi
+fi
+
+echo "GIT	: git clone https://github.com/kliment/Printrun.git "
+git clone https://github.com/kliment/Printrun.git 
+RC=$?; if [ $RC -ne 0 ]; then echo "ERROR	: $RC"; exit $RC; fi
+
+#echo "COMMAND	: wget -P /tmp $SKEINFORGEBASEURL$SKEINFORGEFILENAME "
+#wget -P /tmp $SKEINFORGEBASEURL$SKEINFORGEFILENAME 
+#RC=$?; if [ $RC -ne 0 ]; then echo "ERROR	: $RC"; exit $RC; fi
+#
+#echo "COMMAND	: unzip -d $SKEINFORGEDIR /tmp/$SKEINFORGEFILENAME "
+#unzip -d $SKEINFORGEDIR /tmp/$SKEINFORGEFILENAME 
+#RC=$?; if [ $RC -ne 0 ]; then echo "ERROR	: $RC"; exit $RC; fi
+#
+#echo "COMMAND	: ln -s $SKEINFORGEDIR/* $PRINTRUNDIR/"
+#
+#ln -s $SKEINFORGEDIR/* $PRINTRUNDIR/ # Script makes a symbolic link.
+#RC=$?; if [ $RC -ne 0 ]; then echo "ERROR	: $RC"; exit $RC; fi
+#
+#echo "COMMAND	: rm -rf /tmp/$SKEINFORGEFILENAME "
+#rm -rf /tmp/$SKEINFORGEFILENAME # Removes tmp files.
+#RC=$?; if [ $RC -ne 0 ]; then echo "ERROR	: $RC"; exit $RC; fi
+
+echo "COMMAND	: sudo usermod -G serial -a `whoami` # Allow serial port access"
+
+echo "SUCCESS	: PrintRun installed"
