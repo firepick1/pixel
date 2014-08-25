@@ -1,8 +1,0 @@
-neww -n PI 
-send-keys -t PI "ssh pi@firepick" C-m
-split-window -t PI -h
-send-keys -t PI "ssh pi@firepick" C-m
-split-window -t PI -v
-send-keys -t PI "ssh pi@firepick" C-m
-split-window -t PI -v
-send-keys -t PI "ssh pi@firepick" C-m
