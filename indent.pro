@@ -1,0 +1,7 @@
+--braces-on-func-def-line
+--braces-on-if-line
+--braces-on-struct-decl-line
+--case-brace-indentation0
+--cuddle-do-while
+--cuddle-else
+--struct-brace-indentation 10 

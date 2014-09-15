@@ -57,4 +57,5 @@ hi htmlItalic	cterm=underline
 hi htmlBold	cterm=underline
 
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-
+set ts=4
+set sw=4

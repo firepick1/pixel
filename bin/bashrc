@@ -44,6 +44,8 @@ function c() {
   if [ "$1" == "w" ]; then cd *.wiki
   elif [ "$1" == "t" ]; then cd target
   elif [ "$1" == "D" ]; then cd Debug
+  elif [ "$1" == "tr" ]; then cd ~/finesse/tbw-dev/workspace/ResourceTree
+  elif [ "$1" == "tu" ]; then cd ~/finesse/tbw-dev/workspace/FinesseUtils
   elif [ "$1" == "3d" ]; then cd ~/RepRap/Printrun
   elif [ "$1" == "tom" ]; then cd /opt/local/share/tomcat
   elif [ "$1" == "sea" ]; then cd ~/dev
@@ -62,6 +64,7 @@ function c() {
   elif [ "$1" == "c" ]; then cd FirePiCam
   elif [ "$1" == "cv" ]; then cd opencv
   elif [ "$1" == "g" ]; then cd firepick-org.wiki
+  elif [ "$1" == "gf" ]; then cd gfilter
   elif [ "$1" == "fpd" ]; then cd firepick-delta
   elif [ "$1" == "fp1d" ]; then cd firepick-delta-fp1
   elif [ "$1" == "io" ]; then cd firepick1.github.io
@@ -159,6 +162,7 @@ alias otp='echo $RANDOM | md5sum'
 alias h='history'
 alias hg='history | grep '
 alias psv='ps -eo vsz,pmem,pcpu,user,pid,ppid,stime,tty,time,args --sort vsz'
+alias fpdcam='rcp pi@fpd:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
 alias fp80cam='rcp pi@firepick80:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
 alias fpcam='rcp pi@firepick:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
 alias freek='free | grep s.c | grep -Eo "[^ ]*$"'
@@ -170,6 +174,8 @@ alias psg='ps -ef | grep -v "grep --color=auto" | grep '
 alias aptinst='dpkg --get-selections | grep -v deinstall | grep'
 alias aptavail='apt-cache search '
 alias bld='./build |& tee build.log'
+alias tmuxtbw='tmux -f ~/pixel/tmux.tbw attach'
 
 export IGNOREEOF=42
 export VISUAL=vim
+export BASH_ENV=~/.bashrc

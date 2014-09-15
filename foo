@@ -1,4 +1,4 @@
-new-session
+new-session 
 set -g history-limit 9999
 set -g mode-keys vi
 set-option mouse-select-pane on
@@ -12,10 +12,10 @@ set-option status-left-fg green
 set-option display-time 5000
 
 source ~/pixel/tall-r.tmux
-source ~/pixel/tall-r.tmux
-source ~/pixel/twin.tmux
+source ~/pixel/wide.tmux
 
 next-window
 kill-window
 next-window
 
+attach
