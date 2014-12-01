@@ -59,3 +59,6 @@ hi htmlBold	cterm=underline
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 set ts=4
 set sw=4
+
+source ~/pixel/osc52.vim
+vmap <C-c> y:call SendViaOSC52(getreg('"'))<cr>

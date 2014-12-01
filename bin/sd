@@ -10,7 +10,12 @@ else
   echo "PREVIEW	: yes"
 fi
 
-export SD=`df -H |& grep -E "\s(4G|8G|16G|32G)" | grep -o "/dev/sd." | grep -o "sd." | uniq`
+export SDAVAIL=`df -H |& grep -E "\s(4G|8G|16G|32G)" | grep -o "/dev/sd." | grep -o "sd." | uniq`
+echo "SDAVAIL	: /dev/${SDAVAIL}"
+export SD=sdc
+if [ "$SD" != "$SDAVAIL" ]; then 
+	echo "WARN	: NO SD CARD DETECTED, DEFAULTING TO $SD"
+fi
 echo "SD	: /dev/${SD}"
 if [ -e "/dev/${SD}1" ]; then
   echo "SD Card: ready"
@@ -71,7 +76,7 @@ sudo -E date
 if [ $? -ne 0 ]; then exit -1; fi
 
 while [ "$1" != "" ]; do
-  NAME=`date +%d%m%y`
+  NAME=`date +%y%m%d`
   if [ "$2" != "" -a "${2:0:2}" != "--" ]; then
     NAME=$2
     echo "NAME	: $NAME"
@@ -79,8 +84,8 @@ while [ "$1" != "" ]; do
   echo "IMAGE	: sd-image-$NAME.img"
   echo "STATUS	: Unmounting SD card to restrict use during imaging"
   echo "COMMAND	: umount /dev/${SD}1 /dev/${SD}2"
-  if [ -e /dev/${SD}1 ]; then echo "COMMAND	:" sudo -E umaount /dev/${SD}1; $PREVIEW sudo -E umount /dev/${SD}1 ; fi
-  if [ -e /dev/${SD}2 ]; then echo "COMMAND	:" sudo -E umaount /dev/${SD}2; $PREVIEW sudo -E umount /dev/${SD}2 ; fi
+  if [ -e /dev/${SD}1 ]; then echo "COMMAND	:" sudo -E umount /dev/${SD}1; $PREVIEW sudo -E umount /dev/${SD}1 ; fi
+  if [ -e /dev/${SD}2 ]; then echo "COMMAND	:" sudo -E umount /dev/${SD}2; $PREVIEW sudo -E umount /dev/${SD}2 ; fi
 
   if [ "$1" == "--fsck" ]; then 
     shift; 
@@ -111,6 +116,11 @@ while [ "$1" != "" ]; do
   if [ "$1" == "--read-sd" ]; then
     echo "STATUS	: SD image backup will take some time (5-10m)"
     echo "STATUS	: DO NOT INTERRUPT THIS PROCESS!!!"
+    if [ -e ~/seagate/sd/sd-image-$NAME.gz ]; then
+	  echo "ERROR	: ~/seagate/sd/sd-image-$NAME.gz already exists"
+	  echo "TRY		: remove file or use different name"
+	  exit -1
+	if
     echo "COMMAND	: sudo -E dd bs=4M count=$BLK4MiB if=/dev/${SD} | gzip -c > ~/seagate/sd/sd-image-$NAME.gz"
     $PREVIEW sudo -E dd bs=4M count=$BLK4MiB if=/dev/${SD} | gzip -c > ~/seagate/sd/sd-image-$NAME.gz
     if [ $? -ne 0 ]; then
@@ -145,4 +155,7 @@ while [ "$1" != "" ]; do
   shift
 done
 
+if [ "$PREVIEW" != "" ]; then
+  echo "PREVIEW	: to actually execute this command use '--EXEC' as first parameter"
+fi
 echo "SUCCESS	: completed"

@@ -40,19 +40,37 @@ function m() {
   fi
 }
 
+function bt() {
+	if [ "$EXEC" == "" ]; then
+		echo "ERROR	: EXEC has not been defined"
+		echo "TRY	: export EXEC=name-of-executabe"
+	elif [ ! -e $EXEC ]; then
+		echo "ERROR	: $EXEC does not exist"
+		echo "TRY	: export EXEC=name-of-executabe"
+	elif [ ! -e core ]; then
+		echo "ERROR	: no core file"
+		echo "TRY	: coredump"
+	else
+		echo "COMMAND	: gdb -q -x ~/pixel/gdb.cmd $EXEC core"
+		gdb -q -x ~/pixel/gdb.cmd $EXEC core
+	fi
+}
+
 function c() {
   if [ "$1" == "w" ]; then cd *.wiki
   elif [ "$1" == "t" ]; then cd target
   elif [ "$1" == "D" ]; then cd Debug
-  elif [ "$1" == "tr" ]; then cd ~/finesse/tbw-dev/workspace/ResourceTree
-  elif [ "$1" == "tu" ]; then cd ~/finesse/tbw-dev/workspace/FinesseUtils
+  elif [ "$1" == "tr" ]; then cd ~/tbw-ws/ResourceTree
+  elif [ "$1" == "ts" ]; then cd ~/tbw-ws/RESTserver
+  elif [ "$1" == "tt" ]; then cd ~/tbw-ws/FinesseTIplatform
+  elif [ "$1" == "tu" ]; then cd ~/tbw-ws/FinesseUtils
   elif [ "$1" == "3d" ]; then cd ~/RepRap/Printrun
   elif [ "$1" == "tom" ]; then cd /opt/local/share/tomcat
   elif [ "$1" == "sea" ]; then cd ~/dev
   elif [ "$1" == "fin" ]; then cd ~/finesse
-  elif [ "$1" == "tru" ]; then cd ~/finesse/tbw/workspace
-  elif [ "$1" == "trud" ]; then cd ~/finesse/tbw-dev/workspace
-  elif [ "$1" == "truw" ]; then cd ~/finesse/tbw.wiki
+  elif [ "$1" == "tbw" ]; then cd ~/finesse/tbw/workspace
+  elif [ "$1" == "tbwd" ]; then cd ~/finesse/tbw-dev/workspace
+  elif [ "$1" == "tw" ]; then cd ~/finesse/tbw.wiki
   elif [ -e ~/dev/FireSight ]; then cd ~/dev
   elif [ -e ~/github ]; then cd ~/github
   else cd ~
@@ -63,10 +81,10 @@ function c() {
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "c" ]; then cd FirePiCam
   elif [ "$1" == "cv" ]; then cd opencv
+  elif [ "$1" == "v" ]; then cd fpd-vision
   elif [ "$1" == "g" ]; then cd firepick-org.wiki
   elif [ "$1" == "gf" ]; then cd gfilter
-  elif [ "$1" == "fpd" ]; then cd firepick-delta
-  elif [ "$1" == "fp1d" ]; then cd firepick-delta-fp1
+  elif [ "$1" == "fpd" ]; then cd ~/dev/FPD-LooseCanon
   elif [ "$1" == "io" ]; then cd firepick1.github.io
   elif [ "$1" == "html" ]; then cd FireREST/www/html
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
@@ -152,6 +170,8 @@ function seagate {
   ~/seagate/hello
 }
 
+alias ec='export CONFIG='
+alias dirty='grep -i dirty /proc/meminfo'
 alias sshjoy='ssh admin@165.225.149.255'
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
 alias sob='source ~/.bashrc'
@@ -165,16 +185,20 @@ alias psv='ps -eo vsz,pmem,pcpu,user,pid,ppid,stime,tty,time,args --sort vsz'
 alias fpdcam='rcp pi@fpd:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
 alias fp80cam='rcp pi@firepick80:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
 alias fpcam='rcp pi@firepick:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
+alias fpdcam='rcp pi@fpd:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
 alias freek='free | grep s.c | grep -Eo "[^ ]*$"'
 alias gcode='echo $1 > /dev/firefuse/cnc/firepick1/gcode.fire'
 alias irc='irssi -c chat.freenode.net -n KarlLew'
-alias bca='./build clean all |& tee build.log; grep -i error build.log; grep -i warning build.log'
+alias bca='./build clean all'
+alias ba='./build all'
+alias bclean='./build clean'
 alias xfce='sudo startxfce4'
 alias psg='ps -ef | grep -v "grep --color=auto" | grep '
 alias aptinst='dpkg --get-selections | grep -v deinstall | grep'
 alias aptavail='apt-cache search '
 alias bld='./build |& tee build.log'
-alias tmuxtbw='tmux -f ~/pixel/tmux.tbw attach'
+alias wintbw='tmux -f ~/pixel/tmux.tbw attach'
+alias win='tmux attach'
 
 export IGNOREEOF=42
 export VISUAL=vim
