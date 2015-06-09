@@ -1,0 +1,32 @@
+#! /bin/bash
+
+LOOP=1
+while [ $LOOP -eq 1 ]; do
+
+	echo "CMD	: ./build clean all";
+	./build clean all;
+	rc=$?;
+	if [ $rc -eq 0 ]; then
+		if [ "$1" == "-w" ]; then 
+			echo "CMD	: target/test $2";
+			target/test $2;
+		else
+			echo "CMD	: target/test";
+			target/test;
+		fi
+	else
+		echo "ERROR	: build failed rc:" $rc;
+		if [ "$1" != "-w" ]; then
+			exit $rc;
+		fi
+	fi
+
+	if [ "$1" == "-w" ]; then 
+		echo "NOTE	: REMEMBER TO RUN bcata FOR FULL TEST"
+		echo "SLEEP	: ..."
+		sleep 5
+	else
+		echo $1
+		LOOP=0
+	fi
+done
