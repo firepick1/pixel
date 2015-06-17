@@ -64,10 +64,11 @@ function c() {
   elif [ "$1" == "tr" ]; then cd ~/tbw/workspace/ResourceTree
   elif [ "$1" == "troo" ]; then cd ~/tbw/workspace/rootil
   elif [ "$1" == "tw" ]; then cd ~/tbw/workspace/RESTserver
+  elif [ "$1" == "tsb" ]; then cd ~/tbw/workspace/FinesseSmartBoards
   elif [ "$1" == "tc" ]; then cd ~/tbw/workspace/Configurations
   elif [ "$1" == "th" ]; then cd ~/tbw/workspace/HouseKeeper
   elif [ "$1" == "tt" ]; then cd ~/tbw/workspace/FinesseTest
-  elif [ "$1" == "tti" ]; then cd ~/tbw/workspace/FinesseTIplatform
+  elif [ "$1" == "ti" ]; then cd ~/tbw/workspace/FinesseTIplatform
   elif [ "$1" == "tu" ]; then cd ~/tbw/workspace/FinesseUtils
   elif [ "$1" == "3d" ]; then cd ~/RepRap/Printrun
   elif [ "$1" == "tom" ]; then cd /opt/local/share/tomcat
