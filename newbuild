@@ -1,5 +1,22 @@
 #! /bin/bash
 
+echo "TODO	: Download http://goo.gl/fd3zc"
+echo "TODO	: sudo sh ~/Downloads/crouton -r trusty -t touch,xfce"
+echo "TODO	: sudo enter-chroot"
+
 sudo apt-get update
 sudo apt-get install -y ssh
+
 sudo apt-get install -y iptable
+echo "ENABLE	: ssh access"
+echo "EDIT	: sudo vi /etc/rc.local"
+echo "TO	: enable firewall port 22"
+echo "ADD	: /sbin/iptables -I INPUT -p tcp --dport 22 -j ACCEPT"
+echo "TO	: Start sshd"
+echo "ADD	: mkdir -p -m0755 /var/run/sshd"
+echo "ADD	: /usr/sbin/sshd"
+
+sudo apt-get install -y git
+sudo apt-get install -y vim
+sudo apt-get install -y tmux
+sudo apt-get install -y samba
