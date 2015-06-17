@@ -1,4 +1,8 @@
 #! /bin/bash
 
-if [ ! -e .vimrc ]; then ln -s ~/pixel/vimrc ~/.vimrc; fi
-if [ ! -e .tmux.conf ]; then ln -s ~/pixel/tmux.conf ~/.tmux.conf; fi
+cd
+ln -sf ~/pixel/bin bin
+ln -sf ~/pixel/vimrc .vimrc
+ln -sf ~/pixel/tmux.conf .tmux.conf
+ln -sf ~/pixel/indent.pro .indent.pro
+ln -sf ~/pixel/.astylerc .astylerc
