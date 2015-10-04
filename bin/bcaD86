@@ -1,0 +1,32 @@
+#! /bin/bash
+
+LOOP=1
+while [ $LOOP -eq 1 ]; do
+
+	echo "CMD	: ./build clean all";
+	./build clean all;
+	rc=$?;
+	if [ $rc -eq 0 ]; then
+		if [ "$EXEC" == "" ]; then
+			echo "ERROR	: nothing to execute";
+			echo "TRY	: export EXEC=name-of-program";
+			echo "TRY	: export EXECARGS=args-of-program";
+		else
+			echo "CMD	: $EXEC $EXECARGS";
+			$EXEC $EXECARGS
+		fi
+	else
+		echo "ERROR	: build failed rc:" $rc;
+		if [ "$1" != "-w" ]; then
+			exit $rc;
+		fi
+	fi
+
+	if [ "$1" == "-w" ]; then 
+		echo "SLEEP	: ..."
+		sleep 5
+	else
+		echo $1
+		LOOP=0
+	fi
+done

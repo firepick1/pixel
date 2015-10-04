@@ -1,0 +1,27 @@
+#! /bin/bash
+
+LOOP=1
+while [ $LOOP -eq 1 ]; do
+
+	echo "CMD	: ./build clean all";
+	./build clean all;
+	rc=$?;
+	if [ $rc -eq 0 ]; then
+		shift	
+		echo "CMD	: Test-86/*test $*";
+		Test-86/*test $*
+	else
+		echo "ERROR	: build failed rc:" $rc;
+		if [ "$1" != "-w" ]; then
+			exit $rc;
+		fi
+	fi
+
+	if [ "$1" == "-w" ]; then 
+		echo "SLEEP	: press RETURN when ready..."
+		read OP
+	else
+		echo $1
+		LOOP=0
+	fi
+done
