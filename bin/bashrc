@@ -1,5 +1,5 @@
 function parse_git_dirty {
-  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && echo "*"
 }
 function parse_git_branch {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
@@ -58,6 +58,7 @@ function bt() {
 
 function c() {
   if [ "$1" == "w" ]; then cd *.wiki
+  elif [ "$1" == "ar" ]; then cd ~/Arduino
   elif [ "$1" == "t" ]; then cd target
   elif [ "$1" == "D" ]; then cd Debug
   elif [ "$1" == "tj" ]; then cd ~/tbw/workspace/jansson
@@ -65,7 +66,11 @@ function c() {
   elif [ "$1" == "troo" ]; then cd ~/tbw/workspace/rootil
   elif [ "$1" == "tw" ]; then cd ~/tbw/workspace/RESTserver
   elif [ "$1" == "tsb" ]; then cd ~/tbw/workspace/FinesseSmartBoards
+  elif [ "$1" == "sam" ]; then cd ~/tbw/workspace/sam
+  elif [ "$1" == "ts" ]; then cd ~/tbw/workspace/sam
   elif [ "$1" == "tc" ]; then cd ~/tbw/workspace/Configurations
+  elif [ "$1" == "tbc" ]; then cd ~/tbw/workspace/tbw-client
+  elif [ "$1" == "tbcj" ]; then cd ~/tbw/workspace/tbw-client/src/main/java/com/finesse/tbw
   elif [ "$1" == "th" ]; then cd ~/tbw/workspace/HouseKeeper
   elif [ "$1" == "tt" ]; then cd ~/tbw/workspace/FinesseTest
   elif [ "$1" == "ti" ]; then cd ~/tbw/workspace/FinesseTIplatform
@@ -87,9 +92,13 @@ function c() {
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "c" ]; then cd FirePiCam
   elif [ "$1" == "cv" ]; then cd opencv
+  elif [ "$1" == "dl" ]; then cd ~/Downloads
+  elif [ "$1" == "dn" ]; then cd ~/Downloads
+  elif [ "$1" == "dla" ]; then cd ~/Downloads/Arduino
   elif [ "$1" == "v" ]; then cd fpd-vision
   elif [ "$1" == "g" ]; then cd firepick-org.wiki
   elif [ "$1" == "gf" ]; then cd gfilter
+  elif [ "$1" == "jan" ]; then cd ~/dev/jansson
   elif [ "$1" == "fpd" ]; then cd ~/dev/FPD-LooseCanon
   elif [ "$1" == "io" ]; then cd firepick1.github.io
   elif [ "$1" == "html" ]; then cd FireREST/www/html
@@ -210,6 +219,28 @@ function bcati {
 	fi
 }
 
+function bca86 {
+	echo "CMD	: ./build clean all"
+	export CONFIG=Debug-86
+	LOOP=1
+	while [ $LOOP -eq 1 ]; do
+		./build clean all
+		rc=$?;
+		if [ $rc -eq 0 ]; then
+			$EXEC $*
+		else
+			echo "ERROR	: build failed rc:" $rc
+		fi
+		if [ "$1" == "-w" ]; then
+			echo "SLEEP	: ..."
+			sleep 5
+		else
+			LOOP=0
+		fi
+	done
+}
+
+
 alias ec='export CONFIG='
 alias dirty='grep -i dirty /proc/meminfo'
 alias sshjoy='ssh admin@165.225.149.255'
@@ -245,12 +276,15 @@ alias tihomefs='sshfs -o nonempty root@ti-home:/home/ti/finesse /home/ti'
 alias tifs='sshfs -o nonempty root@ti-karl:/home/ti/finesse /home/ti/finesse'
 alias fpdfs='sshfs -o nonempty pi@fpd:/home/pi/FireREST ~/fpd'
 alias restdssl='Debug-86/RESTserver -d --ssl -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
-alias netex='pushd ~/seagate/Downloads/netExtenderClient; sudo ./netExtender -u klew -p Firepass -d Finesse sslvpn.finesse.com; popd'
+alias netex='pushd ~/dev/Downloads/netExtenderClient; sudo ./netExtender -u klew -p Firepass -d Finesse sslvpn.finesse.com; popd'
 alias restd='Debug-86/RESTserver -d -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
 alias rest='Debug-86/RESTserver -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
-alias vgnd='valgrind --leak-check=full --show-reachable=yes '
+alias vgnd='valgrind --leak-check=full --show-reachable=yes --track-origins=yes '
 alias moc1='mocha -w -R min --inline-diffs -g TESTTEST server/firepick/*.js'
 alias moci1='mocha -w -R min --inline-diffs -i -g TESTTEST server/firepick/*.js'
+alias rel='scripts/release'
+alias mci='mvn clean install'
+alias tbw='java -jar target/tbw-client*jar '
 
 
 export IGNOREEOF=42

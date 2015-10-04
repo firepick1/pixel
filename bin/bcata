@@ -11,8 +11,8 @@ while [ $LOOP -eq 1 ]; do
 			echo "CMD	: target/test $2";
 			target/test $2;
 		else
-			echo "CMD	: target/test";
-			target/test;
+			echo "CMD	: target/test $1";
+			target/test $1;
 		fi
 	else
 		echo "ERROR	: build failed rc:" $rc;
@@ -23,8 +23,8 @@ while [ $LOOP -eq 1 ]; do
 
 	if [ "$1" == "-w" ]; then 
 		echo "NOTE	: REMEMBER TO RUN bcata FOR FULL TEST"
-		echo "SLEEP	: ..."
-		sleep 5
+		echo "SLEEP	: hit ENTER..."
+		read DISCARD
 	else
 		echo $1
 		LOOP=0

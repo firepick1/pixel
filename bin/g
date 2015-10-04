@@ -8,7 +8,6 @@ shift
 function help() {
   echo "git command shortcut"
 
-  echo "      a  git add --all ."
   echo "      b  git branch "
   echo "     bm  git branch --merged"
   echo "    bnm  git branch --no-merged"
@@ -23,6 +22,7 @@ function help() {
   echo "      d  git diff ..."
   echo "     ds  git diff diff --stat ..."
   echo "    dev  git checkout dev"
+  echo "     dt  git push origin :refs/tags/..."
   echo "      f  git fetch"
   echo "     fm  git fetch; git merge"
   echo "      l  git log -5 --graph"
@@ -38,13 +38,13 @@ function help() {
   echo "      s  git status"
 }
 
-if [ "$op" == "a" ]; then cmd="git add --all . " 
-elif [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd=
+if [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd=
 elif [ "$op" == "bm" ]; then cmd="git branch --merged"
 elif [ "$op" == "bnm" ]; then cmd="git branch --no-merged"
 elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=
 elif [ "$op" == "cr" ]; then cmd="git checkout -b release/$1; git push -u"; git checkout -b release/$1; git push -u; cmd=
 elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd=
+elif [ "$op" == "dt" ]; then echo "git push origin :refs/tags/$@"; git push origin :refs/tags/"$@"; cmd=
 elif [ "$op" == "ra" ]; then echo "git remote add $@"; git remote add "$@"; cmd=
 elif [ "$op" == "rrm" ]; then echo "git remote rm $@"; git remote rm "$@"; cmd=
 elif [ "$op" == "camp" ]; then echo "git commit -am $@ && git push"; git commit -am "$@" && git push; cmd=
