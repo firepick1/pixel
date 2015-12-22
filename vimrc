@@ -1,3 +1,4 @@
+set expandtab
 set nocompatible                  " Must come first because it changes other options.
 syntax enable                     " Turn on syntax highlighting.
 filetype plugin on                " Turn on file type detection.

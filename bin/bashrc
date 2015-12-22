@@ -88,10 +88,12 @@ function c() {
   fi
   if [ "$1" == "s" ]; then 
     if [ -e FireSight ]; then cd FireSight; else cd FireREST/FireSight; fi
+  elif [ "$1" == "sc" ]; then cd firestep-cam 
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "c" ]; then cd FirePiCam
   elif [ "$1" == "cv" ]; then cd opencv
+  elif [ "$1" == "fn" ]; then cd firenodejs
   elif [ "$1" == "dl" ]; then cd ~/Downloads
   elif [ "$1" == "dn" ]; then cd ~/Downloads
   elif [ "$1" == "dla" ]; then cd ~/Downloads/Arduino
@@ -261,7 +263,7 @@ alias freek='free | grep s.c | grep -Eo "[^ ]*$"'
 alias freem='free -m | grep s.c | grep -Eo "[^ ]*$"'
 alias gcode='echo $1 > /dev/firefuse/cnc/firepick1/gcode.fire'
 alias irc='irssi -c chat.freenode.net -n KarlLew'
-alias bca='./build clean all'
+alias bca='./build clean; ./build all'
 alias ba='./build all'
 alias bclean='./build clean'
 alias xfce='sudo startxfce4'
@@ -280,11 +282,17 @@ alias netex='pushd ~/dev/Downloads/netExtenderClient; sudo ./netExtender -u klew
 alias restd='Debug-86/RESTserver -d -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
 alias rest='Debug-86/RESTserver -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
 alias vgnd='valgrind --leak-check=full --show-reachable=yes --track-origins=yes '
+alias mocijs='mocha -w -R min --inline-diffs -i -g TESTTEST *.js'
+alias moctjs='mocha -w -R min --inline-diffs -g TESTTEST *.js'
+alias mocjs='mocha -w -R min --inline-diffs *.js'
 alias moc1='mocha -w -R min --inline-diffs -g TESTTEST server/firepick/*.js'
 alias moci1='mocha -w -R min --inline-diffs -i -g TESTTEST server/firepick/*.js'
 alias rel='scripts/release'
 alias mci='mvn clean install'
-alias tbw='java -jar target/tbw-client*jar '
+alias tbw='cd ~/tbw/workspace/tbw-client/; java -jar target/tbw-client*jar '
+alias g4='rcp ~/ti/TBW* root@g4labp2:/home/ti; mv ~/ti/TBW* ~/ti/unused'
+alias g4dv2='rcp ~/ti/TBW* root@g4labdv2:/home/ti; mv ~/ti/TBW* ~/ti/unused'
+alias g4p2='rcp ~/ti/TBW* root@g4labp2:/home/ti; mv ~/ti/TBW* ~/ti/unused'
 
 
 export IGNOREEOF=42
