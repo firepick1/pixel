@@ -1,0 +1,27 @@
+#!/bin/bash
+echo DATE,MONTH,YEAR,EQUITY,INCOME,Bank,EXPENSE,BILLABLE,PROJECT,Method,Schedule C,DESCRIPTION,CASALES,CASALESSCC,URL
+grep -v -e '^[[:space:]]*$' -e 'Fee Net Balance' $1 |
+sed -e 's/^Jan/1,/' |
+sed -e 's/^Feb/2,/' |
+sed -e 's/^Mar/3,/' |
+sed -e 's/^Apr/4,/' |
+sed -e 's/^May/5,/' |
+sed -e 's/^Jun/6,/' |
+sed -e 's/^Jul/7,/' |
+sed -e 's/^Aug/8,/' |
+sed -e 's/^Sep/9,/' |
+sed -e 's/^Oct/10,/' |
+sed -e 's/^Nov/11,/' |
+sed -e 's/^Dec/12,/' |
+sed -e 's/[0-9, ]*[0-9]/&,&/' |
+sed -e 's/, /\//' -e 's/, /\//' |
+sed -e 's/\([^,]*,[^,]*,\)[^,]*, /\1/' |
+#sed -e 's/\([^,]*,[^,]*,\)[^,]*,\s*\([0-9]*\)\s*\([^-$]*\)\(-*$[0-9.]*\)\s*\(-*[0-9.]*\)\s*\(-*[0-9.]*\)\s*\(-*[0-9.]*\)/\1\2,\6,\3/' |
+sed -e 's/\([^ ]*\)\s*\([^$-]\+\)\s*.*\(-*$[0-9.]\+\)\s\+\(-*$[0-9.]\+\) USD.*USD$/\1,\4,\2/' |
+sed -e ''
+#sed -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' |
+#sed -e 's/[^,]*/&,&/' -e 's/\//,/' -e 's/\//,/' -e 's/\//,/' -e 's/[0-9]*\///' |
+#sed -e 's/,/\//' -e 's/,/\//' -e s/,0/,/g |
+#sed -e 's/\(.*,2015,\)\(.*[^*]\)\*,\(.*DEPOSIT.*\)/\1,\2,,,FINESSE,,Revenue\3/' |
+#sed -e 's/\(.*,2015,\)\(.*[^*]\)\*,\(.*\)/\1,,,\2,FirePick Services,,1040C-22 Parts\3/'
+
