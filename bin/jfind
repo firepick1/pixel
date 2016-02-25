@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ ! -e $1 ]; then
+    echo -e "ERROR\t: expected file name"
+    exit -1
+fi
+
+json -f $1 -A -c "\
+    var JFindUtil = require('./JFindUtil');\
+    var root=this;\
+    JFindUtil.test(root);\
+    return false; \
+"

@@ -94,6 +94,7 @@ function c() {
   elif [ "$1" == "c" ]; then cd FirePiCam
   elif [ "$1" == "cv" ]; then cd opencv
   elif [ "$1" == "fn" ]; then cd firenodejs
+  elif [ "$1" == "bom" ]; then cd FireBOM
   elif [ "$1" == "dl" ]; then cd ~/Downloads
   elif [ "$1" == "dn" ]; then cd ~/Downloads
   elif [ "$1" == "dla" ]; then cd ~/Downloads/Arduino
