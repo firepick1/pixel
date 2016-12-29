@@ -1,6 +1,29 @@
 #! /bin/bash
 
-echo "COMMAND	: $0 $*"
+echo "START	: $0 $*"
+
+export SDEXIST=`df -H |& grep -E "\s(4G|8G|16G|32G)" | grep -o "/dev/sd." | grep -o "sd." | uniq`
+if [ "${SDEXIST}" == "" ]; then
+    echo "INSERT  : SD card not found. Insert SD card now."
+    read -p "TYPE    : 'ok' when inserted ---> " OK
+    if [ "$OK" != "ok" ]; then
+        echo -e "END\t: cancelled..."
+        exit -1
+    fi
+    export SDNEW=`df -H |& grep -E "\s(4G|8G|16G|32G)" | grep -o "/dev/sd." | grep -o "sd." | uniq`
+    echo -e "SDNEW\t: ${SDNEW}"
+    if [ "${SDEXIST}" == "${SDNEW}" ]; then
+        echo -e "ERROR\t: no SD card detected"
+        exit -1
+    fi
+    SDCARD=${SDNEW}
+    echo -e "SDCARD\t: ${SDCARD} (newly inserted)"
+else 
+    SDCARD=${SDEXIST}
+    echo -e "SDCARD\t: ${SDCARD} (existing)"
+fi
+export SD=${SDCARD}
+
 PREVIEW="echo PREVIEW_: "
 if [ "$1" == "--EXEC" ]; then
   echo "PREVIEW	: EXECUTING COMMAND!!!"
@@ -10,18 +33,18 @@ else
   echo "PREVIEW	: yes"
 fi
 
-export SDAVAIL=`df -H |& grep -E "\s(4G|8G|16G|32G)" | grep -o "/dev/sd." | grep -o "sd." | uniq`
-echo "SDAVAIL	: /dev/${SDAVAIL}"
-export SD=sdc
-if [ "$SD" != "$SDAVAIL" ]; then 
-	echo "WARN	: NO SD CARD DETECTED, DEFAULTING TO $SD"
+#export SDAVAIL=`df -H |& grep -E "\s(4G|8G|16G|32G)" | grep -o "/dev/sd." | grep -o "sd." | uniq`
+#echo "SDAVAIL	: /dev/${SDAVAIL}"
+#export SD=sdc
+if [ "${SD}" != "${SDAVAIL}" ]; then 
+	echo "WARN	: NO SD CARD DETECTED, DEFAULTING TO ${SD}"
 fi
 echo "SD	: /dev/${SD}"
 if [ -e "/dev/${SD}1" ]; then
-  echo "SD Card: ready"
+  echo "SD Card : ready"
   sudo -E parted /dev/${SD} unit s print
 else
-  echo "SD Card: (NO CARD)"
+  echo "SD Card : (NO CARD)"
 fi
 
 BLK4MiB=555
@@ -70,10 +93,9 @@ if [ ! -e /dev/${SD} ] || [ "$1" == "" ] ; then
 fi
 
 sudo -E -k
-sudo -E date
-
-
 if [ $? -ne 0 ]; then exit -1; fi
+
+sudo -E date
 
 while [ "$1" != "" ]; do
   NAME=`date +%y%m%d`
@@ -93,7 +115,6 @@ while [ "$1" != "" ]; do
     $PREVIEW sudo -E fsck.ext4 -p -f -C0 /dev/${SD}2
     if [ $? -ne 0 ]; then echo FAILED; exit -1; fi
   fi
-
   if [ "$1" == "--shrink-fs" ]; then
     shift
     echo "COMMAND	: sudo -E resize2fs -p -M /dev/${SD}2"
@@ -120,7 +141,7 @@ while [ "$1" != "" ]; do
 	  echo "ERROR	: ~/seagate/sd/sd-image-$NAME.gz already exists"
 	  echo "TRY		: remove file or use different name"
 	  exit -1
-	if
+	fi
     echo "COMMAND	: sudo -E dd bs=4M count=$BLK4MiB if=/dev/${SD} | gzip -c > ~/seagate/sd/sd-image-$NAME.gz"
     $PREVIEW sudo -E dd bs=4M count=$BLK4MiB if=/dev/${SD} | gzip -c > ~/seagate/sd/sd-image-$NAME.gz
     if [ $? -ne 0 ]; then

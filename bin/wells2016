@@ -1,0 +1,25 @@
+#!/bin/bash
+echo DATE,MONTH,EQUITY,INCOME,Bank,EXPENSE,BILLABLE,PROJECT,Method,Schedule C,DESCRIPTION,CASALES,CASALESSCC,URL
+grep -v -e '^[[:space:]]*$' $1 |
+sed -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' |
+sed -e 's/[^,]*/&,&/' -e 's/\//,/' -e 's/\//,/' -e 's/\//,/' -e 's/[0-9]*\///' |
+sed -e 's/,/\//' -e 's/,/\//' -e s/,0/,/g |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*DEPOSIT.*\)/\1,\2,,,FINESSE,,Revenue\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*CLIPPER.*\)/\1,,,,\2,FirePick Services,,Transportation\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*UBER.*\)/\1,,,,\2,FirePick Services,,Transportation\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*JOYENT.*\)/\1,,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*GOOGLE \*SVC.*\)/\1,,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*FEE FOR.*\)/\1,,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*NEWYORKPIZZA.*\)/\1,,,,\2,FirePick Services,,1040C-24b Meals\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*GIOVANNI.*\)/\1,,,,\2,FirePick Services,,1040C-24b Meals\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*MERIT VEGAN.*\)/\1,,,,\2,FirePick Services,,1040C-24b Meals\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*PHO VAN.*\)/\1,,,,\2,FirePick Services,,1040C-24b Meals\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*IRS.*\)/\1,,,,\2,FirePick Services,,Federal Tax\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*ULINE.*\)/\1,,,,\2,FirePick Services,,1040C-18 Office\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*JDM PACKING.*\)/\1,,,,\2,FirePick Services,,1040C-18 Office\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*IKEA.*\)/\1,,,,\2,FirePick Services,,1040C-18 Office\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*ATM WITHDRAWAL.*\)/\1,,,,\2,FirePick Services,,Owner Draw\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*ONLINE TRANSFER TO BANK.*\)/\1,,,,\2,FirePick Services,,Owner Draw\3/' |
+sed -e 's/\(.*,2016,\)\(.*[^*]\)\*,\(.*\)/\1,,,\2,FirePick Services,,1040C-22 Parts\3/' |
+sed -e 's/\(.*\),2016,/\1,/'
+

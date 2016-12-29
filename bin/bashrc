@@ -58,6 +58,7 @@ function bt() {
 
 function c() {
   if [ "$1" == "w" ]; then cd *.wiki
+  elif [ "$1" == "down" ]; then cd ~/Downloads
   elif [ "$1" == "ar" ]; then cd ~/Arduino
   elif [ "$1" == "t" ]; then cd target
   elif [ "$1" == "D" ]; then cd Debug
@@ -66,6 +67,7 @@ function c() {
   elif [ "$1" == "troo" ]; then cd ~/tbw/workspace/rootil
   elif [ "$1" == "tw" ]; then cd ~/tbw/workspace/RESTserver
   elif [ "$1" == "tsb" ]; then cd ~/tbw/workspace/FinesseSmartBoards
+  elif [ "$1" == "tmb" ]; then cd ~/tbw/workspace/modbustcpslave
   elif [ "$1" == "sam" ]; then cd ~/tbw/workspace/sam
   elif [ "$1" == "ts" ]; then cd ~/tbw/workspace/sam
   elif [ "$1" == "tc" ]; then cd ~/tbw/workspace/Configurations
@@ -90,10 +92,15 @@ function c() {
     if [ -e FireSight ]; then cd FireSight; else cd FireREST/FireSight; fi
   elif [ "$1" == "sc" ]; then cd firestep-cam 
   elif [ "$1" == "B" ]; then cd FireBOM
+  elif [ "$1" == "pcb" ]; then cd jspcb
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "c" ]; then cd FirePiCam
   elif [ "$1" == "cv" ]; then cd opencv
   elif [ "$1" == "fn" ]; then cd firenodejs
+  elif [ "$1" == "fp" ]; then cd FirePump
+  elif [ "$1" == "fb" ]; then cd FireBolt
+  elif [ "$1" == "fg" ]; then cd FireGear
+  elif [ "$1" == "fs" ]; then cd FireSlide
   elif [ "$1" == "bom" ]; then cd FireBOM
   elif [ "$1" == "dl" ]; then cd ~/Downloads
   elif [ "$1" == "dn" ]; then cd ~/Downloads
@@ -290,8 +297,11 @@ alias moc1='mocha -w -R min --inline-diffs -g TESTTEST server/firepick/*.js'
 alias moci1='mocha -w -R min --inline-diffs -i -g TESTTEST server/firepick/*.js'
 alias rel='scripts/release'
 alias mci='mvn clean install'
+alias sort='sort -b -f '
 alias tbw='cd ~/tbw/workspace/tbw-client/; java -jar target/tbw-client*jar '
-alias g4='rcp ~/ti/TBW* root@g4labp2:/home/ti; mv ~/ti/TBW* ~/ti/unused'
+#alias g4='rcp ~/ti/TBW* root@g4lab:/home/ti; mv ~/ti/TBW* ~/ti/unused'
+alias g4='tbw --host g4labp2 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
+alias g4dv8='tbw --host g4labdv8 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
 alias g4dv2='rcp ~/ti/TBW* root@g4labdv2:/home/ti; mv ~/ti/TBW* ~/ti/unused'
 alias g4dv1='rcp ~/ti/TBW* root@g4labdv1:/home/ti; mv ~/ti/TBW* ~/ti/unused'
 alias g4p2='rcp ~/ti/TBW* root@g4labp2:/home/ti; mv ~/ti/TBW* ~/ti/unused'

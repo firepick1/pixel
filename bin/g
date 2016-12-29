@@ -86,7 +86,7 @@ elif [ "$op" == "relm" ]; then
     git push && git checkout master && git merge release/$1 && git push && git checkout dev && git merge master && git push && git branch -v
   fi
 elif [ "$op" == "s" ]; then cmd="git status"
-elif [ "$op" == "..." ]; then echo "git commit -am ...;git push"; git commit -am ...; git push; cmd=
+elif [ "$op" == "..." ]; then echo "git commit -am ...;git push"; git commit -am "...cosmetic changes..."; git push; cmd=
 elif [ "$op" == "" ]; then help
 elif [ "$op" == "vi" ]; then vi ~/bin/g
 else
