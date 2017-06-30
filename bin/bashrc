@@ -63,6 +63,7 @@ function c() {
   elif [ "$1" == "t" ]; then cd target
   elif [ "$1" == "D" ]; then cd Debug
   elif [ "$1" == "tj" ]; then cd ~/tbw/workspace/jansson
+  elif [ "$1" == "vb" ]; then cd ~/tbw/workspace/vbmodbus
   elif [ "$1" == "tr" ]; then cd ~/tbw/workspace/ResourceTree
   elif [ "$1" == "troo" ]; then cd ~/tbw/workspace/rootil
   elif [ "$1" == "tw" ]; then cd ~/tbw/workspace/RESTserver
@@ -70,6 +71,7 @@ function c() {
   elif [ "$1" == "tmb" ]; then cd ~/tbw/workspace/modbustcpslave
   elif [ "$1" == "sam" ]; then cd ~/tbw/workspace/sam
   elif [ "$1" == "ts" ]; then cd ~/tbw/workspace/sam
+  elif [ "$1" == "td" ]; then cd ~/tbw/workspace/deploy
   elif [ "$1" == "tc" ]; then cd ~/tbw/workspace/Configurations
   elif [ "$1" == "tbc" ]; then cd ~/tbw/workspace/tbw-client
   elif [ "$1" == "tbcj" ]; then cd ~/tbw/workspace/tbw-client/src/main/java/com/finesse/tbw
@@ -90,42 +92,49 @@ function c() {
   fi
   if [ "$1" == "s" ]; then 
     if [ -e FireSight ]; then cd FireSight; else cd FireREST/FireSight; fi
-  elif [ "$1" == "sc" ]; then cd firestep-cam 
   elif [ "$1" == "B" ]; then cd FireBOM
-  elif [ "$1" == "pcb" ]; then cd jspcb
   elif [ "$1" == "b" ]; then cd firebom-js
+  elif [ "$1" == "bom" ]; then cd FireBOM
   elif [ "$1" == "c" ]; then cd FirePiCam
   elif [ "$1" == "cv" ]; then cd opencv
-  elif [ "$1" == "fn" ]; then cd firenodejs
-  elif [ "$1" == "fp" ]; then cd FirePump
+  elif [ "$1" == "dl" ]; then cd ~/Downloads
+  elif [ "$1" == "dla" ]; then cd ~/Downloads/Arduino
+  elif [ "$1" == "dn" ]; then cd ~/Downloads
   elif [ "$1" == "fb" ]; then cd FireBolt
   elif [ "$1" == "fg" ]; then cd FireGear
+  elif [ "$1" == "fn" ]; then cd firenodejs
+  elif [ "$1" == "fp" ]; then cd FirePump
+  elif [ "$1" == "fpd" ]; then cd ~/dev/FPD-LooseCanon
   elif [ "$1" == "fs" ]; then cd FireSlide
-  elif [ "$1" == "bom" ]; then cd FireBOM
-  elif [ "$1" == "dl" ]; then cd ~/Downloads
-  elif [ "$1" == "dn" ]; then cd ~/Downloads
-  elif [ "$1" == "dla" ]; then cd ~/Downloads/Arduino
-  elif [ "$1" == "v" ]; then cd fpd-vision
   elif [ "$1" == "g" ]; then cd firepick-org.wiki
   elif [ "$1" == "gf" ]; then cd gfilter
-  elif [ "$1" == "jan" ]; then cd ~/dev/jansson
-  elif [ "$1" == "fpd" ]; then cd ~/dev/FPD-LooseCanon
-  elif [ "$1" == "io" ]; then cd firepick1.github.io
   elif [ "$1" == "html" ]; then cd FireREST/www/html
+  elif [ "$1" == "io" ]; then cd firepick1.github.io
+  elif [ "$1" == "jan" ]; then cd ~/dev/jansson
+  elif [ "$1" == "ki" ]; then cd kinann
+  elif [ "$1" == "kir" ]; then cd kinann-rest
   elif [ "$1" == "lc" ]; then cd FPD-LooseCanon
   elif [ "$1" == "lcw" ]; then cd FPD-LooseCanon.wiki
+  elif [ "$1" == "mj" ]; then cd mathjs
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
   elif [ "$1" == "o" ]; then cd openpnp/gui
   elif [ "$1" == "p" ]; then cd ~/pixel
+  elif [ "$1" == "pa" ]; then cd astar-path
   elif [ "$1" == "part" ]; then cd firepart
-  elif [ "$1" == "pick" ]; then cd firepick
-  elif [ "$1" == "pixel" ]; then cd ~/pixel
-  elif [ "$1" == "pix" ]; then cd ~/pixel
+  elif [ "$1" == "pcb" ]; then cd jspcb
   elif [ "$1" == "ph" ]; then cd ~/dev/ph5
+  elif [ "$1" == "pick" ]; then cd firepick
+  elif [ "$1" == "pix" ]; then cd ~/pixel
+  elif [ "$1" == "pixel" ]; then cd ~/pixel
+  elif [ "$1" == "r" ]; then cd FireREST
+  elif [ "$1" == "rb" ]; then cd rest-bundle
+  elif [ "$1" == "vg" ]; then cd vue-g-row-col
   elif [ "$1" == "rcl" ]; then cd firerest-client
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
-  elif [ "$1" == "r" ]; then cd FireREST
+  elif [ "$1" == "sc" ]; then cd firestep-cam 
   elif [ "$1" == "st" ]; then cd FireStep
+  elif [ "$1" == "v" ]; then cd fpd-vision
+
   elif [ "$1" == "f" ]; then
     if [ -e FireFUSE ]; then cd FireFUSE
     else cd FireREST/FireFUSE
@@ -137,8 +146,8 @@ function c() {
   fi
 }
 
-EXCLUDE="\( -name bower_components -o -name .metadata -o -name \"*.so\" -o -name bin -o -name ZBar -o -name bootstrap -o -name lib -o -name FireSight -o -name FireFUSE -o -name jansson -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
-EXCLUDESRC="\( -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
+EXCLUDE="\( -name dist -o -name bower_components -o -name .metadata -o -name \"*.so\" -o -name bin -o -name ZBar -o -name bootstrap -o -name lib -o -name FireSight -o -name FireFUSE -o -name jansson -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
+EXCLUDESRC="\( -name \"*.map\" -o -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
 INCLUDE="\( -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
 function lf() {
@@ -285,9 +294,9 @@ alias win='tmux attach'
 alias tihomefs='sshfs -o nonempty root@ti-home:/home/ti/finesse /home/ti'
 alias tifs='sshfs -o nonempty root@ti-karl:/home/ti/finesse /home/ti/finesse'
 alias fpdfs='sshfs -o nonempty pi@fpd:/home/pi/FireREST ~/fpd'
-alias restdssl='Debug-86/RESTserver -d --ssl -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
+alias restdssl='sudo Debug-86/RESTserver -d --ssl -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
 alias netex='pushd ~/dev/Downloads/netExtenderClient; sudo ./netExtender -u klew -p Firepass -d Finesse sslvpn.finesse.com; popd'
-alias restd='Debug-86/RESTserver -d -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
+alias restd='sudo Debug-86/RESTserver -d -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
 alias rest='Debug-86/RESTserver -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
 alias vgnd='valgrind --leak-check=full --show-reachable=yes --track-origins=yes '
 alias mocijs='mocha -w -R min --inline-diffs -i -g TESTTEST *.js'
@@ -301,13 +310,38 @@ alias sort='sort -b -f '
 alias tbw='cd ~/tbw/workspace/tbw-client/; java -jar target/tbw-client*jar '
 #alias g4='rcp ~/ti/TBW* root@g4lab:/home/ti; mv ~/ti/TBW* ~/ti/unused'
 alias g4='tbw --host g4labp2 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
+alias g4dv1='tbw --host g4labdv1 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
+alias g4dv2='tbw --host g4labdv2 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
+alias g4dv3='tbw --host g4labdv3 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
+alias g4dv4='tbw --host g4labdv4 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
+alias g4dv5='tbw --host g4labdv5 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
+alias g4dv6='tbw --host g4labdv6 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
+alias g4dv7='tbw --host g4labdv7 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
 alias g4dv8='tbw --host g4labdv8 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
-alias g4dv2='rcp ~/ti/TBW* root@g4labdv2:/home/ti; mv ~/ti/TBW* ~/ti/unused'
-alias g4dv1='rcp ~/ti/TBW* root@g4labdv1:/home/ti; mv ~/ti/TBW* ~/ti/unused'
+alias g4dv4_8='g4dv4;g4dv5;g4dv6;g4dv7;g4dv8'
 alias g4p2='rcp ~/ti/TBW* root@g4labp2:/home/ti; mv ~/ti/TBW* ~/ti/unused'
 alias g4max='rcp ~/ti/TBW* root@g4max:/home/ti; mv ~/ti/TBW* ~/ti/unused'
 alias vsrc='vi -c "cd src"'
 alias odc='od -t cx1'
+alias npmb='npm run build'
+alias npmbd='npm run build && npm run dev'
+alias npmc='npm run clean'
+alias npmd='npm run dev'
+alias npmi='npm install'
+alias npmt='npm test'
+alias npmtt='npm run test:test'
+alias npmtw='npm run test:watch'
+alias npmj='npm run build:jit |& tee npm.log | head -20'
+alias npms='npm start'
+alias npmjs='(npm run build:jit && npm start) |& tee npm.log | head -15'
+alias b="if [ -e build ]; then build; else scripts/build; fi"
+alias bs="b && npms"
+alias fname='find . -name '
+alias ff='find . \( -name .git -o -name node_modules \) -prune -o -type f -print'
+alias ffx='find . \( -name .git -o -name node_modules \) -prune -o -type f -print | xargs'
+alias ffsed='find . \( -name .git -o -name node_modules \) -prune -o -type f -print | xargs sed -i '
+alias jsb="js-beautify -r "
+alias jsbx="find . -name '*.js' | xargs js-beautify -r "
 
 
 export IGNOREEOF=42

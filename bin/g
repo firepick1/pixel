@@ -8,6 +8,7 @@ shift
 function help() {
   echo "git command shortcut"
 
+  echo "      a  git add -A "
   echo "      b  git branch "
   echo "     bm  git branch --merged"
   echo "    bnm  git branch --no-merged"
@@ -38,7 +39,8 @@ function help() {
   echo "      s  git status"
 }
 
-if [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd=
+if [ "$op" == "a" ]; then cmd="git add -A $@"
+elif [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd=
 elif [ "$op" == "bm" ]; then cmd="git branch --merged"
 elif [ "$op" == "bnm" ]; then cmd="git branch --no-merged"
 elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=

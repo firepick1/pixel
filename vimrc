@@ -13,6 +13,7 @@ set hlsearch                      " Highlight matches.
 set wrap                          " Turn on line wrapping.
 set modeline                      " Allow per file config
 
+set formatoptions-=r             " disable comment auto-indent on enter
 set nows			  " stop at EOF when searching
 set sw=2			  " shift width
 set ic				  " ignore case when searching
