@@ -6,3 +6,33 @@ ln -sf ~/pixel/vimrc .vimrc
 ln -sf ~/pixel/tmux.conf .tmux.conf
 ln -sf ~/pixel/indent.pro .indent.pro
 ln -sf ~/pixel/.astylerc .astylerc
+
+type curl >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: curl installed"
+else
+    sudo apt-get install curl
+fi
+
+type sqlite3 >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: sqlite3 installed"
+else
+    sudo apt-get install sqlite3
+fi
+
+type git >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: git installed"
+else
+    sudo apt-get install git
+fi
+
+type nodejs >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: nodejs installed"
+else
+    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+    sudo apt-get install -y build-essential
+fi

@@ -118,6 +118,8 @@ function c() {
   elif [ "$1" == "mj" ]; then cd mathjs
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
   elif [ "$1" == "o" ]; then cd openpnp/gui
+  elif [ "$1" == "opi" ]; then cd oyapi
+  elif [ "$1" == "ov" ]; then cd oya-vue
   elif [ "$1" == "p" ]; then cd ~/pixel
   elif [ "$1" == "pa" ]; then cd astar-path
   elif [ "$1" == "part" ]; then cd firepart
