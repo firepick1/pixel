@@ -1,11 +1,27 @@
 #! /bin/bash
 
+sudo apt-get update
+
 cd
 ln -sf ~/pixel/bin bin
 ln -sf ~/pixel/vimrc .vimrc
 ln -sf ~/pixel/tmux.conf .tmux.conf
 ln -sf ~/pixel/indent.pro .indent.pro
 ln -sf ~/pixel/.astylerc .astylerc
+
+type cross-env >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: cross-env installed"
+else
+    sudo npm install -g cross-env
+fi
+
+type concurrently >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: concurrently installed"
+else
+    sudo npm install -g concurrently
+fi
 
 type curl >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
@@ -36,3 +52,11 @@ else
     sudo apt-get install -y nodejs
     sudo apt-get install -y build-essential
 fi
+
+type mocha >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: mocha installed"
+else
+    sudo npm install -g mocha
+fi
+
