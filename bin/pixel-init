@@ -9,6 +9,13 @@ ln -sf ~/pixel/tmux.conf .tmux.conf
 ln -sf ~/pixel/indent.pro .indent.pro
 ln -sf ~/pixel/.astylerc .astylerc
 
+type vue >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: vue installed"
+else
+    sudo npm install -g vue-cli
+fi
+
 type cross-env >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: cross-env installed"
