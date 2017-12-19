@@ -16,6 +16,13 @@ else
     sudo npm install -g cross-env
 fi
 
+type rimraf >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: rimraf installed"
+else
+    sudo npm install -g rimraf
+fi
+
 type concurrently >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: concurrently installed"
