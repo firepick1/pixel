@@ -2,8 +2,8 @@
 
 sudo apt-get update
 
-cd
-ln -sf ~/pixel/bin bin
+cd /home/pixel
+#ln -sf /home/pixel/pixel/bin /home/pixel/bin
 ln -sf ~/pixel/vimrc .vimrc
 ln -sf ~/pixel/tmux.conf .tmux.conf
 ln -sf ~/pixel/indent.pro .indent.pro
