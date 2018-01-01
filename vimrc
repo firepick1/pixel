@@ -62,5 +62,7 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 set ts=4
 set sw=4
 
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
 source ~/pixel/osc52.vim
 vmap <C-c> y:call SendViaOSC52(getreg('"'))<cr>
