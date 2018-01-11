@@ -1,5 +1,6 @@
 #! /bin/bash
 
+echo -e "INIT\t: updating apt..."
 sudo apt-get update
 
 cd /home/pixel
@@ -8,6 +9,7 @@ ln -sf ~/pixel/vimrc .vimrc
 ln -sf ~/pixel/tmux.conf .tmux.conf
 ln -sf ~/pixel/indent.pro .indent.pro
 ln -sf ~/pixel/.astylerc .astylerc
+
 
 type vue >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
@@ -37,6 +39,13 @@ else
     sudo npm install -g concurrently
 fi
 
+type vim >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: vim installed"
+else
+    sudo apt-get install vim
+fi
+
 type curl >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: curl installed"
@@ -57,6 +66,9 @@ RC=$?; if [ "$RC" == "0" ]; then
 else
     sudo apt-get install git
 fi
+git config --global user.email "karl@firepick.org"
+git config --global user.name "Karl Lew"
+git config --global push.default simple
 
 type nodejs >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
@@ -74,3 +86,13 @@ else
     sudo npm install -g mocha
 fi
 
+if [ -e .bashrc ]; then
+    cmp .bashrc pixel/.bashrc
+    RC=$?; if [ "$RC" != "0" ]; then
+        mv -f .bashrc .bashrc.old
+    fi
+fi
+ln -sf ~/pixel/.bashrc .bashrc
+echo -e "INIT\t: exit and re-enter chroot to verify setup"
+
+echo -e "INIT\t: pixel initialized"
