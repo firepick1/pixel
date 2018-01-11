@@ -37,6 +37,13 @@ else
     sudo npm install -g concurrently
 fi
 
+type tmux >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: tmux installed"
+else
+    sudo apt-get install tmux
+fi
+
 type curl >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: curl installed"
