@@ -1,6 +1,7 @@
 #! /bin/bash
 
 echo -e "INIT\t: updating apt..."
+sudo apt-get upgrade
 sudo apt-get update
 
 cd /home/pixel
@@ -44,6 +45,14 @@ RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: vim installed"
 else
     sudo apt-get install vim
+fi
+
+type nslookup >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: nslookup installed"
+else
+    sudo apt-get install dnsutils
+fi
 
 type tmux >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then

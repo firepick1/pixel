@@ -95,6 +95,7 @@ function c() {
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "bom" ]; then cd FireBOM
+  elif [ "$1" == "bu" ]; then cd translation
   elif [ "$1" == "c" ]; then cd FirePiCam
   elif [ "$1" == "cv" ]; then cd opencv
   elif [ "$1" == "dl" ]; then cd ~/Downloads
@@ -117,9 +118,15 @@ function c() {
   elif [ "$1" == "lc" ]; then cd FPD-LooseCanon
   elif [ "$1" == "lcw" ]; then cd FPD-LooseCanon.wiki
   elif [ "$1" == "mj" ]; then cd mathjs
+  elif [ "$1" == "mrk" ]; then cd merkle-json
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
   elif [ "$1" == "o" ]; then cd openpnp/gui
+  elif [ "$1" == "oan" ]; then cd oya-ann
+  elif [ "$1" == "oas" ]; then cd oya-asset
+  elif [ "$1" == "oc" ]; then cd oya-chain
+  elif [ "$1" == "opcb" ]; then cd oyapcb
   elif [ "$1" == "opi" ]; then cd oyapi
+  elif [ "$1" == "o3" ]; then cd oya3d
   elif [ "$1" == "ov" ]; then cd oya-vue
   elif [ "$1" == "p" ]; then cd ~/pixel
   elif [ "$1" == "pa" ]; then cd astar-path
@@ -129,6 +136,7 @@ function c() {
   elif [ "$1" == "pick" ]; then cd firepick
   elif [ "$1" == "pix" ]; then cd ~/pixel
   elif [ "$1" == "pixel" ]; then cd ~/pixel
+  elif [ "$1" == "po" ]; then cd Pinout.xyz
   elif [ "$1" == "r" ]; then cd FireREST
   elif [ "$1" == "rb" ]; then cd rest-bundle
   elif [ "$1" == "vg" ]; then cd vue-g-row-col
@@ -137,6 +145,7 @@ function c() {
   elif [ "$1" == "sc" ]; then cd firestep-cam 
   elif [ "$1" == "st" ]; then cd FireStep
   elif [ "$1" == "v" ]; then cd fpd-vision
+  elif [ "$1" == "vmc" ]; then cd vue-motion-cam
 
   elif [ "$1" == "f" ]; then
     if [ -e FireFUSE ]; then cd FireFUSE
@@ -151,7 +160,7 @@ function c() {
 
 EXCLUDE="\( -name dist -o -name bower_components -o -name .metadata -o -name \"*.so\" -o -name bin -o -name ZBar -o -name bootstrap -o -name lib -o -name FireSight -o -name FireFUSE -o -name jansson -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
 EXCLUDESRC="\( -name \"*.map\" -o -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
-INCLUDE="\( -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
+INCLUDE="\( -name '*.po' -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
 function lf() {
   if [ "$1" == "" ]; then
