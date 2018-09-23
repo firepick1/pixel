@@ -143,6 +143,7 @@ function c() {
   elif [ "$1" == "rcl" ]; then cd firerest-client
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
   elif [ "$1" == "sc" ]; then cd firestep-cam 
+  elif [ "$1" == "scv" ]; then cd sc-voice
   elif [ "$1" == "st" ]; then cd FireStep
   elif [ "$1" == "v" ]; then cd fpd-vision
   elif [ "$1" == "vmc" ]; then cd vue-motion-cam
@@ -158,7 +159,7 @@ function c() {
   fi
 }
 
-EXCLUDE="\( -name dist -o -name bower_components -o -name .metadata -o -name \"*.so\" -o -name bin -o -name ZBar -o -name bootstrap -o -name lib -o -name FireSight -o -name FireFUSE -o -name jansson -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
+EXCLUDE="\( -name local -o -name dist -o -name bower_components -o -name .metadata -o -name \"*.so\" -o -name bin -o -name ZBar -o -name bootstrap -o -name lib -o -name FireSight -o -name FireFUSE -o -name jansson -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
 EXCLUDESRC="\( -name \"*.map\" -o -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
 INCLUDE="\( -name '*.po' -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
@@ -274,6 +275,14 @@ function bca86 {
 
 alias ec='export CONFIG='
 alias dirty='grep -i dirty /proc/meminfo'
+alias ec2ip0="aws ec2 describe-instances | json Reservations[0].Instances[0].PublicIpAddress"
+alias ec2ip1="aws ec2 describe-instances | json Reservations[1].Instances[0].PublicIpAddress"
+alias ec2ip2="aws ec2 describe-instances | json Reservations[2].Instances[0].PublicIpAddress"
+alias ec2ip3="aws ec2 describe-instances | json Reservations[3].Instances[0].PublicIpAddress"
+alias sshec2="ssh -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip0`"
+alias sshec2-1="ssh -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip1`"
+alias sshec2-2="ssh -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip2`"
+alias sshec2-3="ssh -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip3`"
 alias sshjoy='ssh admin@165.225.149.255'
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
 alias sob='source ~/.bashrc'
