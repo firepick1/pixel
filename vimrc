@@ -10,6 +10,7 @@ set wildmenu                      " Enhanced command line completion.
 set wildmode=list:longest         " Complete files like a shell.
 set incsearch                     " Highlight matches as you type.
 set hlsearch                      " Highlight matches.
+set shell=/bin/bash
 set wrap                          " Turn on line wrapping.
 set modeline                      " Allow per file config
 

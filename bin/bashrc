@@ -279,6 +279,8 @@ alias ec2ip0="aws ec2 describe-instances | json Reservations[0].Instances[0].Pub
 alias ec2ip1="aws ec2 describe-instances | json Reservations[1].Instances[0].PublicIpAddress"
 alias ec2ip2="aws ec2 describe-instances | json Reservations[2].Instances[0].PublicIpAddress"
 alias ec2ip3="aws ec2 describe-instances | json Reservations[3].Instances[0].PublicIpAddress"
+alias scpec2="scp -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip0`"
+alias scpec2-1="scp -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip1`"
 alias sshec2="ssh -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip0`"
 alias sshec2-1="ssh -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip1`"
 alias sshec2-2="ssh -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip2`"
@@ -354,6 +356,8 @@ alias npmtt='npm run test:test'
 alias npmtw='npm run test:watch'
 alias npmj='npm run build:jit |& tee npm.log | head -20'
 alias npms='npm start'
+alias npmssl='npm run start:ssl'
+alias npmstaging='npm run start:staging'
 alias npmjs='(npm run build:jit && npm start) |& tee npm.log | head -15'
 alias b="if [ -e build ]; then build; else scripts/build; fi"
 alias bs="b && npms"
@@ -363,7 +367,7 @@ alias ffx='find . \( -name .git -o -name node_modules \) -prune -o -type f -prin
 alias ffsed='find . \( -name .git -o -name node_modules \) -prune -o -type f -print | xargs sed -i '
 alias jsb="js-beautify -r "
 alias jsbx="find . -name '*.js' | xargs js-beautify -r "
-
+alias gsutta='./scripts/grep-sutta.sh '
 
 export IGNOREEOF=42
 export VISUAL=vim
