@@ -92,6 +92,7 @@ function c() {
   fi
   if [ "$1" == "s" ]; then 
     if [ -e FireSight ]; then cd FireSight; else cd FireREST/FireSight; fi
+  elif [ "$1" == "aen" ]; then cd aeneas-michael
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "bom" ]; then cd FireBOM
@@ -371,6 +372,7 @@ alias ffsed='find . \( -name .git -o -name node_modules \) -prune -o -type f -pr
 alias jsb="js-beautify -r "
 alias jsbx="find . -name '*.js' | xargs js-beautify -r "
 alias gsutta='./scripts/grep-sutta.sh '
+alias play='ffplay -nodisp -autoexit '
 
 export IGNOREEOF=42
 export VISUAL=vim
