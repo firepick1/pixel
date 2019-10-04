@@ -86,7 +86,7 @@ function c() {
   elif [ "$1" == "tbw" ]; then cd ~/finesse/tbw/workspace
   elif [ "$1" == "tbwd" ]; then cd ~/finesse/tbw-dev/workspace
   elif [ "$1" == "tbww" ]; then cd ~/finesse/tbw.wiki
-  elif [ -e ~/dev/FireSight ]; then cd ~/dev
+  elif [ -e ~/dev/ ]; then cd ~/dev
   elif [ -e ~/github ]; then cd ~/github
   else cd ~
   fi
@@ -128,6 +128,7 @@ function c() {
   elif [ "$1" == "opcb" ]; then cd oyapcb
   elif [ "$1" == "opi" ]; then cd oyapi
   elif [ "$1" == "o3" ]; then cd oya3d
+  elif [ "$1" == "osc" ]; then cd oya-scan
   elif [ "$1" == "ov" ]; then cd oya-vue
   elif [ "$1" == "p" ]; then cd ~/pixel
   elif [ "$1" == "pa" ]; then cd astar-path

@@ -16,70 +16,70 @@ type vue >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: vue installed"
 else
-    sudo npm install -g vue-cli
+    sudo npm install -g -y vue-cli
 fi
 
 type cross-env >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: cross-env installed"
 else
-    sudo npm install -g cross-env
+    sudo npm install -g -y cross-env
 fi
 
 type rimraf >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: rimraf installed"
 else
-    sudo npm install -g rimraf
+    sudo npm install -g -y rimraf
 fi
 
 type concurrently >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: concurrently installed"
 else
-    sudo npm install -g concurrently
+    sudo npm install -g -y concurrently
 fi
 
 type vim >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: vim installed"
 else
-    sudo apt-get install vim
+    sudo apt-get install -y vim
 fi
 
 type nslookup >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: nslookup installed"
 else
-    sudo apt-get install dnsutils
+    sudo apt-get install -y dnsutils
 fi
 
 type tmux >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: tmux installed"
 else
-    sudo apt-get install tmux
+    sudo apt-get install -y tmux
 fi
 
 type curl >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: curl installed"
 else
-    sudo apt-get install curl
+    sudo apt-get install -y curl
 fi
 
 type sqlite3 >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: sqlite3 installed"
 else
-    sudo apt-get install sqlite3
+    sudo apt-get install -y sqlite3
 fi
 
 type git >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: git installed"
 else
-    sudo apt-get install git
+    sudo apt-get install -y git
 fi
 git config --global user.email "karl@firepick.org"
 git config --global user.name "Karl Lew"
@@ -98,7 +98,7 @@ type mocha >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: mocha installed"
 else
-    sudo npm install -g mocha
+    sudo npm install -g -y mocha
 fi
 
 if [ -e .bashrc ]; then
