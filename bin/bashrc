@@ -95,6 +95,7 @@ function c() {
   elif [ "$1" == "aen" ]; then cd aeneas-michael
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "b" ]; then cd firebom-js
+  elif [ "$1" == "bil" ]; then cd scv-bilara
   elif [ "$1" == "bom" ]; then cd FireBOM
   elif [ "$1" == "bu" ]; then cd translation
   elif [ "$1" == "c" ]; then cd FirePiCam
