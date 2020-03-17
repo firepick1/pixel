@@ -95,7 +95,11 @@ function c() {
   elif [ "$1" == "aen" ]; then cd aeneas-michael
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "b" ]; then cd firebom-js
+  elif [ "$1" == "stk" ]; then cd smart-stick
+  elif [ "$1" == "rng" ]; then cd om-ranger
   elif [ "$1" == "bil" ]; then cd scv-bilara
+  elif [ "$1" == "js" ]; then cd just-simple
+  elif [ "$1" == "tts" ]; then cd scv-tts
   elif [ "$1" == "bom" ]; then cd FireBOM
   elif [ "$1" == "bu" ]; then cd translation
   elif [ "$1" == "c" ]; then cd FirePiCam
@@ -284,13 +288,13 @@ alias ec2ip1="aws ec2 describe-instances | json Reservations[1].Instances[0].Pub
 alias ec2ip2="aws ec2 describe-instances | json Reservations[2].Instances[0].PublicIpAddress"
 alias ec2ip3="aws ec2 describe-instances | json Reservations[3].Instances[0].PublicIpAddress"
 alias ec2ip4="aws ec2 describe-instances | json Reservations[4].Instances[0].PublicIpAddress"
-alias scpec2="scp -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip0`"
-alias scpec2-1="scp -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip1`"
-alias sshec2="ssh -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip0`"
-alias sshec2-1="ssh -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip1`"
-alias sshec2-2="ssh -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip2`"
-alias sshec2-3="ssh -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip3`"
-alias sshec2-4="ssh -i ~/.aws/g-sc-polly.pem ubuntu@`ec2ip4`"
+alias scpec2="scp -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip0`"
+alias scpec2-1="scp -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip1`"
+alias sshec2="ssh -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip0`"
+alias sshec2-1="ssh -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip1`"
+alias sshec2-2="ssh -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip2`"
+alias sshec2-3="ssh -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip3`"
+alias sshec2-4="ssh -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip4`"
 alias sshjoy='ssh admin@165.225.149.255'
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
 alias sob='source ~/.bashrc'
@@ -336,20 +340,6 @@ alias moci1='mocha -w -R min --inline-diffs -i -g TESTTEST server/firepick/*.js'
 alias rel='scripts/release'
 alias mci='mvn clean install'
 alias sort='sort -b -f '
-alias tbw='cd ~/tbw/workspace/tbw-client/; java -jar target/tbw-client*jar '
-#alias g4='rcp ~/ti/TBW* root@g4lab:/home/ti; mv ~/ti/TBW* ~/ti/unused'
-alias g4='tbw --host g4labp2 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
-alias g4dv1='tbw --host g4labdv1 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
-alias g4dv2='tbw --host g4labdv2 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
-alias g4dv3='tbw --host g4labdv3 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
-alias g4dv4='tbw --host g4labdv4 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
-alias g4dv5='tbw --host g4labdv5 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
-alias g4dv6='tbw --host g4labdv6 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
-alias g4dv7='tbw --host g4labdv7 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
-alias g4dv8='tbw --host g4labdv8 -u FinMan -p bioreactor --tbw-update ~/ti/TBW*'
-alias g4dv4_8='g4dv4;g4dv5;g4dv6;g4dv7;g4dv8'
-alias g4p2='rcp ~/ti/TBW* root@g4labp2:/home/ti; mv ~/ti/TBW* ~/ti/unused'
-alias g4max='rcp ~/ti/TBW* root@g4max:/home/ti; mv ~/ti/TBW* ~/ti/unused'
 alias vsrc='vi -c "cd src"'
 alias odc='od -t cx1'
 alias npmb='npm run build'
@@ -366,7 +356,6 @@ alias npmssl='npm run start:ssl'
 alias npmstaging='npm run start:staging'
 alias npmjs='(npm run build:jit && npm start) |& tee npm.log | head -15'
 alias b="if [ -e build ]; then build; else scripts/build; fi"
-alias bs="b && npms"
 alias fname='find . -name '
 alias ff='find . \( -name .git -o -name node_modules \) -prune -o -type f -print'
 alias ffx='find . \( -name .git -o -name node_modules \) -prune -o -type f -print | xargs'
@@ -375,6 +364,9 @@ alias jsb="js-beautify -r "
 alias jsbx="find . -name '*.js' | xargs js-beautify -r "
 alias gsutta='./scripts/grep-sutta.sh '
 alias play='ffplay -nodisp -autoexit '
+alias bls='~/dev/scv-bilara/scripts/search -om1'
+alias ble='~/dev/scv-bilara/scripts/bilara_edit'
+alias blv='~/dev/scv-bilara/scripts/bilara_edit vim'
 
 export IGNOREEOF=42
 export VISUAL=vim

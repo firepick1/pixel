@@ -1,0 +1,3 @@
+#!/bin/bash
+echo Bilara Search 
+~/dev/scv-bilara/scripts/search -ol "$@" | less -R

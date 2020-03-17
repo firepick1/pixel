@@ -1,0 +1,53 @@
+#!/bin/bash
+echo DATE,MONTH,EQUITY,INCOME,Bank,EXPENSE,BILLABLE,PROJECT,Method,Schedule C,DESCRIPTION,CASALES,CASALESSCC,URL
+grep -v -e '^[[:space:]]*$' $1 |
+sed -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' -e 's/"//' |
+sed -e 's/[^,]*/&,&/' -e 's/\//,/' -e 's/\//,/' -e 's/\//,/' -e 's/[0-9]*\///' |
+sed -e 's/,/\//' -e 's/,/\//' -e s/,0/,/g |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*DEPOSIT.*\)/\1,\2,,,FirePick Services,,Refund\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*eDeposit.*\)/\1,\2,,,FirePick Services,,Refund\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*CLIPPER.*\)/\1,,,\2,FirePick Services,,Transportation\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*UBER.*\)/\1,,,\2,FirePick Services,,Transportation\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*LYFT.*\)/\1,,,\2,FirePick Services,,Transportation\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*JOYENT.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*LONZO.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*Kaspersky.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*USPS.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*LEIDER.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*aws.amazon.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*INTERNATIONAL PURCH.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*GOOGLE \*SVC.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*GOOGLE \*GOOGLE STO.*\)/\1,,,\2,FirePick Services,,Computer\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*GOOGLE \*GSUITE.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*GOOGLE\*GSUITE.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*GOOGLE \*Domains.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*GOOGLE\*DOMAINS.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*MOBAL.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*STAMPS.*\)/\1,,,\2,FirePick Services,,1040C-18 Office\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*ALIBRE.*\)/\1,,,\2,FirePick Services,,1040C-18 Office\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*FEE FOR.*\)/\1,,,\2,FirePick Services,,Service\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*NEWYORKPIZZA.*\)/\1,,,\2,FirePick Services,,1040C-24b Meals\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*GIOVANNI.*\)/\1,,,\2,FirePick Services,,1040C-24b Meals\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*MERIT VEGAN.*\)/\1,,,\2,FirePick Services,,1040C-24b Meals\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*KABUL.*\)/\1,,,\2,FirePick Services,,1040C-24b Meals\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*SARAVANA.*\)/\1,,,\2,FirePick Services,,1040C-24b Meals\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*PHO VAN.*\)/\1,,,\2,FirePick Services,,1040C-24b Meals\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*IRS.*\)/\1,,,\2,FirePick Services,,Federal Tax\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*SUNNYVALE BUSINESS.*\)/\1,,,\2,FirePick Services,,1040C-23 Taxes\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*CHECK # 1001.*\)/\1,,,\2,FirePick Services,,1040C-23 Taxes\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*CHECK # 1002.*\)/\1,,,\2,FirePick Services,,1040C-23 Taxes\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*CHECK # 1004.*\)/\1,,,\2,FirePick Services,,1040C-23 Taxes\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*CHECK # 1008.*\)/\1,,,\2,FirePick Services,,1040C-23 Taxes\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*CHECK # 1010.*\)/\1,,,\2,FirePick Services,,1040C-23 Taxes\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*VANGUARD.*\)/\1,,,\2,FirePick Services,,401(k) co+emp\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*ULINE.*\)/\1,,,\2,FirePick Services,,1040C-18 Office\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*JDM PACKING.*\)/\1,,,\2,FirePick Services,,1040C-18 Office\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*IKEA.*\)/\1,,,\2,FirePick Services,,1040C-18 Office\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*KASPERSKY.*\)/\1,,,\2,FirePick Services,,1040C-18 Office\3/' |
+sed -e 's/\(.*,2019\),\(.*[^*]\)\*,\(.*GIANT-EAG.*\)/\1,\2,,,,FirePick Services,,Owner Draw\3/' |
+sed -e 's/\(.*,2019\),\(.*[^*]\)\*,\(.*ATM WITHDRAWAL.*\)/\1,\2,,,,FirePick Services,,Owner Draw\3/' |
+sed -e 's/\(.*,2019\),\(.*[^*]\)\*,\(.*CAPITAL CONTRIBUTION.*\)/\1,\2,,,,FirePick Services,,Owner Contribution\3/' |
+sed -e 's/\(.*,2019\),\(.*[^*]\)\*,\(.*ONLINE TRANSFER TO BANK.*\)/\1,\2,,,,FirePick Services,,Owner Draw\3/' |
+sed -e 's/\(.*,2019,\)\(.*[^*]\)\*,\(.*\)/\1,,,\2,FirePick Services,,1040C-22 Parts\3/' |
+sed -e 's/\(.*\),2019,/\1,/'
+
