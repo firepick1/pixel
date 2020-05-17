@@ -116,6 +116,7 @@ function c() {
   elif [ "$1" == "fs" ]; then cd FireSlide
   elif [ "$1" == "g" ]; then cd firepick-org.wiki
   elif [ "$1" == "gf" ]; then cd gfilter
+  elif [ "$1" == "gro" ]; then cd grow-log
   elif [ "$1" == "html" ]; then cd FireREST/www/html
   elif [ "$1" == "io" ]; then cd firepick1.github.io
   elif [ "$1" == "jan" ]; then cd ~/dev/jansson
@@ -150,6 +151,7 @@ function c() {
   elif [ "$1" == "rcl" ]; then cd firerest-client
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
   elif [ "$1" == "sc" ]; then cd firestep-cam 
+  elif [ "$1" == "scr" ]; then cd sc-renumber
   elif [ "$1" == "scv" ]; then cd sc-voice
   elif [ "$1" == "st" ]; then cd FireStep
   elif [ "$1" == "v" ]; then cd fpd-vision

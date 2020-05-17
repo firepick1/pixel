@@ -16,7 +16,6 @@ set modeline                      " Allow per file config
 
 set formatoptions-=r             " disable comment auto-indent on enter
 set nows			  " stop at EOF when searching
-set sw=2			  " shift width
 set ic				  " ignore case when searching
 set ai				  " auto indent on insert
 set number			  " show line numbering
@@ -60,8 +59,9 @@ hi htmlItalic	cterm=underline
 hi htmlBold	cterm=underline
 
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-set ts=4
-set sw=4
+set sw=2			  " shift width
+set ts=2              " tab stop
+autocmd FileType javascript set sw=4 ts=4
 
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
