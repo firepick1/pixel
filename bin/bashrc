@@ -196,8 +196,13 @@ function lgrepi() {
 }
 
 function vgrep() {
-  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -q -E \"$1\" {} \; -exec echo vi -c 'lcd %:p:h' -c '/$1/' {} +"
-  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec grep -q -E \"$1\" {} \; -exec vi -c 'lcd %:p:h' -c '/$1/' {} +"
+  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec rg -l -e \"$1\" {} \; -exec echo vi -c 'lcd %:p:h' -c '/$1/' {} +"
+  eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec rg -l -e \"$1\" {} \; -exec vi -c 'lcd %:p:h' -c '/$1/' {} +"
+}
+
+RGEXCLUDE="-g '!local' -g '!node_modules'"
+function vrg() {
+  eval "vim `rg -l $RGEXCLUDE -e $@`"
 }
 
 function v() {
