@@ -200,9 +200,8 @@ function vgrep() {
   eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f $INCLUDE -exec rg -l -e \"$1\" {} \; -exec vi -c 'lcd %:p:h' -c '/$1/' {} +"
 }
 
-RGEXCLUDE="-g '!local' -g '!node_modules'"
 function vrg() {
-  eval "vim `rg -l $RGEXCLUDE -e $@`"
+  eval "vim -c '/$*/' `rg -l -e \"$*\" | tr '\n' ' '`"
 }
 
 function v() {
