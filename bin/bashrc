@@ -1,3 +1,4 @@
+echo ~/bin/bashrc START
 function parse_git_dirty {
   [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && echo "*"
 }
@@ -285,28 +286,27 @@ function bca86 {
 	done
 }
 
+function ec2ip {
+  if [ "$1" == "" ]; then
+    aws ec2 describe-instances |\
+    json Reservations |\
+    json -a Instances[0].PublicIpAddress |\
+    sed -e "s/^/ubuntu@&/"
+  else
+    aws ec2 describe-instances |\
+    json Reservations[$1].Instances[0].PublicIpAddress |\
+    sed -e "s/^/ubuntu@&/"
+  fi
+}
 
+
+echo ~/bin/bashrc ALIAS
 alias ec='export CONFIG='
 alias dirty='grep -i dirty /proc/meminfo'
-alias ec2ips="aws ec2 describe-instances | json Reservations | json -a Instances[0].PublicIpAddress"
-alias ec2ip0="aws ec2 describe-instances | json Reservations[0].Instances[0].PublicIpAddress"
-alias ec2ip1="aws ec2 describe-instances | json Reservations[1].Instances[0].PublicIpAddress"
-alias ec2ip2="aws ec2 describe-instances | json Reservations[2].Instances[0].PublicIpAddress"
-alias ec2ip3="aws ec2 describe-instances | json Reservations[3].Instances[0].PublicIpAddress"
-alias ec2ip4="aws ec2 describe-instances | json Reservations[4].Instances[0].PublicIpAddress"
-alias scpec2="scp -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip0`"
-alias scpec2-1="scp -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip1`"
-alias sshec2="ssh -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip0`"
-alias sshec2-1="ssh -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip1`"
-alias sshec2-2="ssh -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip2`"
-alias sshec2-3="ssh -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip3`"
-alias sshec2-4="ssh -i ~/.aws/ec2-pixelbook-2019.pem ubuntu@`ec2ip4`"
-alias sshjoy='ssh admin@165.225.149.255'
+alias sshec2="ssh -i ~/.aws/ec2-pixelbook-2019.pem"
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
 alias sob='source ~/.bashrc'
-alias vib='vi ~/bin/bashrc'
-alias vffl='vi /var/log/firefuse.log'
-alias vset='vi -c "lcd %:p:h" ~/.m2/settings.xml'
+alias vib='vim ~/bin/bashrc'
 alias otp='echo $RANDOM | md5sum'
 alias h='history'
 alias hg='history | grep '
@@ -377,3 +377,4 @@ alias blv='~/dev/scv-bilara/scripts/bilara_edit vim'
 export IGNOREEOF=42
 export VISUAL=vim
 export BASH_ENV=~/.bashrc
+echo ~/bin/bashrc END
