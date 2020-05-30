@@ -207,11 +207,10 @@ function vrg() {
 
 function v() {
   if [ "$2" == "" ]; then
-    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec echo vi -c 'cd %:p:h' {} + "
-    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vi -c 'cd %:p:h' {} + "
+    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vim {} + "
   else
-    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec echo vi -c 'cd %:p:h' -c 'e $2*' {} + "
-    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vi -c 'cd %:p:h'  -c 'e $2*' {} + "
+    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec echo vim -c 'cd %:p:h' -c 'e $2*' {} + "
+    eval "find . $EXCLUDE -o $EXCLUDESRC -o -type f -name \"$1*\" -exec vim -c 'cd %:p:h'  -c 'e $2*' {} + "
   fi
 }
 
@@ -346,7 +345,7 @@ alias moci1='mocha -w -R min --inline-diffs -i -g TESTTEST server/firepick/*.js'
 alias rel='scripts/release'
 alias mci='mvn clean install'
 alias sort='sort -b -f '
-alias vsrc='vi -c "cd src"'
+alias vsrc='vim -c "cd src"'
 alias odc='od -t cx1'
 alias npmb='npm run build'
 alias npmbd='npm run build && npm run dev'
