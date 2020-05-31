@@ -155,6 +155,7 @@ function c() {
   elif [ "$1" == "scr" ]; then cd sc-renumber
   elif [ "$1" == "scv" ]; then cd sc-voice
   elif [ "$1" == "st" ]; then cd FireStep
+  elif [ "$1" == "tag" ]; then cd oya-tag
   elif [ "$1" == "v" ]; then cd fpd-vision
   elif [ "$1" == "vmc" ]; then cd vue-motion-cam
 

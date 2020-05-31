@@ -7,10 +7,9 @@ sudo apt-get update
 cd /home/pixel
 #ln -sf /home/pixel/pixel/bin /home/pixel/bin
 ln -sf ~/pixel/vimrc .vimrc
-ln -sf ~/pixel/ripgreprc .ripgreprc
 ln -sf ~/pixel/tmux.conf .tmux.conf
 ln -sf ~/pixel/indent.pro .indent.pro
-ln -sf ~/pixel/.astylerc .astylerc
+ln -sf ~/pixel/astyle.rc .astylerc
 
 
 type vue >& /dev/null
