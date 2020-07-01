@@ -18,6 +18,12 @@ RED="\[\033[0;31m\]"; YELLOW="\[\033[0;33m\]"; GREEN="\[\033[0;32m\]"; NO_COLOR=
     
 PS1="$GREEN\h$NO_COLOR:\w$YELLOW:\$(parse_git_branch)$NO_COLOR:\$(job_count)> "
 
+function rgg() {
+  dir=$1
+  shift
+  rg --iglob=${dir}/** $@
+}
+
 function m() {
   if [ "$1" == "CI" ]; then 
     mvn clean install -Dmaven.test.skip=true
@@ -117,7 +123,6 @@ function c() {
   elif [ "$1" == "fs" ]; then cd FireSlide
   elif [ "$1" == "g" ]; then cd firepick-org.wiki
   elif [ "$1" == "gf" ]; then cd gfilter
-  elif [ "$1" == "gro" ]; then cd grow-log
   elif [ "$1" == "html" ]; then cd FireREST/www/html
   elif [ "$1" == "io" ]; then cd firepick1.github.io
   elif [ "$1" == "jan" ]; then cd ~/dev/jansson
@@ -203,7 +208,18 @@ function vgrep() {
 }
 
 function vrg() {
-  eval "vim -c '/$*/' `rg -l -e \"$*\" | tr '\n' ' '`"
+  if [ "$2" == "" ]; then
+    files=`rg -l -e "$*" | tr '\n' ' '`
+  else
+    dir=$1
+    shift
+    files=`rg -l --iglob="${dir}/**" -e "$*" | tr '\n' ' '`
+  fi
+  if [ "$files" == "" ]; then
+    echo no files found for "$*"
+  else 
+    eval "vim -c \"/$*/\" ${files}"
+  fi
 }
 
 function v() {
