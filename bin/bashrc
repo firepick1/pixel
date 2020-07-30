@@ -389,8 +389,14 @@ alias play='ffplay -nodisp -autoexit '
 alias bls='~/dev/scv-bilara/scripts/search -om1'
 alias ble='~/dev/scv-bilara/scripts/bilara_edit'
 alias blv='~/dev/scv-bilara/scripts/bilara_edit vim'
+alias :e='vim '
+alias e='vim '
+alias ifok='if [ "$?" == "0" ]; then '
+alias iferr='if [ "$?" != "0" ]; then '
 
 export IGNOREEOF=42
 export VISUAL=vim
 export BASH_ENV=~/.bashrc
 echo ~/bin/bashrc END
+export STAGING=ubuntu@54.67.25.233
+export VOICE=ubuntu@50.18.90.151
