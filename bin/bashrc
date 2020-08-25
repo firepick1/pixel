@@ -115,6 +115,7 @@ function c() {
   elif [ "$1" == "dla" ]; then cd ~/Downloads/Arduino
   elif [ "$1" == "dn" ]; then cd ~/Downloads
   elif [ "$1" == "du" ]; then cd diff-upsert
+  elif [ "$1" == "ebt" ]; then cd js-ebt
   elif [ "$1" == "fb" ]; then cd FireBolt
   elif [ "$1" == "fg" ]; then cd FireGear
   elif [ "$1" == "fn" ]; then cd firenodejs
@@ -141,6 +142,9 @@ function c() {
   elif [ "$1" == "opi" ]; then cd oyapi
   elif [ "$1" == "o3" ]; then cd oya3d
   elif [ "$1" == "osc" ]; then cd oya-scan
+  elif [ "$1" == "otg" ]; then cd oya-tag-garden
+  elif [ "$1" == "ok" ]; then cd okitty
+  elif [ "$1" == "oka" ]; then cd okitty-apig
   elif [ "$1" == "ov" ]; then cd oya-vue
   elif [ "$1" == "p" ]; then cd ~/pixel
   elif [ "$1" == "pa" ]; then cd astar-path
@@ -156,6 +160,7 @@ function c() {
   elif [ "$1" == "vg" ]; then cd vue-g-row-col
   elif [ "$1" == "rcl" ]; then cd firerest-client
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
+  elif [ "$1" == "say" ]; then cd say-again
   elif [ "$1" == "sc" ]; then cd firestep-cam 
   elif [ "$1" == "scr" ]; then cd sc-renumber
   elif [ "$1" == "scv" ]; then cd sc-voice
