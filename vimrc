@@ -28,8 +28,6 @@ set encoding=utf-8		  " Unicode
 hi Normal       ctermfg=White ctermbg=Black term=NONE cterm=NONE
 hi Identifier   ctermfg=White ctermbg=Black cterm=bold term=bold
 
-hi CursorColumn ctermfg=LightMagenta  ctermbg=Black
-hi CursorLine   ctermfg=LightMagenta ctermbg=Black cterm=bold term=bold
 hi MatchParen   ctermfg=LightRed ctermbg=Black  cterm=bold term=bold
 
 hi Search       ctermfg=Yellow ctermbg=BLACK cterm=bold
@@ -53,6 +51,8 @@ hi Statement    ctermfg=LightCyan ctermbg=Black cterm=NONE term=NONE
 hi Type         ctermfg=LightCyan ctermbg=Black
 "hi Underlined   ctermfg=LightCyan ctermbg=Black
 hi VimCommand   ctermfg=LightCyan ctermbg=Black
+hi CursorColumn ctermfg=LightMagenta ctermbg=Black
+hi CursorLine   ctermfg=LightMagenta ctermbg=Black cterm=bold term=bold
 
 hi LineNr       ctermfg=Green ctermbg=Black cterm=NONE term=NONE
 hi htmlItalic	cterm=underline
