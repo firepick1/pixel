@@ -11,6 +11,12 @@ ln -sf ~/pixel/tmux.conf .tmux.conf
 ln -sf ~/pixel/indent.pro .indent.pro
 ln -sf ~/pixel/astyle.rc .astylerc
 
+type mkpasswd >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: whois installed"
+else
+    sudo apt-get install -y whois
+fi
 
 type vue >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then

@@ -131,6 +131,7 @@ function c() {
   elif [ "$1" == "kir" ]; then cd kinann-rest
   elif [ "$1" == "lc" ]; then cd FPD-LooseCanon
   elif [ "$1" == "lcw" ]; then cd FPD-LooseCanon.wiki
+  elif [ "$1" == "log" ]; then cd log-instance
   elif [ "$1" == "mj" ]; then cd mathjs
   elif [ "$1" == "mrk" ]; then cd merkle-json
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
@@ -378,7 +379,7 @@ alias npmt='npm test'
 alias npmtt='npm run test:test'
 alias npmtw='npm run test:watch'
 alias npmj='npm run build:jit |& tee npm.log | head -20'
-alias npms='npm start'
+alias npms='npm start 2>&1 | tee /tmp/npm.log'
 alias npmssl='npm run start:ssl'
 alias npmstaging='npm run start:staging'
 alias npmjs='(npm run build:jit && npm start) |& tee npm.log | head -15'
@@ -400,6 +401,9 @@ alias :e='vim '
 alias e='vim '
 alias ifok='if [ "$?" == "0" ]; then '
 alias iferr='if [ "$?" != "0" ]; then '
+alias dock='sudo docker'
+alias dk='sudo docker'
+alias dkr='sudo docker run --rm -it'
 
 export IGNOREEOF=42
 export VISUAL=vim
