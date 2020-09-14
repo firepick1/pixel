@@ -69,30 +69,10 @@ function c() {
   elif [ "$1" == "ar" ]; then cd ~/Arduino
   elif [ "$1" == "t" ]; then cd target
   elif [ "$1" == "D" ]; then cd Debug
-  elif [ "$1" == "tj" ]; then cd ~/tbw/workspace/jansson
-  elif [ "$1" == "vb" ]; then cd ~/tbw/workspace/vbmodbus
-  elif [ "$1" == "tr" ]; then cd ~/tbw/workspace/ResourceTree
-  elif [ "$1" == "troo" ]; then cd ~/tbw/workspace/rootil
-  elif [ "$1" == "tw" ]; then cd ~/tbw/workspace/RESTserver
-  elif [ "$1" == "tsb" ]; then cd ~/tbw/workspace/FinesseSmartBoards
-  elif [ "$1" == "tmb" ]; then cd ~/tbw/workspace/modbustcpslave
-  elif [ "$1" == "sam" ]; then cd ~/tbw/workspace/sam
-  elif [ "$1" == "ts" ]; then cd ~/tbw/workspace/sam
-  elif [ "$1" == "td" ]; then cd ~/tbw/workspace/deploy
-  elif [ "$1" == "tc" ]; then cd ~/tbw/workspace/Configurations
-  elif [ "$1" == "tbc" ]; then cd ~/tbw/workspace/tbw-client
-  elif [ "$1" == "tbcj" ]; then cd ~/tbw/workspace/tbw-client/src/main/java/com/finesse/tbw
-  elif [ "$1" == "th" ]; then cd ~/tbw/workspace/HouseKeeper
-  elif [ "$1" == "tt" ]; then cd ~/tbw/workspace/FinesseTest
-  elif [ "$1" == "ti" ]; then cd ~/tbw/workspace/FinesseTIplatform
-  elif [ "$1" == "tu" ]; then cd ~/tbw/workspace/FinesseUtils
   elif [ "$1" == "3d" ]; then cd ~/RepRap/Printrun
   elif [ "$1" == "tom" ]; then cd /opt/local/share/tomcat
   elif [ "$1" == "sea" ]; then cd ~/dev
   elif [ "$1" == "fin" ]; then cd ~/finesse
-  elif [ "$1" == "tbw" ]; then cd ~/finesse/tbw/workspace
-  elif [ "$1" == "tbwd" ]; then cd ~/finesse/tbw-dev/workspace
-  elif [ "$1" == "tbww" ]; then cd ~/finesse/tbw.wiki
   elif [ -e ~/dev/ ]; then cd ~/dev
   elif [ -e ~/github ]; then cd ~/github
   else cd ~
@@ -137,6 +117,7 @@ function c() {
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
   elif [ "$1" == "o" ]; then cd openpnp/gui
   elif [ "$1" == "oan" ]; then cd oya-ann
+  elif [ "$1" == "oaw" ]; then cd oya-aws
   elif [ "$1" == "oas" ]; then cd oya-asset
   elif [ "$1" == "oc" ]; then cd oya-chain
   elif [ "$1" == "opcb" ]; then cd oyapcb
@@ -161,6 +142,7 @@ function c() {
   elif [ "$1" == "vg" ]; then cd vue-g-row-col
   elif [ "$1" == "rcl" ]; then cd firerest-client
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
+  elif [ "$1" == "sam" ]; then cd aws-sam
   elif [ "$1" == "say" ]; then cd say-again
   elif [ "$1" == "sc" ]; then cd firestep-cam 
   elif [ "$1" == "scr" ]; then cd sc-renumber
@@ -270,23 +252,6 @@ function seagate {
 	#fi
 #}
 
-function bcati {
-	echo "CMD	: ./build clean all"
-	./build clean all
-	rc=$?;
-	if [ $rc -eq 0 ]; then
-		echo "CMD	: rsync -avz ~/tbw/workspace/Configurations/ ~/ti/Configurations/"
-		rsync -avz ~/tbw/workspace/Configurations/ ~/ti/Configurations/
-		echo "CMD	: rsync -avz ~/ti/ /home/ti/finesse/"
-		rsync -avz ~/ti/ /home/ti/finesse/
-		echo "CMD	: rsync -avz /home/ti/finesse/ root@ti-karl:/home/ti/finesse/"
-		rsync -avz /home/ti/finesse/ root@ti-karl:/home/ti/finesse/
-	else
-		echo "ERROR	: build failed rc:" $rc
-		return $rc
-	fi
-}
-
 function bca86 {
 	echo "CMD	: ./build clean all"
 	export CONFIG=Debug-86
@@ -350,7 +315,6 @@ alias aptinst='dpkg --get-selections | grep -v deinstall | grep'
 alias aptavail='apt-cache search '
 alias bld='./build |& tee build.log'
 alias bpb='./build post-build |& tee build.log'
-alias wintbw='tmux -f ~/pixel/tmux.tbw attach'
 alias win='tmux attach'
 alias tihomefs='sshfs -o nonempty root@ti-home:/home/ti/finesse /home/ti'
 alias tifs='sshfs -o nonempty root@ti-karl:/home/ti/finesse /home/ti/finesse'
@@ -375,9 +339,10 @@ alias npmbd='npm run build && npm run dev'
 alias npmc='npm run clean'
 alias npmd='npm run dev'
 alias npmi='npm install'
-alias npmt='npm test'
-alias npmtt='npm run test:test'
-alias npmtw='npm run test:watch'
+alias npmt='mocha --inline-diffs'
+alias npmtt='mocha -w -R min --inline-diffs -g TEST'
+alias test='mocha --inline-diffs'
+alias testtest='mocha -w -R min --inline-diffs -g TEST'
 alias npmj='npm run build:jit |& tee npm.log | head -20'
 alias npms='npm start 2>&1 | tee /tmp/npm.log'
 alias npmssl='npm run start:ssl'
@@ -402,8 +367,8 @@ alias e='vim '
 alias ifok='if [ "$?" == "0" ]; then '
 alias iferr='if [ "$?" != "0" ]; then '
 alias dock='sudo docker'
-alias dk='sudo docker'
-alias dkr='sudo docker run --rm -it'
+alias dk='docker'
+alias dkr='docker run --rm -it'
 
 export IGNOREEOF=42
 export VISUAL=vim
