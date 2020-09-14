@@ -24,45 +24,6 @@ function rgg() {
   rg --iglob=${dir}/** $@
 }
 
-function m() {
-  if [ "$1" == "CI" ]; then 
-    mvn clean install -Dmaven.test.skip=true
-    if [ $? -ne 0 ]; then more target/surefire-reports/*.txt; fi
-  elif [ "$1" == "rprep" ]; then 
-    mvn clean release:prepare && echo "step #1: otp" && echo "step #2: g relb #.#" && echo "step #3: mvn release:perform"
-  elif [ "$1" == "rperf" ]; then 
-    mvn clean release:perform 
-  elif [ "$1" == "rback" ]; then 
-    mvn clean release:rollback 
-  elif [ "$1" == "ci" ]; then 
-    mvn clean install
-    if [ $? -ne 0 ]; then more target/surefire-reports/*.txt; fi
-  elif [ "$1" == "ccas" ]; then 
-    mvn clean compile assembly:single
-  elif [ "$1" == "cid" ]; then 
-    mvn clean install deploy
-    if [ $? -ne 0 ]; then more target/surefire-reports/*.txt; fi
-  elif [ "$1" == "err" ]; then 
-    more target/surefire-reports/*.txt
-  fi
-}
-
-function bt() {
-	if [ "$EXEC" == "" ]; then
-		echo "ERROR	: EXEC has not been defined"
-		echo "TRY	: export EXEC=name-of-executabe"
-	elif [ ! -e $EXEC ]; then
-		echo "ERROR	: $EXEC does not exist"
-		echo "TRY	: export EXEC=name-of-executabe"
-	elif [ ! -e core ]; then
-		echo "ERROR	: no core file"
-		echo "TRY	: coredump"
-	else
-		echo "COMMAND	: gdb -q -x ~/pixel/gdb.cmd $EXEC core"
-		gdb -q -x ~/pixel/gdb.cmd $EXEC core
-	fi
-}
-
 function c() {
   if [ "$1" == "w" ]; then cd *.wiki
   elif [ "$1" == "down" ]; then cd ~/Downloads
@@ -224,55 +185,6 @@ function coredump {
   sudo bash -c "echo ./core > /proc/sys/kernel/core_pattern"
 }
 
-function seagate {
-  fuser ~/seagate
-  if [ "$1" == "off" ] || [ "$1" == "on" ]; then 
-    echo sudo umount ~/seagate; 
-    sudo umount ~/seagate; 
-    if [ $? -ne 0 ]; then echo "umount failed"; fi
-  fi
-  if [ "$1" == "on" ]; then 
-    echo sudo mount -a
-    sudo mount -a
-    if [ $? -ne 0 ]; then echo "mount failed"; fi
-  fi
-  ~/seagate/hello
-}
-
-#function bcata {
-	#echo "CMD	: ./build clean all"
-	#./build clean all
-	#rc=$?;
-	#if [ $rc -eq 0 ]; then
-		#echo "CMD	: target/test"
-		#target/test
-	#else
-		#echo "ERROR	: build failed rc:" $rc
-		#return $rc
-	#fi
-#}
-
-function bca86 {
-	echo "CMD	: ./build clean all"
-	export CONFIG=Debug-86
-	LOOP=1
-	while [ $LOOP -eq 1 ]; do
-		./build clean all
-		rc=$?;
-		if [ $rc -eq 0 ]; then
-			$EXEC $*
-		else
-			echo "ERROR	: build failed rc:" $rc
-		fi
-		if [ "$1" == "-w" ]; then
-			echo "SLEEP	: ..."
-			sleep 5
-		else
-			LOOP=0
-		fi
-	done
-}
-
 function ec2ip {
   if [ "$1" == "" ]; then
     aws ec2 describe-instances |\
@@ -289,7 +201,6 @@ function ec2ip {
 
 echo ~/bin/bashrc ALIAS
 alias ec='export CONFIG='
-alias dirty='grep -i dirty /proc/meminfo'
 alias sshec2="ssh -i ~/.aws/ec2-pixelbook-2019.pem"
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
 alias sob='source ~/.bashrc'
@@ -298,17 +209,8 @@ alias otp='echo $RANDOM | md5sum'
 alias h='history'
 alias hg='history | grep '
 alias psv='ps -eo vsz,pmem,pcpu,user,pid,ppid,stime,tty,time,args --sort vsz'
-alias fpdcam='rcp pi@fpd:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
-alias fp80cam='rcp pi@firepick80:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
-alias fpcam='rcp pi@firepick:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
-alias fpdcam='rcp pi@fpd:/dev/firefuse/sync/cv/1/camera.jpg ~/Downloads ; chmod +w ~/Downloads/camera.jpg'
 alias freek='free | grep s.c | grep -Eo "[^ ]*$"'
 alias freem='free -m | grep s.c | grep -Eo "[^ ]*$"'
-alias gcode='echo $1 > /dev/firefuse/cnc/firepick1/gcode.fire'
-alias irc='irssi -c chat.freenode.net -n KarlLew'
-alias bca='./build clean -j 4; ./build all -j 4'
-alias ba='./build all -j 4'
-alias bclean='./build clean'
 alias xfce='sudo startxfce4'
 alias psg='ps -ef | grep -v "grep --color=auto" | grep '
 alias aptinst='dpkg --get-selections | grep -v deinstall | grep'
@@ -316,21 +218,7 @@ alias aptavail='apt-cache search '
 alias bld='./build |& tee build.log'
 alias bpb='./build post-build |& tee build.log'
 alias win='tmux attach'
-alias tihomefs='sshfs -o nonempty root@ti-home:/home/ti/finesse /home/ti'
-alias tifs='sshfs -o nonempty root@ti-karl:/home/ti/finesse /home/ti/finesse'
-alias fpdfs='sshfs -o nonempty pi@fpd:/home/pi/FireREST ~/fpd'
-alias restdssl='sudo Debug-86/RESTserver -d --ssl -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
-alias netex='pushd ~/dev/Downloads/netExtenderClient; sudo ./netExtender -u klew -p Firepass -d Finesse sslvpn.finesse.com; popd'
-alias restd='sudo Debug-86/RESTserver -d -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
-alias rest='Debug-86/RESTserver -m WebServer/json/FullG4Lite.json ../Configurations/KeyTok.txt'
 alias vgnd='valgrind --leak-check=full --show-reachable=yes --track-origins=yes '
-alias mocijs='mocha -w -R min --inline-diffs -i -g TESTTEST *.js'
-alias moctjs='mocha -w -R min --inline-diffs -g TESTTEST *.js'
-alias mocjs='mocha -w -R min --inline-diffs *.js'
-alias moc1='mocha -w -R min --inline-diffs -g TESTTEST server/firepick/*.js'
-alias moci1='mocha -w -R min --inline-diffs -i -g TESTTEST server/firepick/*.js'
-alias rel='scripts/release'
-alias mci='mvn clean install'
 alias sort='sort -b -f '
 alias vsrc='vim -c "cd src"'
 alias odc='od -t cx1'
@@ -339,10 +227,9 @@ alias npmbd='npm run build && npm run dev'
 alias npmc='npm run clean'
 alias npmd='npm run dev'
 alias npmi='npm install'
-alias npmt='mocha --inline-diffs'
-alias npmtt='mocha -w -R min --inline-diffs -g TEST'
-alias test='mocha --inline-diffs'
-alias testtest='mocha -w -R min --inline-diffs -g TEST'
+alias npmt='npm run test'
+alias mt='mocha --inline-diffs'
+alias mtt='mocha -w -R min --inline-diffs -g TEST'
 alias npmj='npm run build:jit |& tee npm.log | head -20'
 alias npms='npm start 2>&1 | tee /tmp/npm.log'
 alias npmssl='npm run start:ssl'
