@@ -1,4 +1,4 @@
-echo ~/bin/bashrc START
+echo ~/bin/bashrc START `date +"%Y%m%d@%H%M%S.%3N"`
 function parse_git_dirty {
   [[ $(git status 2> /dev/null | tail -n1 | sed s/,.*// ) != "nothing to commit" ]] && echo "*"
 }
@@ -56,7 +56,8 @@ function c() {
   elif [ "$1" == "dla" ]; then cd ~/Downloads/Arduino
   elif [ "$1" == "dn" ]; then cd ~/Downloads
   elif [ "$1" == "du" ]; then cd diff-upsert
-  elif [ "$1" == "ebt" ]; then cd js-ebt
+  elif [ "$1" == "jeb" ]; then cd js-ebt
+  elif [ "$1" == "ebt" ]; then cd ebt-doc
   elif [ "$1" == "fb" ]; then cd FireBolt
   elif [ "$1" == "fg" ]; then cd FireGear
   elif [ "$1" == "fn" ]; then cd firenodejs
@@ -73,6 +74,7 @@ function c() {
   elif [ "$1" == "lc" ]; then cd FPD-LooseCanon
   elif [ "$1" == "lcw" ]; then cd FPD-LooseCanon.wiki
   elif [ "$1" == "log" ]; then cd log-instance
+  elif [ "$1" == "mem" ]; then cd memo-again
   elif [ "$1" == "mj" ]; then cd mathjs
   elif [ "$1" == "mrk" ]; then cd merkle-json
   elif [ "$1" == "mote" ] || [ "$1" == "m" ]; then cd FireMote
@@ -106,8 +108,11 @@ function c() {
   elif [ "$1" == "sam" ]; then cd aws-sam
   elif [ "$1" == "say" ]; then cd say-again
   elif [ "$1" == "sc" ]; then cd firestep-cam 
+  elif [ "$1" == "sca" ]; then cd sc-api
   elif [ "$1" == "scr" ]; then cd sc-renumber
   elif [ "$1" == "scv" ]; then cd sc-voice
+  elif [ "$1" == "scd" ]; then cd sc-data
+  elif [ "$1" == "sls" ]; then cd serverless
   elif [ "$1" == "st" ]; then cd FireStep
   elif [ "$1" == "tag" ]; then cd oya-tag
   elif [ "$1" == "v" ]; then cd fpd-vision
@@ -199,9 +204,9 @@ function ec2ip {
 }
 
 
-echo ~/bin/bashrc ALIAS
 alias ec='export CONFIG='
 alias sshec2="ssh -i ~/.aws/ec2-pixelbook-2019.pem"
+alias scpec2="scp -i ~/.aws/ec2-pixelbook-2019.pem"
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
 alias sob='source ~/.bashrc'
 alias vib='vim ~/bin/bashrc'
@@ -227,7 +232,10 @@ alias npmbd='npm run build && npm run dev'
 alias npmc='npm run clean'
 alias npmd='npm run dev'
 alias npmi='npm install'
+alias npmis='npm install --save'
 alias npmt='npm run test'
+alias npmp='npm publish 2>&1 | tee local/publish.log | less'
+alias npmtt='npm run test:test'
 alias mt='mocha --inline-diffs'
 alias mtt='mocha -w -R min --inline-diffs -g TEST'
 alias npmj='npm run build:jit |& tee npm.log | head -20'
@@ -256,10 +264,14 @@ alias iferr='if [ "$?" != "0" ]; then '
 alias dock='sudo docker'
 alias dk='docker'
 alias dkr='docker run --rm -it'
+alias sld='serverless deploy'
+alias sli='serverless invoke'
+alias sll='serverless invoke local -f'
 
 export IGNOREEOF=42
 export VISUAL=vim
 export BASH_ENV=~/.bashrc
-echo ~/bin/bashrc END
 export STAGING=ubuntu@54.67.25.233
 export VOICE=ubuntu@50.18.90.151
+
+echo ~/bin/bashrc "-END-" `date +"%Y%m%d@%H%M%S.%3N"`
