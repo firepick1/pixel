@@ -234,7 +234,7 @@ alias npmd='npm run dev'
 alias npmi='npm install'
 alias npmis='npm install --save'
 alias npmt='npm run test'
-alias npmp='npm publish 2>&1 | tee local/publish.log | less'
+alias npmp='npm publish 2>&1 | tee local/publish.log'
 alias npmtt='npm run test:test'
 alias mt='mocha --inline-diffs'
 alias mtt='mocha -w -R min --inline-diffs -g TEST'
@@ -273,5 +273,6 @@ export VISUAL=vim
 export BASH_ENV=~/.bashrc
 export STAGING=ubuntu@54.67.25.233
 export VOICE=ubuntu@50.18.90.151
+tput init
 
 echo ~/bin/bashrc "-END-" `date +"%Y%m%d@%H%M%S.%3N"`
