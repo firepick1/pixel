@@ -107,6 +107,13 @@ else
     sudo npm install -g -y mocha
 fi
 
+type ogginfo
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: vorbis-tools installed"
+else
+    sudo npm install -g -y vorbis-tools
+fi
+
 type rg >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: ripgrep installed"
