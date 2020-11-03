@@ -43,6 +43,7 @@ function c() {
   elif [ "$1" == "aen" ]; then cd aeneas-michael
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "b" ]; then cd firebom-js
+  elif [ "$1" == "bus" ]; then cd scv-buster
   elif [ "$1" == "stk" ]; then cd smart-stick
   elif [ "$1" == "rng" ]; then cd om-ranger
   elif [ "$1" == "bil" ]; then cd scv-bilara

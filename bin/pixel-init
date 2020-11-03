@@ -107,6 +107,13 @@ else
     sudo npm install -g -y mocha
 fi
 
+type opusenc
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: opus-tools installed"
+else
+    sudo apt-get install -y opus-tools
+fi
+
 type ogginfo
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: vorbis-tools installed"
