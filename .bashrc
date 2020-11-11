@@ -113,6 +113,7 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export RIPGREP_CONFIG_PATH=~/pixel/ripgreprc
 
+echo LOADING BASHRC
 source ~/bin/bashrc
 
 

@@ -4,122 +4,104 @@ echo -e "INIT\t: updating apt..."
 sudo apt-get upgrade
 sudo apt-get update
 
-cd /home/pixel
+function installApp() {
+  APP=$1
+  INST=$2
+  if [ "$INST" == "" ]; then INST=$APP; fi
+  type $APP >& /dev/null
+  RC=$?; if [ "$RC" == "0" ]; then
+      echo -e "INIT\t:" `type $APP`
+  else
+      echo -e "INIT\t: installing $APP (sudo)"
+      sudo apt-get install -y $INST
+  fi
+}
+
+function installLibDev() {
+  LIB=$1
+  MSG=`sudo ldconfig -p | grep $LIB.so`;
+  RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: $MSG (OK)"
+  else
+    echo -e "INIT\t: installing $LIB-dev"
+  fi
+}
+
+cd ~
 #ln -sf /home/pixel/pixel/bin /home/pixel/bin
 ln -sf ~/pixel/vimrc .vimrc
 ln -sf ~/pixel/tmux.conf .tmux.conf
 ln -sf ~/pixel/indent.pro .indent.pro
 ln -sf ~/pixel/astyle.rc .astylerc
 
-type mkpasswd >& /dev/null
+installApp curl
+
+MSG=`sudo bash -c "type docker" >& /dev/null` 
 RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: whois installed"
+    echo -e "INIT\t: $MSG (OK)"
 else
-    sudo apt-get install -y whois
+    echo -e "INIT\t: installing docker engine"
+    sudo apt-get install -y\
+      apt-transport-https ca-certificates gnupg-agent software-properties-common
+    curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+    sudo apt-key fingerprint 0EBFCD88 \
+      |& grep "9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88" >& /dev/null
+    RC=$?; if [ "$RC" == "0" ]; then
+      echo -e  "INIT\t: valid docker key"
+    else
+      echo -e  "INIT\t: invalid docker key (FATAL)"
+      exit 1
+    fi
+    sudo add-apt-repository \
+       "deb [arch=amd64] https://download.docker.com/linux/debian \
+       $(lsb_release -cs) \
+      stable"
+   sudo apt-get update
+   sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+   sudo groupadd docker
+   sudo usermod -aG docker $USER
+   newgrp docker
 fi
 
-type vue >& /dev/null
+exit
+
+OLD_NODE=10.21
+nodejs --version |& grep $OLD_NODE >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: vue installed"
+  echo -e "INIT\t: uninstalling nodejs $OLD_NODE"
+  sudo apt-get remove -y nodejs 
 else
-    sudo npm install -g -y vue-cli
+  echo -e "INIT\t: no legacy nodejs found (OK)"
 fi
 
-type cross-env >& /dev/null
+NODE_VER=14.15
+nodejs --version |& grep $NODE_VER >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: cross-env installed"
+  echo -e "INIT\t: nodejs $NODE_VER installed"
 else
-    sudo npm install -g -y cross-env
+  echo -e "INIT\t: installing nodejs $NODE_VER"
+  curl -sL https://deb.nodesource.com/setup_14.x | tee node_setup_14.x | sudo bash -
+  sudo apt -y install nodejs
 fi
 
-type rimraf >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: rimraf installed"
-else
-    sudo npm install -g -y rimraf
-fi
+installApp npm
+installApp mkpasswd whois
+installApp vue vue-cli
+installApp cross-env
+installApp concurrently
+installApp vim
+installApp nslookup dnsutils
+installApp tmux
+installApp sqlite3
+installApp git
 
-type concurrently >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: concurrently installed"
-else
-    sudo npm install -g -y concurrently
-fi
-
-type vim >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: vim installed"
-else
-    sudo apt-get install -y vim
-fi
-
-type nslookup >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: nslookup installed"
-else
-    sudo apt-get install -y dnsutils
-fi
-
-type tmux >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: tmux installed"
-else
-    sudo apt-get install -y tmux
-fi
-
-type curl >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: curl installed"
-else
-    sudo apt-get install -y curl
-fi
-
-type sqlite3 >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: sqlite3 installed"
-else
-    sudo apt-get install -y sqlite3
-fi
-
-type git >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: git installed"
-else
-    sudo apt-get install -y git
-fi
 git config --global user.email "karl@firepick.org"
 git config --global user.name "Karl Lew"
 git config --global push.default simple
 
-type nodejs >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: nodejs installed"
-else
-    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-    sudo apt-get install -y nodejs
-    sudo apt-get install -y build-essential
-fi
-
-type mocha >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: mocha installed"
-else
-    sudo npm install -g -y mocha
-fi
-
-type opusenc
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: opus-tools installed"
-else
-    sudo apt-get install -y opus-tools
-fi
-
-type ogginfo
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: vorbis-tools installed"
-else
-    sudo npm install -g -y vorbis-tools
-fi
+installApp mocha
+installApp opusenc opus-tools
+installApp ogginfo vorbis-tools
 
 type rg >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
