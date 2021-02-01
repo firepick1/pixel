@@ -43,7 +43,7 @@ function c() {
   elif [ "$1" == "aen" ]; then cd aeneas-michael
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "b" ]; then cd firebom-js
-  elif [ "$1" == "bus" ]; then cd scv-buster
+  elif [ "$1" == "dkr" ]; then cd scv-docker
   elif [ "$1" == "stk" ]; then cd smart-stick
   elif [ "$1" == "rng" ]; then cd om-ranger
   elif [ "$1" == "bil" ]; then cd scv-bilara
@@ -57,6 +57,7 @@ function c() {
   elif [ "$1" == "dla" ]; then cd ~/Downloads/Arduino
   elif [ "$1" == "dn" ]; then cd ~/Downloads
   elif [ "$1" == "du" ]; then cd diff-upsert
+  elif [ "$1" == "dur" ]; then cd scv-duration
   elif [ "$1" == "jeb" ]; then cd js-ebt
   elif [ "$1" == "ebt" ]; then cd ebt-doc
   elif [ "$1" == "fb" ]; then cd FireBolt
@@ -115,8 +116,10 @@ function c() {
   elif [ "$1" == "scd" ]; then cd sc-data
   elif [ "$1" == "sls" ]; then cd serverless
   elif [ "$1" == "st" ]; then cd FireStep
+  elif [ "$1" == "svs" ]; then cd scv-static
   elif [ "$1" == "tag" ]; then cd oya-tag
   elif [ "$1" == "v" ]; then cd fpd-vision
+  elif [ "$1" == "ver" ]; then cd bilara-verse
   elif [ "$1" == "vmc" ]; then cd vue-motion-cam
 
   elif [ "$1" == "f" ]; then
@@ -232,8 +235,9 @@ alias npmb='npm run build'
 alias npmbd='npm run build && npm run dev'
 alias npmc='npm run clean'
 alias npmd='npm run dev'
-alias npmi='npm install'
-alias npmis='npm install --save'
+alias npmg='npm run generate'
+alias npmi='npm install --save'
+alias npmid='npm install --save-dev'
 alias npmt='npm run test'
 alias npmp='npm publish 2>&1 | tee local/publish.log'
 alias npmtt='npm run test:test'
@@ -244,7 +248,7 @@ alias npms='npm start 2>&1 | tee /tmp/npm.log'
 alias npmssl='npm run start:ssl'
 alias npmstaging='npm run start:staging'
 alias npmjs='(npm run build:jit && npm start) |& tee npm.log | head -15'
-alias pv='json version <package.json'
+alias pv='git diff -U0 package.json; json version <package.json'
 alias b="if [ -e build ]; then build; else scripts/build; fi"
 alias fname='find . -name '
 alias ff='find . \( -name .git -o -name node_modules \) -prune -o -type f -print'
@@ -265,6 +269,12 @@ alias iferr='if [ "$?" != "0" ]; then '
 alias dock='sudo docker'
 alias dk='docker'
 alias dkr='docker run --rm -it'
+alias dkru='docker run --rm -it sc-voice/scv-ubuntu'
+alias dkrd='docker run --rm -it sc-voice/scv-debian'
+alias dkrud='docker run --rm -it sc-voice/scv-ubuntu-dev'
+alias dkrdd='docker run --rm -it sc-voice/scv-debian-dev'
+alias dkruv='docker run --rm -it sc-voice/scv-ubuntu-scv'
+alias dkrdv='docker run --rm -it sc-voice/scv-debian-scv'
 alias sld='serverless deploy'
 alias sli='serverless invoke'
 alias sll='serverless invoke local -f'

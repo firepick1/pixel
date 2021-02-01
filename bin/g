@@ -13,7 +13,7 @@ function help() {
   echo "     bm  git branch --merged"
   echo "    bnm  git branch --no-merged"
   echo "    cam  git commit -am comment"
-  echo "   camp  git commit -am comment && git push"
+  echo "   camp  npm audit fix; git commit -am comment && git push"
   echo "    con  git config ... "
   echo "   conl  git config --list "
   echo "coninit  git config ... "
@@ -49,7 +49,11 @@ elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd
 elif [ "$op" == "dt" ]; then echo "git push origin :refs/tags/$@"; git push origin :refs/tags/"$@"; cmd=
 elif [ "$op" == "ra" ]; then echo "git remote add $@"; git remote add "$@"; cmd=
 elif [ "$op" == "rrm" ]; then echo "git remote rm $@"; git remote rm "$@"; cmd=
-elif [ "$op" == "camp" ]; then echo "git commit -am $@ && git push"; git commit -am "$@" && git push; cmd=
+elif [ "$op" == "camp" ]; then 
+  CMT="v`json version < package.json` $@"
+  echo "npm audit fix; git commit -am "$CMT" && git push"; 
+  [[ -e package-lock.json ]] && npm audit fix; git commit -am "$CMT" && git push; 
+  cmd=
 elif [ "$op" == "conl" ]; then cmd="git config --list"
 elif [ "$op" == "con" ]; then 
   echo "git config $@"

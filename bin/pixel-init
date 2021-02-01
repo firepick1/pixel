@@ -1,19 +1,33 @@
 #! /bin/bash
 
-echo -e "INIT\t: updating apt..."
-sudo apt-get upgrade
+echo -e "INIT\t: apt-get update..."
 sudo apt-get update
+echo -e "INIT\t: apt-get upgrade..."
+sudo apt-get upgrade
 
-function installApp() {
+function installApt() {
   APP=$1
   INST=$2
   if [ "$INST" == "" ]; then INST=$APP; fi
   type $APP >& /dev/null
   RC=$?; if [ "$RC" == "0" ]; then
-      echo -e "INIT\t:" `type $APP`
+      echo -e "INIT\t:" `type $APP` "(OK)"
   else
       echo -e "INIT\t: installing $APP (sudo)"
       sudo apt-get install -y $INST
+  fi
+}
+
+function installNpm() {
+  APP=$1
+  INST=$2
+  if [ "$INST" == "" ]; then INST=$APP; fi
+  type $APP >& /dev/null
+  RC=$?; if [ "$RC" == "0" ]; then
+      echo -e "INIT\t:" `type $APP` "(OK)"
+  else
+      echo -e "INIT\t: installing $APP (sudo)"
+      npm install -y -g $INST
   fi
 }
 
@@ -27,6 +41,7 @@ function installLibDev() {
   fi
 }
 
+echo -e "INIT\t: linking home folder..."
 cd ~
 #ln -sf /home/pixel/pixel/bin /home/pixel/bin
 ln -sf ~/pixel/vimrc .vimrc
@@ -34,9 +49,12 @@ ln -sf ~/pixel/tmux.conf .tmux.conf
 ln -sf ~/pixel/indent.pro .indent.pro
 ln -sf ~/pixel/astyle.rc .astylerc
 
-installApp curl
+echo -e "INIT\t: installing libcap2-bin"
+sudo apt-get install -y libcap2-bin
 
-MSG=`sudo bash -c "type docker" >& /dev/null` 
+installApt curl
+
+MSG=`docker --version` >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: $MSG (OK)"
 else
@@ -63,7 +81,17 @@ else
    newgrp docker
 fi
 
-exit
+MSG=`yarn --version` >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+  echo -e "INIT\t: yarn $MSG (OK)"
+else
+  echo -e "INIT\t: $MSG (installing yarn...)"
+  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  sudo apt install -y yarn
+fi
+
+installApt npm
 
 OLD_NODE=10.21
 nodejs --version |& grep $OLD_NODE >& /dev/null
@@ -84,28 +112,33 @@ else
   sudo apt -y install nodejs
 fi
 
-installApp npm
-installApp mkpasswd whois
-installApp vue vue-cli
-installApp cross-env
-installApp concurrently
-installApp vim
-installApp nslookup dnsutils
-installApp tmux
-installApp sqlite3
-installApp git
+installApt git
+installApt vim
 
+# Common stuff
+installApt mkpasswd whois
+installApt cross-env
+installApt concurrently
+installApt nslookup dnsutils
+installApt tmux
+installApt sqlite3
+installApt mocha
+installApt nuxt
+
+installNpm bit bit-bin
+installNpm vue @vue/cli
+
+echo -e "INIT\t: setting up git global configuration"
 git config --global user.email "karl@firepick.org"
 git config --global user.name "Karl Lew"
 git config --global push.default simple
 
-installApp mocha
-installApp opusenc opus-tools
-installApp ogginfo vorbis-tools
+installApt opusenc opus-tools
+installApt ogginfo vorbis-tools
 
 type rg >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: ripgrep installed"
+    echo -e "BUILD\t: ripgrep installed"
 else
     curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb
     sudo dpkg -i ripgrep_11.0.2_amd64.deb
@@ -119,5 +152,6 @@ if [ -e .bashrc ]; then
 fi
 ln -sf ~/pixel/.bashrc .bashrc
 echo -e "INIT\t: exit and re-enter chroot to verify setup"
+
 
 echo -e "INIT\t: pixel initialized"
