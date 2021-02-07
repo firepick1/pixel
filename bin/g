@@ -45,7 +45,11 @@ elif [ "$op" == "bm" ]; then cmd="git branch --merged"
 elif [ "$op" == "bnm" ]; then cmd="git branch --no-merged"
 elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=
 elif [ "$op" == "cr" ]; then cmd="git checkout -b release/$1; git push -u"; git checkout -b release/$1; git push -u; cmd=
-elif [ "$op" == "cam" ]; then echo "git commit -am $@"; git commit -am "$@"; cmd=
+elif [ "$op" == "cam" ]; then 
+  CMT="v`json version < package.json` $@"
+  echo "npm audit fix; git commit -am "$CMT" "; 
+  [[ -e package-lock.json ]] && npm audit fix; git commit -am "$CMT" ;
+  cmd=
 elif [ "$op" == "dt" ]; then echo "git push origin :refs/tags/$@"; git push origin :refs/tags/"$@"; cmd=
 elif [ "$op" == "ra" ]; then echo "git remote add $@"; git remote add "$@"; cmd=
 elif [ "$op" == "rrm" ]; then echo "git remote rm $@"; git remote rm "$@"; cmd=

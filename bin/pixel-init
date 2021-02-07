@@ -124,6 +124,7 @@ installApt tmux
 installApt sqlite3
 installApt mocha
 installApt nuxt
+installApt fzf
 
 installNpm bit bit-bin
 installNpm vue @vue/cli
