@@ -44,11 +44,14 @@ function c() {
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "dkr" ]; then cd scv-docker
+  elif [ "$1" == "dsu" ]; then cd sutta
+  elif [ "$1" == "dhr" ]; then cd dhammaregen
+  elif [ "$1" == "ebt" ]; then cd ebt-site
   elif [ "$1" == "stk" ]; then cd smart-stick
   elif [ "$1" == "rng" ]; then cd om-ranger
   elif [ "$1" == "bil" ]; then cd scv-bilara
   elif [ "$1" == "js" ]; then cd just-simple
-  elif [ "$1" == "tts" ]; then cd scv-tts
+  elif [ "$1" == "tts" ]; then cd ebt-tts
   elif [ "$1" == "bom" ]; then cd FireBOM
   elif [ "$1" == "bu" ]; then cd translation
   elif [ "$1" == "c" ]; then cd FirePiCam
@@ -226,7 +229,7 @@ alias aptinst='dpkg --get-selections | grep -v deinstall | grep'
 alias aptavail='apt-cache search '
 alias bld='./build |& tee build.log'
 alias bpb='./build post-build |& tee build.log'
-alias win='tmux attach'
+alias win='tmux -u attach'
 alias vgnd='valgrind --leak-check=full --show-reachable=yes --track-origins=yes '
 alias sort='sort -b -f '
 alias vsrc='vim -c "cd src"'
@@ -245,6 +248,7 @@ alias mt='mocha --inline-diffs'
 alias mtt='mocha -w -R min --inline-diffs -g TEST'
 alias npmj='npm run build:jit |& tee npm.log | head -20'
 alias npms='npm start 2>&1 | tee /tmp/npm.log'
+alias npms3000='npm run start:3000 2>&1 | tee /tmp/npm.log'
 alias npmssl='npm run start:ssl'
 alias npmstaging='npm run start:staging'
 alias npmjs='(npm run build:jit && npm start) |& tee npm.log | head -15'
@@ -262,6 +266,7 @@ alias bls='~/dev/scv-bilara/scripts/search -om1'
 alias ble='~/dev/scv-bilara/scripts/bilara_edit'
 alias blv='~/dev/scv-bilara/scripts/bilara_edit vim'
 alias vp='vim package.json'
+alias vz="vim \`fzf\`"
 alias :e='vim '
 alias e='vim '
 alias ifok='if [ "$?" == "0" ]; then '
@@ -285,5 +290,8 @@ export BASH_ENV=~/.bashrc
 export STAGING=ubuntu@54.67.25.233
 export VOICE=ubuntu@50.18.90.151
 tput init
+
+export GOPATH=$HOME/work
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
 echo ~/bin/bashrc "-END-" `date +"%Y%m%d@%H%M%S.%3N"`
