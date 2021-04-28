@@ -13,7 +13,7 @@ function help() {
   echo "     bm  git branch --merged"
   echo "    bnm  git branch --no-merged"
   echo "    cam  git commit -am comment"
-  echo "   camp  npm audit fix; git commit -am comment && git push"
+  echo "   camp  git commit -am comment && git push"
   echo "    con  git config ... "
   echo "   conl  git config --list "
   echo "coninit  git config ... "
@@ -47,16 +47,16 @@ elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=
 elif [ "$op" == "cr" ]; then cmd="git checkout -b release/$1; git push -u"; git checkout -b release/$1; git push -u; cmd=
 elif [ "$op" == "cam" ]; then 
   CMT="v`json version < package.json` $@"
-  echo "npm audit fix; git commit -am "$CMT" "; 
-  [[ -e package-lock.json ]] && npm audit fix; git commit -am "$CMT" ;
+  echo "git commit -am "$CMT" "; 
+  [[ -e package-lock.json ]] ; git commit -am "$CMT" ;
   cmd=
 elif [ "$op" == "dt" ]; then echo "git push origin :refs/tags/$@"; git push origin :refs/tags/"$@"; cmd=
 elif [ "$op" == "ra" ]; then echo "git remote add $@"; git remote add "$@"; cmd=
 elif [ "$op" == "rrm" ]; then echo "git remote rm $@"; git remote rm "$@"; cmd=
 elif [ "$op" == "camp" ]; then 
   CMT="v`json version < package.json` $@"
-  echo "npm audit fix; git commit -am "$CMT" && git push"; 
-  [[ -e package-lock.json ]] && npm audit fix; git commit -am "$CMT" && git push; 
+  echo "git commit -am "$CMT" && git push"; 
+  [[ -e package-lock.json ]] ; git commit -am "$CMT" && git push; 
   cmd=
 elif [ "$op" == "conl" ]; then cmd="git config --list"
 elif [ "$op" == "con" ]; then 

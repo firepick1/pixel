@@ -38,8 +38,7 @@ function c() {
   elif [ -e ~/github ]; then cd ~/github
   else cd ~
   fi
-  if [ "$1" == "s" ]; then 
-    if [ -e FireSight ]; then cd FireSight; else cd FireREST/FireSight; fi
+  if [ -e $1 ]; then cd $1
   elif [ "$1" == "aen" ]; then cd aeneas-michael
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "b" ]; then cd firebom-js
@@ -47,6 +46,9 @@ function c() {
   elif [ "$1" == "dsu" ]; then cd sutta
   elif [ "$1" == "dhr" ]; then cd dhammaregen
   elif [ "$1" == "ebt" ]; then cd ebt-site
+  elif [ "$1" == "ebtd" ]; then cd ebt-de
+  elif [ "$1" == "evu" ]; then cd ebt-vue
+  elif [ "$1" == "eda" ]; then cd ebt-data
   elif [ "$1" == "stk" ]; then cd smart-stick
   elif [ "$1" == "rng" ]; then cd om-ranger
   elif [ "$1" == "bil" ]; then cd scv-bilara
@@ -61,9 +63,6 @@ function c() {
   elif [ "$1" == "dn" ]; then cd ~/Downloads
   elif [ "$1" == "du" ]; then cd diff-upsert
   elif [ "$1" == "dur" ]; then cd scv-duration
-  elif [ "$1" == "jeb" ]; then cd js-ebt
-  elif [ "$1" == "ebt" ]; then cd ebt-doc
-  elif [ "$1" == "fb" ]; then cd FireBolt
   elif [ "$1" == "fg" ]; then cd FireGear
   elif [ "$1" == "fn" ]; then cd firenodejs
   elif [ "$1" == "fp" ]; then cd FirePump
@@ -212,8 +211,8 @@ function ec2ip {
 
 
 alias ec='export CONFIG='
-alias sshec2="ssh -i ~/.aws/ec2-pixelbook-2019.pem"
-alias scpec2="scp -i ~/.aws/ec2-pixelbook-2019.pem"
+alias sshec2="ssh -i ~/.ssh/ec2-pixelbook-2021.pem"
+alias scpec2="scp -i ~/.ssh/ec2-pixelbook-2021.pem"
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
 alias sob='source ~/.bashrc'
 alias vib='vim ~/bin/bashrc'
@@ -287,7 +286,7 @@ alias sll='serverless invoke local -f'
 export IGNOREEOF=42
 export VISUAL=vim
 export BASH_ENV=~/.bashrc
-export STAGING=ubuntu@54.67.25.233
+export STAGING=ubuntu@54.151.83.81
 export VOICE=ubuntu@50.18.90.151
 tput init
 
