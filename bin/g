@@ -25,7 +25,8 @@ function help() {
   echo "    dev  git checkout dev"
   echo "     dt  git push origin :refs/tags/..."
   echo "      f  git fetch"
-  echo "     fm  git fetch && git merge && npm install"
+  echo "     fm  git fetch && git merge "
+  echo "    fmi  git fetch && git merge && npm install"
   echo "      l  git log -5 --graph"
   echo "      ls git ls-remote"
   echo "    mas  git checkout master"
@@ -74,6 +75,10 @@ elif [ "$op" == "ds" ]; then echo "git diff --stat $@"; git diff --stat $@; cmd=
 elif [ "$op" == "dev" ]; then cmd="git checkout dev"
 elif [ "$op" == "f" ]; then echo "git fetch $@"; git fetch $@; cmd=
 elif [ "$op" == "fm" ]; then 
+  echo "git fetch && git merge "; 
+  git fetch && git merge 
+  cmd=
+elif [ "$op" == "fmi" ]; then 
   echo "git fetch && git merge && npm install "; 
   git fetch && git merge && npm install
   cmd=
