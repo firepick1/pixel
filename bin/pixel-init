@@ -137,6 +137,7 @@ git config --global push.default simple
 installApt opusenc opus-tools
 installApt ogginfo vorbis-tools
 installApt aplay alsa-utils
+installApt lzma
 
 type rg >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then

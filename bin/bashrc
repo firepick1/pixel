@@ -41,9 +41,9 @@ function c() {
   if [ -e $1 ]; then cd $1
   elif [ "$1" == "aen" ]; then cd aeneas-michael
   elif [ "$1" == "B" ]; then cd FireBOM
+  elif [ "$1" == "go" ]; then cd $GOPATH
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "drg" ]; then cd dhammaregen
-  elif [ "$1" == "dkr" ]; then cd scv-docker
   elif [ "$1" == "dsu" ]; then cd sutta
   elif [ "$1" == "ebt" ]; then cd ebt-site
   elif [ "$1" == "esite" ]; then cd ebt-site
@@ -64,6 +64,7 @@ function c() {
   elif [ "$1" == "dn" ]; then cd ~/Downloads
   elif [ "$1" == "du" ]; then cd diff-upsert
   elif [ "$1" == "dur" ]; then cd scv-duration
+  elif [ "$1" == "tsv" ]; then cd bilara-html-tsv
   elif [ "$1" == "fg" ]; then cd FireGear
   elif [ "$1" == "fn" ]; then cd firenodejs
   elif [ "$1" == "fp" ]; then cd FirePump
@@ -213,6 +214,7 @@ function ec2ip {
 
 alias ec='export CONFIG='
 alias sshec2="ssh -i ~/.ssh/ec2-pixelbook-2021.pem"
+alias sshlin="ssh "
 alias scpec2="scp -i ~/.ssh/ec2-pixelbook-2021.pem"
 alias sa='eval `ssh-agent -s`; ssh-add ~/.ssh/id_rsa'
 alias sob='source ~/.bashrc'
@@ -246,6 +248,7 @@ alias npmid='npm install --save-dev'
 alias npmt='npm run test'
 alias npmp='npm publish 2>&1 | tee local/publish.log'
 alias npmtt='npm run test:test'
+alias npmt1='npm run test:one'
 alias mt='mocha --inline-diffs'
 alias mtt='mocha -w -R min --inline-diffs -g TEST'
 alias npmj='npm run build:jit |& tee npm.log | head -20'
@@ -264,7 +267,7 @@ alias ffsed='find . \( -name .git -o -name node_modules \) -prune -o -type f -pr
 alias jsb="js-beautify -r "
 alias jsbx="find . -name '*.js' | xargs js-beautify -r "
 alias gsutta='./scripts/grep-sutta.sh '
-alias play='ffplay -nodisp -autoexit '
+alias play='nice -20 ffplay -loglevel error -stats -nodisp -autoexit '
 alias bls='~/dev/scv-bilara/scripts/search -om1'
 alias ble='~/dev/scv-bilara/scripts/bilara_edit'
 alias blv='~/dev/scv-bilara/scripts/bilara_edit vim'
@@ -276,6 +279,9 @@ alias ifok='if [ "$?" == "0" ]; then '
 alias iferr='if [ "$?" != "0" ]; then '
 alias dock='sudo docker'
 alias dk='docker'
+alias dkb='docker build'
+alias dkis='docker images'
+alias dki='docker image'
 alias dkr='docker run --rm -it'
 alias dkru='docker run --rm -it sc-voice/scv-ubuntu'
 alias dkrd='docker run --rm -it sc-voice/scv-debian'
@@ -283,14 +289,17 @@ alias dkrud='docker run --rm -it sc-voice/scv-ubuntu-dev'
 alias dkrdd='docker run --rm -it sc-voice/scv-debian-dev'
 alias dkruv='docker run --rm -it sc-voice/scv-ubuntu-scv'
 alias dkrdv='docker run --rm -it sc-voice/scv-debian-scv'
+alias sha='cat | head -1 | sha256sum | sed -e "s/\(...............\).*/ \\1.../"'
 alias sld='serverless deploy'
 alias sli='serverless invoke'
 alias sll='serverless invoke local -f'
+alias rga='rg -g "*"'
+alias rgl='rg -g "*" local -e'
 
 export IGNOREEOF=42
 export VISUAL=vim
 export BASH_ENV=~/.bashrc
-export STAGING=ubuntu@54.151.83.81
+export STAGING=unroot@45.79.140.204
 export VOICE=ubuntu@50.18.90.151
 tput init
 

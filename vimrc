@@ -59,9 +59,11 @@ hi htmlItalic	cterm=underline
 hi htmlBold	cterm=underline
 
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd BufNewFile,BufReadPost *.cjs set filetype=javascript
+autocmd BufNewFile,BufReadPost *.mjs set filetype=javascript
 set sw=2			  " shift width
 set ts=2              " tab stop
-autocmd FileType javascript set sw=4 ts=4
+autocmd FileType javascript set sw=2 ts=2
 
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
