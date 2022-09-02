@@ -254,11 +254,12 @@ alias mtt='mocha -w -R min --inline-diffs -g TEST'
 alias npmj='npm run build:jit |& tee npm.log | head -20'
 alias npms='npm start 2>&1 | tee /tmp/npm.log'
 alias npms3000='npm run start:3000 2>&1 | tee /tmp/npm.log'
-alias npms3='npm run start:3000 2>&1 | tee /tmp/npm.log'
+alias npms8080='npm run start:8080 2>&1 | tee /tmp/npm.log'
 alias npmssl='npm run start:ssl'
 alias npmstaging='npm run start:staging'
 alias npmjs='(npm run build:jit && npm start) |& tee npm.log | head -15'
-alias pv='git diff -U0 package.json; json version <package.json'
+alias npmv='npm view '
+alias pv="npm ls scv-server | head -1 | sed 's/.*@\\([0-9.]*\\).*/\\1/'"
 alias b="if [ -e build ]; then build; else scripts/build; fi"
 alias fname='find . -name '
 alias ff='find . \( -name .git -o -name node_modules \) -prune -o -type f -print'
@@ -279,28 +280,30 @@ alias ifok='if [ "$?" == "0" ]; then '
 alias iferr='if [ "$?" != "0" ]; then '
 alias dock='sudo docker'
 alias dk='docker'
-alias dkb='docker build'
+alias dkb='DOCKER_BUILDKIT=1 docker build .'
+alias dkbs='./scripts/dkr-build.sh'
+alias dkc='docker compose'
+alias dkcr='docker compose run --service-ports'
+alias dke='docker exec -it '
 alias dkis='docker images'
 alias dki='docker image'
-alias dkr='docker run --rm -it'
-alias dkru='docker run --rm -it sc-voice/scv-ubuntu'
-alias dkrd='docker run --rm -it sc-voice/scv-debian'
-alias dkrud='docker run --rm -it sc-voice/scv-ubuntu-dev'
-alias dkrdd='docker run --rm -it sc-voice/scv-debian-dev'
-alias dkruv='docker run --rm -it sc-voice/scv-ubuntu-scv'
-alias dkrdv='docker run --rm -it sc-voice/scv-debian-scv'
+alias dkr='docker run'
+alias dkrt='docker run --rm -it'
+alias dksp='docker system prune'
 alias sha='cat | head -1 | sha256sum | sed -e "s/\(...............\).*/ \\1.../"'
 alias sld='serverless deploy'
 alias sli='serverless invoke'
 alias sll='serverless invoke local -f'
 alias rga='rg -g "*"'
 alias rgl='rg -g "*" local -e'
+alias xc='xclip -sel clip'
 
 export IGNOREEOF=42
 export VISUAL=vim
 export BASH_ENV=~/.bashrc
 export STAGING=unroot@45.79.140.204
 export VOICE=ubuntu@50.18.90.151
+export S1SCV=unroot@45.79.101.136
 tput init
 
 export GOPATH=$HOME/work

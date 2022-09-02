@@ -28,6 +28,7 @@ function help() {
   echo "     fm  git fetch && git merge "
   echo "    fmi  git fetch && git merge && npm install"
   echo "      l  git log -5 --graph"
+  echo "      l1 git log -15 --oneline"
   echo "      ls git ls-remote"
   echo "    mas  git checkout master"
   echo "      m  git merge"
@@ -40,6 +41,8 @@ function help() {
   echo "      s  git status"
 }
 
+APPDIR=`git rev-parse --show-toplevel`
+
 if [ "$op" == "a" ]; then cmd="git add -A $@"
 elif [ "$op" == "b" ]; then cmd="git branch -v $@"; git branch -v $@; cmd=
 elif [ "$op" == "bm" ]; then cmd="git branch --merged"
@@ -47,17 +50,17 @@ elif [ "$op" == "bnm" ]; then cmd="git branch --no-merged"
 elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=
 elif [ "$op" == "cr" ]; then cmd="git checkout -b release/$1; git push -u"; git checkout -b release/$1; git push -u; cmd=
 elif [ "$op" == "cam" ]; then 
-  CMT="v`json version < package.json` $@"
+  CMT="v`json version < $APPDIR/package.json` += $@"
   echo "git commit -am "$CMT" "; 
-  [[ -e package-lock.json ]] ; git commit -am "$CMT" ;
+  [[ -e $APPDIR/package-lock.json ]] ; git commit -am "$CMT" ;
   cmd=
 elif [ "$op" == "dt" ]; then echo "git push origin :refs/tags/$@"; git push origin :refs/tags/"$@"; cmd=
 elif [ "$op" == "ra" ]; then echo "git remote add $@"; git remote add "$@"; cmd=
 elif [ "$op" == "rrm" ]; then echo "git remote rm $@"; git remote rm "$@"; cmd=
 elif [ "$op" == "camp" ]; then 
-  CMT="v`json version < package.json` $@"
+  CMT="v`json version < $APPDIR/package.json` $@"
   echo "git commit -am "$CMT" && git push"; 
-  [[ -e package-lock.json ]] ; git commit -am "$CMT" && git push; 
+  [[ -e $APPDIR/package-lock.json ]] ; git commit -am "$CMT" && git push; 
   cmd=
 elif [ "$op" == "conl" ]; then cmd="git config --list"
 elif [ "$op" == "con" ]; then 
@@ -83,6 +86,7 @@ elif [ "$op" == "fmi" ]; then
   git fetch && git merge && npm install
   cmd=
 elif [ "$op" == "l" ]; then cmd="git log -5 --graph"
+elif [ "$op" == "l1" ]; then cmd="git log -15 --oneline"
 elif [ "$op" == "ls" ]; then cmd="git ls-remote"
 elif [ "$op" == "m" ]; then cmd="git merge $@"; git merge $@; cmd=
 elif [ "$op" == "mas" ]; then cmd="git checkout master"

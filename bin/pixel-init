@@ -56,96 +56,89 @@ installApt curl
 
 MSG=`docker --version` >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: $MSG (OK)"
+  echo -e "INIT\t: $MSG (OK)"
 else
-    echo -e "INIT\t: installing docker engine"
-    sudo apt-get install -y\
-      apt-transport-https ca-certificates gnupg-agent software-properties-common
-    curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-    sudo apt-key fingerprint 0EBFCD88 \
-      |& grep "9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88" >& /dev/null
-    RC=$?; if [ "$RC" == "0" ]; then
-      echo -e  "INIT\t: valid docker key"
-    else
-      echo -e  "INIT\t: invalid docker key (FATAL)"
-      exit 1
-    fi
-    sudo add-apt-repository \
-       "deb [arch=amd64] https://download.docker.com/linux/debian \
-       $(lsb_release -cs) \
-      stable"
-   sudo apt-get update
-   sudo apt-get -y install docker-ce docker-ce-cli containerd.io
-   sudo groupadd docker
-   sudo usermod -aG docker $USER
-   newgrp docker
+  echo -e "INIT\t: installing docker engine"
+  sudo apt-get install -y ca-certificates gnupg lsb-release
+  sudo mkdir -p /etc/apt/keyrings
+  if [ ! -e /etc/apt/keyrings/docker.gpg ]; then
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  fi
+  echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+         $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  sudo apt-get update
+  sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+  sudo groupadd docker
+  sudo usermod -aG docker $USER
+  #newgrp docker
 fi
 
-MSG=`yarn --version` >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-  echo -e "INIT\t: yarn $MSG (OK)"
-else
-  echo -e "INIT\t: $MSG (installing yarn...)"
-  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-  echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-  sudo apt install -y yarn
-fi
+#MSG=`yarn --version` >& /dev/null
+#RC=$?; if [ "$RC" == "0" ]; then
+  #echo -e "INIT\t: yarn $MSG (OK)"
+#else
+  #echo -e "INIT\t: $MSG (installing yarn...)"
+  #curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+  #echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  #sudo apt install -y yarn
+#fi
 
-installApt npm
+#installApt npm
 
-OLD_NODE=10.21
-nodejs --version |& grep $OLD_NODE >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-  echo -e "INIT\t: uninstalling nodejs $OLD_NODE"
-  sudo apt-get remove -y nodejs 
-else
-  echo -e "INIT\t: no legacy nodejs found (OK)"
-fi
-
-NODE_VER=14.15
-nodejs --version |& grep $NODE_VER >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-  echo -e "INIT\t: nodejs $NODE_VER installed"
-else
-  echo -e "INIT\t: installing nodejs $NODE_VER"
-  curl -sL https://deb.nodesource.com/setup_14.x | tee node_setup_14.x | sudo bash -
-  sudo apt -y install nodejs
-fi
+#OLD_NODE=10.21
+#nodejs --version |& grep $OLD_NODE >& /dev/null
+#RC=$?; if [ "$RC" == "0" ]; then
+  #echo -e "INIT\t: uninstalling nodejs $OLD_NODE"
+  #sudo apt-get remove -y nodejs 
+#else
+  #echo -e "INIT\t: no legacy nodejs found (OK)"
+#fi
+#
+#NODE_VER=14.15
+#nodejs --version |& grep $NODE_VER >& /dev/null
+#RC=$?; if [ "$RC" == "0" ]; then
+  #echo -e "INIT\t: nodejs $NODE_VER installed"
+#else
+  #echo -e "INIT\t: installing nodejs $NODE_VER"
+  #curl -sL https://deb.nodesource.com/setup_14.x | tee node_setup_14.x | sudo bash -
+  #sudo apt -y install nodejs
+#fi
 
 installApt git
 installApt vim
 
 # Common stuff
 installApt mkpasswd whois
-installApt cross-env
-installApt concurrently
+#installApt cross-env
+#installApt concurrently
 installApt nslookup dnsutils
 installApt tmux
-installApt sqlite3
-installApt mocha
-installApt nuxt
-installApt fzf
+#installApt sqlite3
+#installApt mocha
+#installApt nuxt
+#installApt fzf
 
-installNpm bit bit-bin
-installNpm vue @vue/cli
+#installNpm bit bit-bin
+#installNpm vue @vue/cli
 
 echo -e "INIT\t: setting up git global configuration"
 git config --global user.email "karl@firepick.org"
 git config --global user.name "Karl Lew"
 git config --global push.default simple
 
-installApt opusenc opus-tools
-installApt ogginfo vorbis-tools
-installApt aplay alsa-utils
-installApt lzma
+#installApt opusenc opus-tools
+#installApt ogginfo vorbis-tools
+#installApt aplay alsa-utils
+#installApt lzma
 
-type rg >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "BUILD\t: ripgrep installed"
-else
-    curl -LO https://github.com/BurntSushi/ripgrep/releases/download/12.1.1/ripgrep_12.1.1_amd64.deb
-    sudo dpkg -i ripgrep_12.1.1_amd64.deb
-fi
+#type rg >& /dev/null
+#RC=$?; if [ "$RC" == "0" ]; then
+    #echo -e "BUILD\t: ripgrep installed"
+#else
+    #curl -LO https://github.com/BurntSushi/ripgrep/releases/download/12.1.1/ripgrep_12.1.1_amd64.deb
+    #sudo dpkg -i ripgrep_12.1.1_amd64.deb
+#fi
 
 if [ -e .bashrc ]; then
     cmp .bashrc pixel/.bashrc
