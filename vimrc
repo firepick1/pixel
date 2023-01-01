@@ -66,6 +66,7 @@ set ts=2              " tab stop
 autocmd FileType javascript set sw=2 ts=2
 
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+command CD cd %:p:h
 
 source ~/pixel/osc52.vim
 vmap <C-c> y:call SendViaOSC52(getreg('"'))<cr>
