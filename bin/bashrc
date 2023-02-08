@@ -170,18 +170,20 @@ function vgrep() {
 }
 
 function vrg() {
-  if [ "$2" == "" ]; then
-    files=`rg -l -e "$*" | tr '\n' ' '`
-  else
-    dir=$1
-    shift
-    files=`rg -l --iglob="${dir}/**" -e "$*" | tr '\n' ' '`
-  fi
+  pat="${!#}"
+  echo PAT "$pat"
+  set -- "${@:1:$#-1}"
+  echo ARGS $*
+  files=`rg -le "$pat" $ARGS`
+  echo "$files"
+  files=`echo $files | tr '\n' ' '`
   if [ "$files" == "" ]; then
     echo no files found for "$*"
   else 
-    eval "vim -c \"/$*/\" ${files}"
+    echo "vim -c \"/$pat/\" ${files}"
+    eval "vim -c \"/$pat/\" ${files}"
   fi
+
 }
 
 function v() {
