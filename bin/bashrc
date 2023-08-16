@@ -241,8 +241,10 @@ alias odc='od -t cx1'
 alias npmb='npm run build'
 alias npmbd='npm run build && npm run dev'
 alias npmc='npm run clean'
+alias npmcg='npm run clean; npm run generate'
 alias npmd='npm run dev'
 alias npmg='npm run generate'
+alias npmgp='npm run generate; npm run preview'
 alias npmsa='npm run schedule-action'
 alias npmpa='npm run push-action'
 alias npmi='npm install --save'
@@ -251,6 +253,7 @@ alias npmt='npm run test'
 alias npmp='npm publish 2>&1 | tee local/publish.log'
 alias npmtt='npm run test:test'
 alias npmt1='npm run test:one'
+alias npmpv='npm run preview'
 alias mt='mocha --inline-diffs'
 alias mtt='mocha -w -R min --inline-diffs -g TEST'
 alias npmj='npm run build:jit |& tee npm.log | head -20'
@@ -299,12 +302,14 @@ alias sll='serverless invoke local -f'
 alias rga='rg -g "*"'
 alias rgl='rg -g "*" local -e'
 alias xc='xclip -sel clip'
+alias nxi='npx nuxi'
 
 export IGNOREEOF=42
 export VISUAL=vim
 export BASH_ENV=~/.bashrc
 export STAGING=unroot@45.79.140.204
 export VOICE=ubuntu@50.18.90.151
+export VOICE2=ubuntu@54.176.202.43
 export S1SCV=unroot@45.79.101.136
 tput init
 

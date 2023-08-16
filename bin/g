@@ -50,7 +50,11 @@ elif [ "$op" == "bnm" ]; then cmd="git branch --no-merged"
 elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=
 elif [ "$op" == "cr" ]; then cmd="git checkout -b release/$1; git push -u"; git checkout -b release/$1; git push -u; cmd=
 elif [ "$op" == "cam" ]; then 
-  CMT="v`json version < $APPDIR/package.json` += $@"
+  if [ -e $APPDIR/package.json ]; then
+    CMT="v`json version < $APPDIR/package.json` += $@"
+  else 
+    CMT="$@"
+  fi
   echo "git commit -am "$CMT" "; 
   [[ -e $APPDIR/package-lock.json ]] ; git commit -am "$CMT" ;
   cmd=
