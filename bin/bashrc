@@ -40,6 +40,8 @@ function c() {
   fi
   if [ -e $1 ]; then cd $1
   elif [ "$1" == "aen" ]; then cd aeneas-michael
+  elif [ "$1" == "admin" ]; then cd admin_sc-voice_net
+  elif [ "$1" == "api" ]; then cd api_sc-voice_net
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "go" ]; then cd $GOPATH
   elif [ "$1" == "b" ]; then cd firebom-js
@@ -237,6 +239,7 @@ alias win='tmux -u attach'
 alias vgnd='valgrind --leak-check=full --show-reachable=yes --track-origins=yes '
 alias sort='sort -b -f '
 alias vsrc='vim -c "cd src"'
+alias kpr='~/.local/bin/keeper shell'
 alias odc='od -t cx1'
 alias npmb='npm run build'
 alias npmbd='npm run build && npm run dev'
@@ -275,6 +278,7 @@ alias jsbx="find . -name '*.js' | xargs js-beautify -r "
 alias gsutta='./scripts/grep-sutta.sh '
 alias play='nice -20 ffplay -loglevel error -stats -nodisp -autoexit '
 alias bls='~/dev/scv-bilara/scripts/search -om1'
+alias bls3='~/dev/scv-bilara/scripts/search -oh3 -ml1'
 alias ble='~/dev/scv-bilara/scripts/bilara_edit'
 alias blv='~/dev/scv-bilara/scripts/bilara_edit vim'
 alias vp='vim package.json'
@@ -303,6 +307,8 @@ alias rga='rg -g "*"'
 alias rgl='rg -g "*" local -e'
 alias xc='xclip -sel clip'
 alias nxi='npx nuxi'
+alias src="source ~/bin/bashrc"
+alias vrc="vim ~/bin/bashrc"
 
 export IGNOREEOF=42
 export VISUAL=vim
@@ -311,6 +317,7 @@ export STAGING=unroot@45.79.140.204
 export VOICE=ubuntu@50.18.90.151
 export VOICE2=ubuntu@54.176.202.43
 export S1SCV=unroot@45.79.101.136
+export WWWSCV=unroot@45.33.35.10
 tput init
 
 export GOPATH=$HOME/work
