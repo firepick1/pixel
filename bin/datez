@@ -1,0 +1,5 @@
+TZ=$1
+if [[ "$TZ" == "" ]]; then
+  TZ=UTC
+fi
+date
