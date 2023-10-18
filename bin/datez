@@ -2,4 +2,13 @@ TZ=$1
 if [[ "$TZ" == "" ]]; then
   TZ=UTC
 fi
+if [[ "$TZ" == "PST" ]]; then
+  TZ="America/Los_Angeles"
+elif [[ "$TZ" == "DE" ]]; then
+  TZ="Europe/Berlin"
+elif [[ "$TZ" == "AU" ]]; then
+  TZ="Australia/Sydney"
+fi
+export TZ
+echo $TZ
 date
