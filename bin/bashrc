@@ -139,7 +139,7 @@ function c() {
   fi
 }
 
-EXCLUDE="\( -name local -o -name dist -o -name bower_components -o -name .metadata -o -name \"*.so\" -o -name bin -o -name ZBar -o -name bootstrap -o -name lib -o -name FireSight -o -name FireFUSE -o -name jansson -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
+EXCLUDE="\( -name local -o -name out -o -name dist -o -name bower_components -o -name .metadata -o -name \"*.so\" -o -name bin -o -name ZBar -o -name bootstrap -o -name lib -o -name FireSight -o -name FireFUSE -o -name jansson -o -name jannson -o -name CMakeFiles -o -name opencv -o -name target -o -name node_modules -o -name .git -o -name \"*.class\" -o -name \"*.min.*\" -o -name \"*.o\" \) -prune"
 EXCLUDESRC="\( -name \"*.map\" -o -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.woff\" -o -name \"*.ttf\" \) -prune"
 INCLUDE="\( -name '*.po' -name '*.js' -o -name '*.java' -o -name '*.html' -o -name '*.css' -o -name '*.xml' -o -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.sh' -o -name '*.bat' -o -prune \)"
 
