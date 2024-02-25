@@ -74,37 +74,6 @@ else
   #newgrp docker
 fi
 
-#MSG=`yarn --version` >& /dev/null
-#RC=$?; if [ "$RC" == "0" ]; then
-  #echo -e "INIT\t: yarn $MSG (OK)"
-#else
-  #echo -e "INIT\t: $MSG (installing yarn...)"
-  #curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-  #echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-  #sudo apt install -y yarn
-#fi
-
-#installApt npm
-
-#OLD_NODE=10.21
-#nodejs --version |& grep $OLD_NODE >& /dev/null
-#RC=$?; if [ "$RC" == "0" ]; then
-  #echo -e "INIT\t: uninstalling nodejs $OLD_NODE"
-  #sudo apt-get remove -y nodejs 
-#else
-  #echo -e "INIT\t: no legacy nodejs found (OK)"
-#fi
-#
-#NODE_VER=14.15
-#nodejs --version |& grep $NODE_VER >& /dev/null
-#RC=$?; if [ "$RC" == "0" ]; then
-  #echo -e "INIT\t: nodejs $NODE_VER installed"
-#else
-  #echo -e "INIT\t: installing nodejs $NODE_VER"
-  #curl -sL https://deb.nodesource.com/setup_14.x | tee node_setup_14.x | sudo bash -
-  #sudo apt -y install nodejs
-#fi
-
 installApt git
 installApt vim
 

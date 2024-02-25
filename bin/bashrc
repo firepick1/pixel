@@ -45,12 +45,16 @@ function c() {
   elif [ "$1" == "B" ]; then cd FireBOM
   elif [ "$1" == "go" ]; then cd $GOPATH
   elif [ "$1" == "b" ]; then cd firebom-js
+  elif [ "$1" == "d3" ]; then cd d3_sc-voice_net
   elif [ "$1" == "drg" ]; then cd dhammaregen
+  elif [ "$1" == "dpl" ]; then cd ebt-deepl
+  elif [ "$1" == "deepl" ]; then cd ebt-deepl
   elif [ "$1" == "dsu" ]; then cd sutta
   elif [ "$1" == "ebt" ]; then cd ebt-site
   elif [ "$1" == "esite" ]; then cd ebt-site
   elif [ "$1" == "ede" ]; then cd ebt-de
   elif [ "$1" == "evue" ]; then cd ebt-vue
+  elif [ "$1" == "ev3" ]; then cd ebt-vue3
   elif [ "$1" == "edata" ]; then cd ebt-data
   elif [ "$1" == "stk" ]; then cd smart-stick
   elif [ "$1" == "rng" ]; then cd om-ranger
@@ -113,12 +117,13 @@ function c() {
   elif [ "$1" == "vg" ]; then cd vue-g-row-col
   elif [ "$1" == "rcl" ]; then cd firerest-client
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
+  elif [ "$1" == "rec" ]; then cd karls-recipes
   elif [ "$1" == "sam" ]; then cd aws-sam
   elif [ "$1" == "say" ]; then cd say-again
   elif [ "$1" == "sc" ]; then cd firestep-cam 
   elif [ "$1" == "sca" ]; then cd sc-api
   elif [ "$1" == "scr" ]; then cd sc-renumber
-  elif [ "$1" == "scv" ]; then cd sc-voice
+  elif [ "$1" == "scv" ]; then cd sc-voice_net
   elif [ "$1" == "scd" ]; then cd sc-data
   elif [ "$1" == "sls" ]; then cd serverless
   elif [ "$1" == "st" ]; then cd FireStep
@@ -299,6 +304,7 @@ alias dki='docker image'
 alias dkr='docker run'
 alias dkrt='docker run --rm -it'
 alias dksp='docker system prune'
+alias pdf='soffice --convert-to pdf'
 alias sha='cat | head -1 | sha256sum | sed -e "s/\(...............\).*/ \\1.../"'
 alias sld='serverless deploy'
 alias sli='serverless invoke'
@@ -313,7 +319,7 @@ alias vrc="vim ~/bin/bashrc"
 export IGNOREEOF=42
 export VISUAL=vim
 export BASH_ENV=~/.bashrc
-export STAGING=unroot@45.79.140.204
+export STAGING=unroot@104.237.155.82
 export VOICE=ubuntu@50.18.90.151
 export VOICE2=ubuntu@54.176.202.43
 export S1SCV=unroot@45.79.101.136
