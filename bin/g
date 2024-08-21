@@ -32,7 +32,7 @@ function help() {
   echo "      ls git ls-remote"
   echo "    mas  git checkout master"
   echo "      m  git merge"
-  echo "      p  git push"
+  echo "      p  git pull"
   echo "     ra  git remote add $@"
   echo "    rrm  git remote rm $@"
   echo "   relb  git push && git checkout release/\$1 && git merge dev && git push"
@@ -62,40 +62,40 @@ elif [ "$op" == "dt" ]; then echo "git push origin :refs/tags/$@"; git push orig
 elif [ "$op" == "ra" ]; then echo "git remote add $@"; git remote add "$@"; cmd=
 elif [ "$op" == "rrm" ]; then echo "git remote rm $@"; git remote rm "$@"; cmd=
 elif [ "$op" == "camp" ]; then 
-  CMT="v`json version < $APPDIR/package.json` $@"
-  echo "git commit -am "$CMT" && git push"; 
-  [[ -e $APPDIR/package-lock.json ]] ; git commit -am "$CMT" && git push; 
-  cmd=
-elif [ "$op" == "conl" ]; then cmd="git config --list"
-elif [ "$op" == "con" ]; then 
-  echo "git config $@"
-  git config $@
-  cmd=
-elif [ "$op" == "coninit" ]; then 
-  git config --global merge.defaultToUpstream true
-  git config --global push.default current
-  git config --global user.email karl@firepick.org
-  git config --global user.name "firepick1 (`hostname`)"
-  cmd=
-elif [ "$op" == "d" ]; then echo "git diff -U0 -b $@"; git diff -U0 -b $@; cmd=
-elif [ "$op" == "ds" ]; then echo "git diff --stat $@"; git diff --stat $@; cmd=
-elif [ "$op" == "dev" ]; then cmd="git checkout dev"
-elif [ "$op" == "f" ]; then echo "git fetch $@"; git fetch $@; cmd=
-elif [ "$op" == "fm" ]; then 
-  echo "git fetch && git merge "; 
-  git fetch && git merge 
-  cmd=
-elif [ "$op" == "fmi" ]; then 
-  echo "git fetch && git merge && npm install "; 
-  git fetch && git merge && npm install
-  cmd=
-elif [ "$op" == "l" ]; then cmd="git log -5 --graph"
-elif [ "$op" == "l1" ]; then cmd="git log -15 --oneline"
-elif [ "$op" == "ls" ]; then cmd="git ls-remote"
-elif [ "$op" == "m" ]; then cmd="git merge $@"; git merge $@; cmd=
-elif [ "$op" == "mas" ]; then cmd="git checkout master"
-elif [ "$op" == "master" ]; then cmd="git checkout master"
-elif [ "$op" == "p" ]; then echo "git push $@"; git push $@; cmd=
+    CMT="v`json version < $APPDIR/package.json` $@"
+    echo "git commit -am "$CMT" && git push"; 
+    [[ -e $APPDIR/package-lock.json ]] ; git commit -am "$CMT" && git push; 
+    cmd=
+  elif [ "$op" == "conl" ]; then cmd="git config --list"
+  elif [ "$op" == "con" ]; then 
+    echo "git config $@"
+    git config $@
+    cmd=
+  elif [ "$op" == "coninit" ]; then 
+    git config --global merge.defaultToUpstream true
+    git config --global push.default current
+    git config --global user.email karl@firepick.org
+    git config --global user.name "firepick1 (`hostname`)"
+    cmd=
+  elif [ "$op" == "d" ]; then echo "git diff -U0 -b $@"; git diff -U0 -b $@; cmd=
+  elif [ "$op" == "ds" ]; then echo "git diff --stat $@"; git diff --stat $@; cmd=
+  elif [ "$op" == "dev" ]; then cmd="git checkout dev"
+  elif [ "$op" == "f" ]; then echo "git fetch $@"; git fetch $@; cmd=
+  elif [ "$op" == "fm" ]; then 
+    echo "git fetch && git merge "; 
+    git fetch && git merge 
+    cmd=
+  elif [ "$op" == "fmi" ]; then 
+    echo "git fetch && git merge && npm install "; 
+    git fetch && git merge && npm install
+    cmd=
+  elif [ "$op" == "l" ]; then cmd="git log -5 --graph"
+  elif [ "$op" == "l1" ]; then cmd="git log -15 --oneline"
+  elif [ "$op" == "ls" ]; then cmd="git ls-remote"
+  elif [ "$op" == "m" ]; then cmd="git merge $@"; git merge $@; cmd=
+  elif [ "$op" == "mas" ]; then cmd="git checkout master"
+  elif [ "$op" == "master" ]; then cmd="git checkout master"
+  elif [ "$op" == "p" ]; then echo "git pull"; git pull; cmd=
 elif [ "$op" == "relb" ]; then 
   if [ "$1" == "" ]; then help; else
     echo "git push && git checkout release/$1 && git merge dev && git push && git branch -v"
@@ -112,6 +112,15 @@ elif [ "$op" == "relm" ]; then
     git push && git checkout master && git merge release/$1 && git push && git checkout dev && git merge master && git push && git branch -v
   fi
 elif [ "$op" == "s" ]; then cmd="git status"
+elif [ "$op" == "sq1" ]; then cmd="git reset --soft HEAD~1"
+elif [ "$op" == "sq2" ]; then cmd="git reset --soft HEAD~2"
+elif [ "$op" == "sq3" ]; then cmd="git reset --soft HEAD~3"
+elif [ "$op" == "sq4" ]; then cmd="git reset --soft HEAD~4"
+elif [ "$op" == "sq5" ]; then cmd="git reset --soft HEAD~5"
+elif [ "$op" == "sq6" ]; then cmd="git reset --soft HEAD~6"
+elif [ "$op" == "sq7" ]; then cmd="git reset --soft HEAD~7"
+elif [ "$op" == "sq8" ]; then cmd="git reset --soft HEAD~8"
+elif [ "$op" == "sq9" ]; then cmd="git reset --soft HEAD~9"
 elif [ "$op" == "..." ]; then echo "git commit -am ...;git push"; git commit -am "...cosmetic changes..."; git push; cmd=
 elif [ "$op" == "" ]; then help
 elif [ "$op" == "vi" ]; then vi ~/bin/g

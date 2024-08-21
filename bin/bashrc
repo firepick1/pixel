@@ -46,6 +46,7 @@ function c() {
   elif [ "$1" == "go" ]; then cd $GOPATH
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "d3" ]; then cd d3_sc-voice_net
+  elif [ "$1" == "dpd" ]; then cd dpd
   elif [ "$1" == "drg" ]; then cd dhammaregen
   elif [ "$1" == "dpl" ]; then cd ebt-deepl
   elif [ "$1" == "deepl" ]; then cd ebt-deepl
@@ -74,6 +75,7 @@ function c() {
   elif [ "$1" == "fg" ]; then cd FireGear
   elif [ "$1" == "fn" ]; then cd firenodejs
   elif [ "$1" == "fp" ]; then cd FirePump
+  elif [ "$1" == "fr" ]; then cd fr_sc-voice_net
   elif [ "$1" == "fpd" ]; then cd ~/dev/FPD-LooseCanon
   elif [ "$1" == "fs" ]; then cd FireSlide
   elif [ "$1" == "g" ]; then cd firepick-org.wiki
@@ -222,6 +224,7 @@ function ec2ip {
 
 
 alias ec='export CONFIG='
+alias clr="clear; reset; tmux clear-history"
 alias sshec2="ssh -i ~/.ssh/ec2-pixelbook-2021.pem"
 alias sshlin="ssh "
 alias scpec2="scp -i ~/.ssh/ec2-pixelbook-2021.pem"
@@ -256,6 +259,7 @@ alias npmgp='npm run generate; npm run preview'
 alias npmsa='npm run schedule-action'
 alias npmpa='npm run push-action'
 alias npmi='npm install --save'
+alias npmit='npm install; npm run test '
 alias npmid='npm install --save-dev'
 alias npmt='npm run test'
 alias npmp='npm publish 2>&1 | tee local/publish.log'
@@ -284,8 +288,12 @@ alias gsutta='./scripts/grep-sutta.sh '
 alias play='nice -20 ffplay -loglevel error -stats -nodisp -autoexit '
 alias bls='~/dev/scv-bilara/scripts/search -om1'
 alias bls3='~/dev/scv-bilara/scripts/search -oh3 -ml1'
+alias blsit='~/dev/scv-bilara/scripts/search -oh3 -ml1 -da ebt-deepl -bd ebt-data -dl it '
+alias blspt='~/dev/scv-bilara/scripts/search -oh3 -ml1 -da ebt-deepl -bd ebt-data -dl pt '
+alias blses='~/dev/scv-bilara/scripts/search -oh3 -ml1 -da ebt-deepl -bd ebt-data -dl es '
 alias ble='~/dev/scv-bilara/scripts/bilara_edit'
 alias blv='~/dev/scv-bilara/scripts/bilara_edit vim'
+alias dpd='~/dev/pali/scripts/dpd'
 alias vp='vim package.json'
 alias vz="vim \`fzf\`"
 alias :e='vim '
@@ -305,16 +313,22 @@ alias dkr='docker run'
 alias dkrt='docker run --rm -it'
 alias dksp='docker system prune'
 alias pdf='soffice --convert-to pdf'
+alias lint='npx eslint --no-warn-ignored'
 alias sha='cat | head -1 | sha256sum | sed -e "s/\(...............\).*/ \\1.../"'
 alias sld='serverless deploy'
 alias sli='serverless invoke'
 alias sll='serverless invoke local -f'
+alias sqldpd='sqlite3 --batch ~/dev/pali/local/dpd.db'
 alias rga='rg -g "*"'
+alias rgc='rg --color always -ie'
 alias rgl='rg -g "*" local -e'
 alias xc='xclip -sel clip'
 alias nxi='npx nuxi'
 alias src="source ~/bin/bashrc"
 alias vrc="vim ~/bin/bashrc"
+alias xltit='scripts/translate.mjs -da ebt-deepl -dl it -oe1 -dr '
+alias xltpt='scripts/translate.mjs -da ebt-deepl -dl pt-pt -oe1 -dr '
+alias xltes='scripts/translate.mjs -da ebt-deepl -dl es -oe1 -dr '
 
 export IGNOREEOF=42
 export VISUAL=vim
@@ -327,6 +341,7 @@ export WWWSCV=unroot@45.33.35.10
 tput init
 
 export GOPATH=$HOME/work
-export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+export SCRIPTPATH=./scripts
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin:$SCRIPTPATH
 
 echo ~/bin/bashrc "-END-" `date +"%Y%m%d@%H%M%S.%3N"`

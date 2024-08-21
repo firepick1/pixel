@@ -52,7 +52,7 @@ hi Type         ctermfg=LightCyan ctermbg=Black
 hi VimCommand   ctermfg=LightCyan ctermbg=Black
 hi CursorColumn ctermfg=LightMagenta ctermbg=Black
 hi CursorLine   ctermfg=LightMagenta ctermbg=Black cterm=bold term=bold
-hi StatusLine   ctermfg=DarkGray ctermbg=LightMagenta
+hi StatusLine   ctermfg=DarkGray ctermbg=Yellow
 
 hi LineNr       ctermfg=Green ctermbg=Black cterm=NONE term=NONE
 hi htmlItalic	cterm=underline
@@ -72,5 +72,6 @@ source ~/pixel/osc52.vim
 vmap <C-c> y:call SendViaOSC52(getreg('"'))<cr>
 set shm=filmnrwxToO
 set statusline=
+set statusline+=%n@%c=%B:
 set statusline+=%f
 set statusline+=\ %m
