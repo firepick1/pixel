@@ -4,12 +4,13 @@ SCRIPT=`basename $0`
 DIRNAME=`dirname $0`
 BASH_JS_STDOUT=/tmp/$SCRIPT-cmd
 
-node - <<'JS' $DIRNAME $SCRIPT $* > $BASH_JS_STDOUT
+node - <<'JS' $DIRNAME $SCRIPT "$@" > $BASH_JS_STDOUT
 const util = require('util');
 const fs = require('fs');
 const fsp = fs.promises;
 const path = require('path');
 const exec = util.promisify(require('child_process').exec);
+const MIN_PARMS = 0;
 let [ NODE, DASH, DIRNAME, SCRIPT, ...args] = process.argv;
 
 const msg = `${SCRIPT}:`;
@@ -69,7 +70,7 @@ function parseArgs() {
     }
     return a;
   }, []);
-  if (parms.length === 0) {
+  if (parms.length < MIN_PARMS) {
     help();
   }
 
