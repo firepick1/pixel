@@ -63,6 +63,7 @@ function parseArgs() {
       default:
         if (arg.at(0) === "-") {
           console.error(`${msg} [ERROR] ignoring ${arg}`);
+          help();
         } else {
           a.push(arg);
         }
