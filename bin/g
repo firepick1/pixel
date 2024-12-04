@@ -50,7 +50,9 @@ elif [ "$op" == "bnm" ]; then cmd="git branch --no-merged"
 elif [ "$op" == "c" ]; then cmd="git checkout $@"; git checkout $@; cmd=
 elif [ "$op" == "cr" ]; then cmd="git checkout -b release/$1; git push -u"; git checkout -b release/$1; git push -u; cmd=
 elif [ "$op" == "cam" ]; then 
-  if [ -e $APPDIR/package.json ]; then
+  if [ -e ./package.json ]; then
+    CMT="v`json version < ./package.json` += $@"
+  elif [ -e $APPDIR/package.json ]; then
     CMT="v`json version < $APPDIR/package.json` += $@"
   else 
     CMT="$@"

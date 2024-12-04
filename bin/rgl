@@ -1,0 +1,2 @@
+!#/bin/bash
+rg --color always "$@" | less -R
