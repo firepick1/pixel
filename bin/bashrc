@@ -47,7 +47,7 @@ function c() {
   elif [ "$1" == "b" ]; then cd firebom-js
   elif [ "$1" == "d3" ]; then cd d3_sc-voice_net
   elif [ "$1" == "dpd" ]; then cd dpd
-  elif [ "$1" == "drg" ]; then cd dhammaregen
+  elif [ "$1" == "dr3" ]; then cd dhammaregen3
   elif [ "$1" == "dpl" ]; then cd ebt-deepl
   elif [ "$1" == "deepl" ]; then cd ebt-deepl
   elif [ "$1" == "dsu" ]; then cd sutta
@@ -76,6 +76,7 @@ function c() {
   elif [ "$1" == "fn" ]; then cd firenodejs
   elif [ "$1" == "fp" ]; then cd FirePump
   elif [ "$1" == "fr" ]; then cd fr_sc-voice_net
+  elif [ "$1" == "frscv" ]; then cd fr_sc-voice_net
   elif [ "$1" == "fpd" ]; then cd ~/dev/FPD-LooseCanon
   elif [ "$1" == "fs" ]; then cd FireSlide
   elif [ "$1" == "g" ]; then cd firepick-org.wiki
@@ -120,6 +121,8 @@ function c() {
   elif [ "$1" == "rcl" ]; then cd firerest-client
   elif [ "$1" == "rcm" ]; then cd firerest-cmd
   elif [ "$1" == "rec" ]; then cd karls-recipes
+  elif [ "$1" == "ru" ]; then cd ru_sc-voice_net
+  elif [ "$1" == "ruscv" ]; then cd ru_sc-voice_net
   elif [ "$1" == "sam" ]; then cd aws-sam
   elif [ "$1" == "say" ]; then cd say-again
   elif [ "$1" == "sc" ]; then cd firestep-cam 
@@ -287,7 +290,7 @@ alias jsbx="find . -name '*.js' | xargs js-beautify -r "
 alias gsutta='./scripts/grep-sutta.sh '
 alias play='nice -20 ffplay -loglevel error -stats -nodisp -autoexit '
 alias bls='~/dev/scv-bilara/scripts/search -om1'
-alias bls3='~/dev/scv-bilara/scripts/search -oh3 -ml1'
+alias bls3='~/dev/scv-bilara/scripts/search -oh3 -ml1 -bd ebt-data'
 alias blsit='~/dev/scv-bilara/scripts/search -oh3 -ml1 -da ebt-deepl -bd ebt-data -dl it '
 alias blspt='~/dev/scv-bilara/scripts/search -oh3 -ml1 -da ebt-deepl -bd ebt-data -dl pt '
 alias blses='~/dev/scv-bilara/scripts/search -oh3 -ml1 -da ebt-deepl -bd ebt-data -dl es '
@@ -319,7 +322,7 @@ alias sli='serverless invoke'
 alias sll='serverless invoke local -f'
 alias sqldpd='sqlite3 --batch ./local/dpd.db'
 alias rga='rg -g "*"'
-alias rgc='rg --color always -ie'
+alias rgc='rg --color always'
 alias xc='xclip -sel clip'
 alias nxi='npx nuxi'
 alias src="source ~/bin/bashrc"
@@ -327,6 +330,11 @@ alias vrc="vim ~/bin/bashrc"
 alias xltit='scripts/translate.mjs -da ebt-deepl -dl it -oe1 -dr '
 alias xltpt='scripts/translate.mjs -da ebt-deepl -dl pt-pt -oe1 -dr '
 alias xltes='scripts/translate.mjs -da ebt-deepl -dl es -oe1 -dr '
+alias diff='/usr/bin/diff -Z --color '
+alias biome='npx @biomejs/biome '
+alias bcw='npx @biomejs/biome check --write --max-diagnostics=1'
+alias bcwt='npx @biomejs/biome check --write --max-diagnostics=1 `find test -name "*mjs"`'
+alias bcws='npx @biomejs/biome check --write --max-diagnostics=1 `find src -name "*.mjs"` `test -d tools && find tools -name "*.mjs"`'
 
 export IGNOREEOF=42
 export VISUAL=vim

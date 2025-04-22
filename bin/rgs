@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+PAT=$1
+/usr/bin/rg -c $PAT | grep -v '__test' | sort -k 2rn -k 1rd -t ':'
